@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "591028593940",
+    "firebase_url": "https://gms-app-c07f7.firebaseio.com",
+    "project_id": "gms-app-c07f7",
+    "storage_bucket": "gms-app-c07f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591028593940:android:36a6ca2ecea6fdce",
+        "android_client_info": {
+          "package_name": "com.example.bankblood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591028593940-mup8q1mem7itahrt798qvelhptv5hmu7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCccp170RknswelHRx0NPIxIE8u_v_c2h0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591028593940:android:d3f93c0d609c2f34",
+        "android_client_info": {
+          "package_name": "com.example.mysmartlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591028593940-mup8q1mem7itahrt798qvelhptv5hmu7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCccp170RknswelHRx0NPIxIE8u_v_c2h0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

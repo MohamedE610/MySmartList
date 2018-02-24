@@ -60,7 +60,7 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
     }
 
     @Override
-    public void OnFailure(String error) {
+    public void OnFailure(Object error) {
 
     }
 

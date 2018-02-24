@@ -65,7 +65,7 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
     }
 
     @Override
-    public void OnFailure(String error) {
+    public void OnFailure(Object error) {
 
     }
 

@@ -7,5 +7,5 @@ package com.example.mysmartlist.Utils;
 public interface Callbacks {
 
      void OnSuccess(Object obj);
-    void OnFailure(String error);
+    void OnFailure(Object obj);
 }

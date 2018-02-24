@@ -1,7 +1,9 @@
 package com.example.mysmartlist.Activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -21,6 +23,10 @@ import com.example.mysmartlist.Fragments.SearchFragment;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
+import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseCheckAuth;
+import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignOut;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,6 +34,10 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     TabLayout tabLayout;
+    //private FirebaseAuth.AuthStateListener authListener;
+    //private FirebaseAuth auth;
+    FirebaseSignOut firebaseSignOut;
+    FirebaseCheckAuth firebaseCheckAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +61,46 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         addHomeFragment();
         tabLayout.getTabAt(0).setIcon(R.drawable.home__selected);
 
+        //get firebase auth instance
+        //auth = FirebaseAuth.getInstance();
+        firebaseSignOut=new FirebaseSignOut();
+
+        firebaseCheckAuth=new FirebaseCheckAuth();
+        firebaseCheckAuth.setCallback(new Callbacks() {
+            @Override
+            public void OnSuccess(Object obj) {
+                startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                MainActivity.this.finish();
+            }
+
+            @Override
+            public void OnFailure(Object obj) {
+
+            }
+        });
+        firebaseCheckAuth.checkFirebaseAuth();
+
+        /*authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                    MainActivity.this.finish();
+                }
+            }
+        };*/
+    }
 
 
+    //sign out method
+    public void signOut() {
+        //auth.signOut();
+        firebaseSignOut.signOut();
+        startActivity(new Intent(this, SignInActivity.class));
+        this.finish();
     }
 
     @Override
@@ -71,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            signOut();
             return true;
         }
 

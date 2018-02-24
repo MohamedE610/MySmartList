@@ -60,7 +60,7 @@ public class FavouriteFragment extends Fragment implements Callbacks, FavouriteP
     }
 
     @Override
-    public void OnFailure(String error) {
+    public void OnFailure(Object error) {
 
     }
 

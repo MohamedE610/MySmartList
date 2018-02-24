@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/signin_background_screen"
+    >
+
+
+<android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/orange_90"
+    app:cardCornerRadius="40dp"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
+    android:layout_margin="10dp"
+    android:id="@+id/card1">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/smart_list_logo"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="قائمتى الزكيه"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        app:cardBackgroundColor="#90ffffff"
+        app:cardCornerRadius="20dp"
+        android:layout_below="@+id/card1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp"
+        >
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:hint="البريد الالكترونى"
+                android:inputType="textEmailAddress"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:hint="كلمه المرور"
+                android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray" />
+        </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="تذكر كلمه المرور"
+                android:layout_gravity="right"
+                android:id="@+id/checkbox"
+                />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:text="تسجيل الدخول "
+            android:textColor="@android:color/black"
+            />
+
+        <TextView
+            android:id="@+id/btn_reset_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/orange_90"
+            android:text="هل نسيت كلمه المرور ؟"
+            android:textAllCaps="false"
+            android:padding="3dp"
+            android:textSize="13sp"
+            android:textColor="@android:color/black"
+             />
+
+        <!-- Link to Login Screen -->
+        <!--android:background="@null"-->
+        <TextView
+            android:id="@+id/btn_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:padding="3dp"
+            android:background="@color/orange_90"
+            android:text="أنشاء حساب جديد"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            />
+    </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

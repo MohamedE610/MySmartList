@@ -60,11 +60,11 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
         btnSearch=(Button) view.findViewById(R.id.btn_search);
         editTextSearch=(EditText) view.findViewById(R.id.text_search);
         imgBarcode=(ImageView) view.findViewById(R.id.img_barcode);
+
+
         filter=(Spinner)view.findViewById(R.id.spinner);
+        createFilterSpinner();
 
-
-
-        createGenderDropDownMenu();
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,14 +88,14 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
         return view;
     }
 
-    String[] SpinnerDataGender= {"price","name"};
-    private void createGenderDropDownMenu(){
-        ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(getActivity(),R.layout.spinner_item,SpinnerDataGender);
+    String[] SpinnerFilterData= {"price","name"};
+    private void createFilterSpinner(){
+        ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(getActivity(),R.layout.spinner_item,SpinnerFilterData);
         filter.setAdapter(SpinnerAdapter);
         filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                orderKey=SpinnerDataGender[position];
+                orderKey=SpinnerFilterData[position];
             }
 
             @Override
@@ -117,7 +117,7 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
     }
 
     @Override
-    public void OnFailure(String error) {
+    public void OnFailure(Object error) {
 
     }
 

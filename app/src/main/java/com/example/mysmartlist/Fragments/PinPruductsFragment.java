@@ -65,7 +65,7 @@ public class PinPruductsFragment extends Fragment implements Callbacks, PinProdu
     }
 
     @Override
-    public void OnFailure(String error) {
+    public void OnFailure(Object error) {
 
     }
 
