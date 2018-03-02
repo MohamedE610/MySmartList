@@ -3,8 +3,20 @@ package com.example.mysmartlist.Utils.Networking.RetrofitUtils;
 
 
 
-import com.example.mysmartlist.Models.Product;
+import com.example.mysmartlist.Models.Categories.Categories;
+import com.example.mysmartlist.Models.Client.Client;
+import com.example.mysmartlist.Models.ClientLists.ClientLists;
+import com.example.mysmartlist.Models.List.List;
+import com.example.mysmartlist.Models.PopularProducts.PopularProduct;
+import com.example.mysmartlist.Models.Product_1;
+import com.example.mysmartlist.Models.Products.ProductData;
+import com.example.mysmartlist.Models.Products.Products;
+import com.example.mysmartlist.Models.TopProducts.TopProduct;
 import com.example.mysmartlist.Utils.Constants;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,7 +25,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 
 public interface ApiInterface {
@@ -30,7 +41,7 @@ public interface ApiInterface {
     })
 
     @GET("clients")
-    Call<Product> getCompanyClients();*/
+    Call<Product_1> getCompanyClients();*/
 
     /***************         products           *****************/
 
@@ -40,7 +51,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("clients/{client_id}/pin/{product_id}")
-    Call<Product> deletePinProduct(@Path("client_id") int client_id,@Path("product_id") int product_id);
+    Call<JSONObject> deletePinProduct(@Path("client_id") int client_id, @Path("product_id") int product_id);
 
 
     @Headers({
@@ -49,7 +60,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("clients/{client_id}/fav/{product_id}")
-    Call<Product> deleteFavouriteProduct(@Path("client_id") int client_id,@Path("product_id") int product_id);
+    Call<JSONObject> deleteFavouriteProduct(@Path("client_id") int client_id, @Path("product_id") int product_id);
 
 
     @Headers({
@@ -59,7 +70,7 @@ public interface ApiInterface {
     })
     //pass json{}
     @POST("products")
-    Call<Product> addProductToDatabase(@Body Product  product);
+    Call<JSONObject> addProductToDatabase(@Body JSONObject product);
 
 
     @Headers({
@@ -68,7 +79,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("products/search")
-    Call<Product> getProductSearchResult(@Body Product  product);
+    Call<JSONObject> getProductSearchResult(@Body JSONObject searchDetails);
 
 
     @Headers({
@@ -77,7 +88,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("products")
-    Call<Product> getProducts();
+    Call<Products> getProducts();
 
 
     @Headers({
@@ -86,7 +97,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("new/products")
-    Call<Product> getNewProducts();
+    Call<Products> getNewProducts();
 
 
     @Headers({
@@ -95,7 +106,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("popular/products")
-    Call<Product> getPopularProducts();
+    Call<ArrayList<PopularProduct>> getPopularProducts();
 
 
     @Headers({
@@ -104,7 +115,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("top/products")
-    Call<Product> getTopProducts();
+    Call<ArrayList<TopProduct>> getTopProducts();
 
 
     @Headers({
@@ -113,7 +124,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("products/{product_id}")
-    Call<Product> getProductByID(@Path("product_id") int product_id);
+    Call<ProductData> getProductByID(@Path("product_id") int product_id);
 
 
     @Headers({
@@ -122,7 +133,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("categories/{category_id}")
-    Call<Product> getProductByCategory(@Path("category_id") int category_id);
+    Call<ProductData> getProductByCategory(@Path("category_id") int category_id);
 
 
     /***************         Categories           *****************/
@@ -134,14 +145,12 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("categories")
-    Call<Product> getCategories();
+    Call<Categories> getCategories();
 
   /*  @GET("categories/{category}")
-    Call<Product> getCategoryById(@Path("category_id") int category_id);*/
-
+    Call<Product_1> getCategoryById(@Path("category_id") int category_id);*/
 
     /***************         clients           *****************/
-
 
     @Headers({
             "Accept: application/json",
@@ -149,7 +158,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("/clients/{client_id}")
-    Call<Product> getClientByID(@Path("client_id") int client_id);
+    Call<Client> getClientByID(@Path("client_id") int client_id);
 
 
     @Headers({
@@ -158,7 +167,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/lists")
-    Call<Product> getCurrentClientLists(@Path("client_id") int client_id);
+    Call<ClientLists> getCurrentClientLists(@Path("client_id") int client_id);
 
 
     @Headers({
@@ -167,7 +176,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/lists/old")
-    Call<Product> getOldClientLists(@Path("client_id") int client_id);
+    Call<ClientLists> getOldClientLists(@Path("client_id") int client_id);
 
 
     @Headers({
@@ -176,7 +185,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/lists/all")
-    Call<Product> getAllClientLists(@Path("client_id") int client_id);
+    Call<ClientLists> getAllClientLists(@Path("client_id") int client_id);
 
 
     @Headers({
@@ -185,7 +194,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/fav/{product_id}")
-    Call<Product> AddFavouriteProduct(@Path("client_id") int client_id ,@Path("product_id") int product);
+    Call<JSONObject> AddFavouriteProduct(@Path("client_id") int client_id , @Path("product_id") int product);
 
 
     @Headers({
@@ -194,7 +203,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/pin/{product_id}")
-    Call<Product> AddPinProduct(@Path("client_id") int client_id ,@Path("product_id") int product);
+    Call<JSONObject> AddPinProduct(@Path("client_id") int client_id , @Path("product_id") int product);
 
 
     @Headers({
@@ -204,7 +213,7 @@ public interface ApiInterface {
     })
     //pass json{}
     @POST("clients")
-    Call<Product> createClientAccount(@Body Product  client);
+    Call<JSONObject> createClientAccount(@Body JSONObject client);
 
 
     /***************         List           *****************/
@@ -215,7 +224,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("lists/{list_id}")
-    Call<Product> getListById(@Path("list_id") int client_id);
+    Call<List> getListById(@Path("list_id") int client_id);
 
 
     @Headers({
@@ -225,7 +234,7 @@ public interface ApiInterface {
     })
     //pass json{}
     @POST("clients/{client_id}/lists")
-    Call<Product> addListToDatabase(@Path("client_id") String client_id ,@Body Product  list);
+    Call<JSONObject> addListToDatabase(@Path("client_id") String client_id , @Body JSONObject list);
 
 
     @Headers({
@@ -234,7 +243,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("lists/{list_id}/products")
-    Call<Product> addProductToList(@Path("list_id") String client_id ,@Body Product  list);
+    Call<JSONObject> addProductToList(@Path("list_id") String list_id , @Body JSONObject product);
 
 
     @Headers({
@@ -243,7 +252,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("lists/{list_id}/products/{product_id}/increment")
-    Call<Product> incrementProductCountInList(@Path("list_id") String client_id ,@Path("product_id") String product_id ,@Body Product  list);
+    Call<JSONObject> incrementProductCountInList(@Path("list_id") String list_id , @Path("product_id") String product_id , @Body JSONObject jsonObject);
 
 
     @Headers({
@@ -252,7 +261,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("lists/{list_id}/products/{product_id}/decrement")
-    Call<Product> decrementProductCountInList(@Path("list_id") String client_id ,@Path("product_id") String product_id ,@Body Product  list);
+    Call<JSONObject> decrementProductCountInList(@Path("list_id") String list_id , @Path("product_id") String product_id , @Body JSONObject jsonObject);
 
 
     @Headers({
@@ -261,7 +270,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}/products")
-    Call<Product> deleteMultipulProduct(@Path("list_id") int client_id,@Body Product  list);
+    Call<JSONObject> deleteMultipulProduct(@Path("list_id") int list_id, @Body JSONObject jsonObject);
 
 
     @Headers({
@@ -270,7 +279,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}/products/{product_id}")
-    Call<Product> deleteSingleProduct(@Path("list_id") int client_id,@Path("product_id") String product_id );
+    Call<JSONObject> deleteSingleProduct(@Path("list_id") int list_id, @Path("product_id") String product_id );
 
 
     @Headers({
@@ -279,7 +288,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}/trash")
-    Call<Product> MoveListFromCurrentListToOldList(@Path("list_id") int client_id);
+    Call<JSONObject> MoveListFromCurrentListToOldList(@Path("list_id") int list_id);
 
 
     @Headers({
@@ -288,6 +297,6 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}")
-    Call<Product> deleteListPermanently(@Path("list_id") int client_id);
+    Call<JSONObject> deleteListPermanently(@Path("list_id") int list_id);
 
 }

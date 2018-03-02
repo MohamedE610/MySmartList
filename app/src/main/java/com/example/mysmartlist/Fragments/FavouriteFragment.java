@@ -10,12 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.FavouriteProductAdapter;
-import com.example.mysmartlist.Adapters.PinProductAdapter;
-import com.example.mysmartlist.Models.Product;
+import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductByCategoryData;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductsData;
 import com.example.mysmartlist.Utils.JsonParsingUtils;
 
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ import java.util.ArrayList;
  */
 public class FavouriteFragment extends Fragment implements Callbacks, FavouriteProductAdapter.RecyclerViewClickListener {
 
-    ArrayList<Product> products =new ArrayList<>();
+    ArrayList<Product_1> products =new ArrayList<>();
     FavouriteProductAdapter productAdapter;
     FetchProductByCategoryData fetchProductsData;
     RecyclerView recyclerView;

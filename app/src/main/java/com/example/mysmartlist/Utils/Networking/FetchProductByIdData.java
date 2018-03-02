@@ -11,7 +11,8 @@ import retrofit2.Retrofit;
 
 */
 
-import com.example.mysmartlist.Models.Product;
+import com.example.mysmartlist.Models.Product_1;
+import com.example.mysmartlist.Models.Products.ProductData;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiClient;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiInterface;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
@@ -24,26 +25,29 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class FetchProductByIdData extends FetchData implements Callback<Product>  {
+public class FetchProductByIdData extends FetchData implements Callback<ProductData>  {
 
-    public FetchProductByIdData(){
+    private int product_id;
+
+    public FetchProductByIdData(int product_id){
+        this.product_id=product_id;
     }
 
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<Product> clientsCall = apiInterface.getProductByID();
-        clientsCall.enqueue(this);
+        Call<ProductData> productByID = apiInterface.getProductByID(product_id);
+        productByID.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<Product> call, Response<Product> response) {
-        Product clients=response.body();
-        callbacks.OnSuccess(clients);
+    public void onResponse(Call<ProductData> call, Response<ProductData> response) {
+        ProductData productData=response.body();
+        callbacks.OnSuccess(productData);
     }
 
     @Override
-    public void onFailure(Call<Product> call, Throwable t) {
+    public void onFailure(Call<ProductData> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }

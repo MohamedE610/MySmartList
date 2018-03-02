@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mysmartlist.Models.Category;
+import com.example.mysmartlist.Models.Category_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.squareup.picasso.Picasso;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
-    ArrayList<Category> categories;
+    ArrayList<Category_1> categories;
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
@@ -33,8 +33,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public CategoryAdapter() {
     }
 
-    public CategoryAdapter( ArrayList<Category> categories, Context context) {
-        this.categories = new  ArrayList<Category>();
+    public CategoryAdapter(ArrayList<Category_1> categories, Context context) {
+        this.categories = new  ArrayList<Category_1>();
         this.categories = categories;
         this.context = context;
     }

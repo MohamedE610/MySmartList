@@ -1,11 +1,8 @@
 package com.example.mysmartlist.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,13 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.PinProductAdapter;
-import com.example.mysmartlist.Adapters.ProductAdapter;
-import com.example.mysmartlist.Models.Product;
+import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductByCategoryData;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductsData;
 import com.example.mysmartlist.Utils.JsonParsingUtils;
 
 import java.util.ArrayList;
@@ -27,7 +21,7 @@ import java.util.ArrayList;
 
 public class PinPruductsFragment extends Fragment implements Callbacks, PinProductAdapter.RecyclerViewClickListener {
 
-    ArrayList<Product> products =new ArrayList<>();
+    ArrayList<Product_1> products =new ArrayList<>();
     PinProductAdapter productAdapter;
     FetchProductByCategoryData fetchProductsData;
     RecyclerView recyclerView;

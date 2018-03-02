@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mysmartlist.Models.Product;
+import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.squareup.picasso.Picasso;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProductAdapter.MyViewHolder> {
 
-    ArrayList<Product> products;
+    ArrayList<Product_1> products;
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
@@ -33,8 +33,8 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
     public FavouriteProductAdapter() {
     }
 
-    public FavouriteProductAdapter(ArrayList<Product> categories, Context context) {
-        this.products = new  ArrayList<Product>();
+    public FavouriteProductAdapter(ArrayList<Product_1> categories, Context context) {
+        this.products = new  ArrayList<Product_1>();
         this.products = categories;
         this.context = context;
     }

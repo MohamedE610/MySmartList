@@ -4,34 +4,27 @@ package com.example.mysmartlist.Models;
  * Created by abdallah on 2/20/2018.
  */
 
-public class Product {
+public class Category_1 {
 
     String id;
     String name;
-    String price;
-    String cat_id;
-    String imgUrl;
 
-
-
-    public Product(String id, String name, String price, String cat_id, String imgUrl) {
-
+    public Category_1(String id, String name, String imgUrl) {
         this.id = id;
         this.name = name;
-        this.price = price;
-        this.cat_id = cat_id;
         this.imgUrl = imgUrl;
     }
 
-    public Product() {
+    String imgUrl;
+
+    public Category_1() {
 
     }
 
-    public Product(String id, String name, String price, String cat_id) {
+    public Category_1(String id, String name) {
         this.id = id;
         this.name = name;
-        this.price = price;
-        this.cat_id = cat_id;
+
     }
 
     public String getId() {
@@ -50,21 +43,6 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getCat_id() {
-        return cat_id;
-    }
-
-    public void setCat_id(String cat_id) {
-        this.cat_id = cat_id;
-    }
 
     public String getImgUrl() {
         return imgUrl;
@@ -73,4 +51,5 @@ public class Product {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
 }

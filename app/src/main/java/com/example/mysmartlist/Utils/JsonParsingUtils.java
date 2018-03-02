@@ -1,8 +1,7 @@
 package com.example.mysmartlist.Utils;
 
-import com.example.mysmartlist.Models.Category;
-import com.example.mysmartlist.Models.Product;
-import com.google.gson.Gson;
+import com.example.mysmartlist.Models.Category_1;
+import com.example.mysmartlist.Models.Product_1;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,13 +14,13 @@ import java.util.ArrayList;
 
 public  class JsonParsingUtils {
 
-    public static ArrayList<Product> getAllProducts(String json){
-        ArrayList<Product> products=new ArrayList<>();
+    public static ArrayList<Product_1> getAllProducts(String json){
+        ArrayList<Product_1> products=new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
             for (int i = 0; i <jsonArray.length() ; i++) {
-            Product product=new Product();
+            Product_1 product=new Product_1();
             JSONObject object=jsonArray.getJSONObject(i);
             product.setId(object.getString("id"));
             product.setName(object.getString("name"));
@@ -37,8 +36,8 @@ public  class JsonParsingUtils {
         return products;
     }
 
-    public static Product getSingleProduct(String json){
-        Product product = new Product();
+    public static Product_1 getSingleProduct(String json){
+        Product_1 product = new Product_1();
         try{
                 JSONObject jsonObject = new JSONObject(json);
                 JSONObject object = jsonObject.getJSONObject("data");
@@ -53,13 +52,13 @@ public  class JsonParsingUtils {
         return product;
     }
 
-    public static ArrayList<Category> getAllCategories(String json){
-        ArrayList<Category> categories=new ArrayList<>();
+    public static ArrayList<Category_1> getAllCategories(String json){
+        ArrayList<Category_1> categories=new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
             for (int i = 0; i <jsonArray.length() ; i++) {
-                Category  category=new Category();
+                Category_1 category=new Category_1();
                 JSONObject object=jsonArray.getJSONObject(i);
                 category.setId(object.getString("id"));
                 category.setName(object.getString("name"));
@@ -73,8 +72,8 @@ public  class JsonParsingUtils {
         return categories;
     }
 
-    public static Category getSingleCategory(String json){
-        Category  category = new Category();
+    public static Category_1 getSingleCategory(String json){
+        Category_1 category = new Category_1();
         try{
             JSONObject jsonObject = new JSONObject(json);
             JSONObject object = jsonObject.getJSONObject("data");

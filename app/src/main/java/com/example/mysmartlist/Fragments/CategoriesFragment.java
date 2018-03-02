@@ -1,7 +1,5 @@
 package com.example.mysmartlist.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.CategoryAdapter;
-import com.example.mysmartlist.Models.Category;
+import com.example.mysmartlist.Models.Category_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 
 public class CategoriesFragment extends Fragment implements Callbacks, CategoryAdapter.RecyclerViewClickListener {
 
-   ArrayList<Category> categories=new ArrayList<>();
+   ArrayList<Category_1> categories=new ArrayList<>();
    CategoryAdapter categoryAdapter;
    FetchCategoriesData fetchCategoriesData;
    RecyclerView recyclerView;

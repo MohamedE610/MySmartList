@@ -18,17 +18,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.mysmartlist.Activities.ScannerActivity;
-import com.example.mysmartlist.Adapters.FavouriteProductAdapter;
 import com.example.mysmartlist.Adapters.ProductAdapter;
-import com.example.mysmartlist.Models.Product;
+import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductSearchData;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductsData;
 import com.example.mysmartlist.Utils.JsonParsingUtils;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -41,7 +38,7 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
     ImageView imgBarcode;
     EditText editTextSearch;
 
-    ArrayList<Product> products =new ArrayList<>();
+    ArrayList<Product_1> products =new ArrayList<>();
     ProductAdapter productAdapter;
     FetchProductSearchData fetchProductsData;
     RecyclerView recyclerView;
