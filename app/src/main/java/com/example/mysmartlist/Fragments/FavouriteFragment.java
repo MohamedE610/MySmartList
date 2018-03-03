@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.FavouriteProductAdapter;
 import com.example.mysmartlist.Models.Product_1;
+import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductByCategoryData;
 import com.example.mysmartlist.Utils.JsonParsingUtils;
+import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.NetworkState;
+import com.example.mysmartlist.Utils.Networking.getFavouriteProductsRequest;
 
 import java.util.ArrayList;
 
@@ -23,9 +26,9 @@ import java.util.ArrayList;
  */
 public class FavouriteFragment extends Fragment implements Callbacks, FavouriteProductAdapter.RecyclerViewClickListener {
 
-    ArrayList<Product_1> products =new ArrayList<>();
+    Products products;
     FavouriteProductAdapter productAdapter;
-    FetchProductByCategoryData fetchProductsData;
+    getFavouriteProductsRequest favouriteProductsRequest;
     RecyclerView recyclerView;
     private View view;
 
@@ -39,17 +42,21 @@ public class FavouriteFragment extends Fragment implements Callbacks, FavouriteP
         view=inflater.inflate(R.layout.fragment_favourite, container, false);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_favourite);
 
-        fetchProductsData=new FetchProductByCategoryData("5");
-        fetchProductsData.setNetworkResponse(this);
-        fetchProductsData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
+        if(NetworkState.ConnectionAvailable(getActivity())) {
+            MySharedPreferences.setUpMySharedPreferences(getContext());
+            int uid = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+            favouriteProductsRequest = new getFavouriteProductsRequest(uid);
+            favouriteProductsRequest.setCallbacks(this);
+            favouriteProductsRequest.start();
+        }
         return view;
     }
 
     @Override
     public void OnSuccess(Object obj) {
-        String json=(String)obj;
-        products= JsonParsingUtils.getAllProducts(json);
+        //String json=(String)obj;
+        //products= JsonParsingUtils.getAllProducts(json);
+        products=(Products)obj;
         productAdapter=new FavouriteProductAdapter(products,getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         productAdapter.setClickListener(this);

@@ -10,18 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.CategoryAdapter;
+import com.example.mysmartlist.Models.Categories.Categories;
 import com.example.mysmartlist.Models.Category_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.example.mysmartlist.Utils.JsonParsingUtils;
+import com.example.mysmartlist.Utils.NetworkState;
+import com.example.mysmartlist.Utils.Networking.FetchCategoriesData;
 
 import java.util.ArrayList;
 
 
 public class CategoriesFragment extends Fragment implements Callbacks, CategoryAdapter.RecyclerViewClickListener {
 
-   ArrayList<Category_1> categories=new ArrayList<>();
+   //ArrayList<Category_1> categories=new ArrayList<>();
+    Categories categories;
    CategoryAdapter categoryAdapter;
    FetchCategoriesData fetchCategoriesData;
    RecyclerView recyclerView;
@@ -38,9 +41,11 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
         view=inflater.inflate(R.layout.fragment_categories, container, false);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_cat);
 
-        fetchCategoriesData=new FetchCategoriesData();
-        fetchCategoriesData.setNetworkResponse(this);
-        fetchCategoriesData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if(NetworkState.ConnectionAvailable(getActivity())) {
+            fetchCategoriesData = new FetchCategoriesData();
+            fetchCategoriesData.setCallbacks(this);
+            fetchCategoriesData.start();
+        }
 
         return view;
     }
@@ -48,8 +53,9 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
 
     @Override
     public void OnSuccess(Object obj) {
-        String json=(String)obj;
-        categories= JsonParsingUtils.getAllCategories(json);
+        //String json=(String)obj;
+        //categories= JsonParsingUtils.getAllCategories(json);
+        categories=(Categories)obj;
         categoryAdapter=new CategoryAdapter(categories,getActivity());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         categoryAdapter.setClickListener(this);

@@ -17,6 +17,8 @@ import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,13 +27,13 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class decrementProductCountInListRequest extends FetchData implements Callback<JSONObject>  {
+public class decrementProductCountInListRequest extends FetchData implements Callback<HashMap>  {
 
     private int list_id;
     private int product_id;
-    JSONObject  jsonObject;
+    HashMap  jsonObject;
 
-    public decrementProductCountInListRequest(int list_id, int product_id , JSONObject jsonObject){
+    public decrementProductCountInListRequest(int list_id, int product_id , HashMap jsonObject){
         this.list_id=list_id;
         this.jsonObject=jsonObject;
         this.product_id=product_id;
@@ -40,19 +42,19 @@ public class decrementProductCountInListRequest extends FetchData implements Cal
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<JSONObject>  decrementProductCountInListCall = apiInterface
+        Call<HashMap>  decrementProductCountInListCall = apiInterface
                 .decrementProductCountInList(list_id+"",product_id+"",jsonObject);
         decrementProductCountInListCall.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-        JSONObject  body =response.body();
+    public void onResponse(Call<HashMap> call, Response<HashMap> response) {
+        HashMap  body =response.body();
         callbacks.OnSuccess(body);
     }
 
     @Override
-    public void onFailure(Call<JSONObject> call, Throwable t) {
+    public void onFailure(Call<HashMap> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }

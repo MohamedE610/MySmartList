@@ -34,10 +34,13 @@ public class Data implements Serializable
     public String budget;
     @SerializedName("lists")
     @Expose
-    public java.util.List<com.example.Client.List> lists = null;
+    public java.util.List<com.example.mysmartlist.Models.Client.List> lists = null;
     @SerializedName("favs")
     @Expose
     public java.util.List<Fav> favs = null;
+    @SerializedName("keywords")
+    @Expose
+    public java.util.List<String> keywords = null;
     @SerializedName("pins")
     @Expose
     public java.util.List<Pin> pins = null;

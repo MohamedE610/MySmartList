@@ -17,6 +17,8 @@ import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,29 +27,29 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class AddProductRequest extends FetchData implements Callback<JSONObject>  {
+public class AddProductRequest extends FetchData implements Callback<HashMap>  {
 
-    JSONObject jsonObject;
+    HashMap jsonObject;
 
-    public AddProductRequest(JSONObject jsonObject){
+    public AddProductRequest(HashMap jsonObject){
         this.jsonObject=jsonObject;
     }
 
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<JSONObject> addProductToDatabaseCall = apiInterface.addProductToDatabase(jsonObject);
+        Call<HashMap> addProductToDatabaseCall = apiInterface.addProductToDatabase(jsonObject);
         addProductToDatabaseCall.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-        JSONObject  jsonObject =response.body();
+    public void onResponse(Call<HashMap> call, Response<HashMap> response) {
+        HashMap  jsonObject =response.body();
         callbacks.OnSuccess(jsonObject);
     }
 
     @Override
-    public void onFailure(Call<JSONObject> call, Throwable t) {
+    public void onFailure(Call<HashMap> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }

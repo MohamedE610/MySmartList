@@ -17,6 +17,7 @@ import com.example.mysmartlist.Utils.Constants;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -51,7 +52,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("clients/{client_id}/pin/{product_id}")
-    Call<JSONObject> deletePinProduct(@Path("client_id") int client_id, @Path("product_id") int product_id);
+    Call<HashMap> deletePinProduct(@Path("client_id") int client_id, @Path("product_id") int product_id);
 
 
     @Headers({
@@ -60,7 +61,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("clients/{client_id}/fav/{product_id}")
-    Call<JSONObject> deleteFavouriteProduct(@Path("client_id") int client_id, @Path("product_id") int product_id);
+    Call<HashMap> deleteFavouriteProduct(@Path("client_id") int client_id, @Path("product_id") int product_id);
 
 
     @Headers({
@@ -70,7 +71,7 @@ public interface ApiInterface {
     })
     //pass json{}
     @POST("products")
-    Call<JSONObject> addProductToDatabase(@Body JSONObject product);
+    Call<HashMap> addProductToDatabase(@Body HashMap product);
 
 
     @Headers({
@@ -78,8 +79,8 @@ public interface ApiInterface {
             "Content-Type: application/json",
             "Authorization: "+ Constants.accessToken
     })
-    @POST("products/search")
-    Call<JSONObject> getProductSearchResult(@Body JSONObject searchDetails);
+    @POST("clients/{client_id}/products/search")
+    Call<Products> getProductSearchResult(@Path("client_id") int client_id , @Body HashMap searchDetails);
 
 
     @Headers({
@@ -194,7 +195,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/fav/{product_id}")
-    Call<JSONObject> AddFavouriteProduct(@Path("client_id") int client_id , @Path("product_id") int product);
+    Call<HashMap> AddFavouriteProduct(@Path("client_id") int client_id , @Path("product_id") int product);
 
 
     @Headers({
@@ -203,7 +204,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/pin/{product_id}")
-    Call<JSONObject> AddPinProduct(@Path("client_id") int client_id , @Path("product_id") int product);
+    Call<HashMap> AddPinProduct(@Path("client_id") int client_id , @Path("product_id") int product);
 
 
     @Headers({
@@ -213,7 +214,7 @@ public interface ApiInterface {
     })
     //pass json{}
     @POST("clients")
-    Call<JSONObject> createClientAccount(@Body JSONObject client);
+    Call<Client> createClientAccount(@Body HashMap client);
 
 
     /***************         List           *****************/
@@ -234,7 +235,7 @@ public interface ApiInterface {
     })
     //pass json{}
     @POST("clients/{client_id}/lists")
-    Call<JSONObject> addListToDatabase(@Path("client_id") String client_id , @Body JSONObject list);
+    Call<HashMap> addListToDatabase(@Path("client_id") String client_id , @Body HashMap list);
 
 
     @Headers({
@@ -243,7 +244,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("lists/{list_id}/products")
-    Call<JSONObject> addProductToList(@Path("list_id") String list_id , @Body JSONObject product);
+    Call<HashMap> addProductToList(@Path("list_id") String list_id , @Body HashMap product);
 
 
     @Headers({
@@ -252,7 +253,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("lists/{list_id}/products/{product_id}/increment")
-    Call<JSONObject> incrementProductCountInList(@Path("list_id") String list_id , @Path("product_id") String product_id , @Body JSONObject jsonObject);
+    Call<HashMap> incrementProductCountInList(@Path("list_id") String list_id , @Path("product_id") String product_id , @Body HashMap jsonObject);
 
 
     @Headers({
@@ -261,7 +262,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("lists/{list_id}/products/{product_id}/decrement")
-    Call<JSONObject> decrementProductCountInList(@Path("list_id") String list_id , @Path("product_id") String product_id , @Body JSONObject jsonObject);
+    Call<HashMap> decrementProductCountInList(@Path("list_id") String list_id , @Path("product_id") String product_id , @Body HashMap jsonObject);
 
 
     @Headers({
@@ -270,7 +271,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}/products")
-    Call<JSONObject> deleteMultipulProduct(@Path("list_id") int list_id, @Body JSONObject jsonObject);
+    Call<HashMap> deleteMultipulProduct(@Path("list_id") int list_id, @Body HashMap jsonObject);
 
 
     @Headers({
@@ -279,7 +280,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}/products/{product_id}")
-    Call<JSONObject> deleteSingleProduct(@Path("list_id") int list_id, @Path("product_id") String product_id );
+    Call<HashMap> deleteSingleProduct(@Path("list_id") int list_id, @Path("product_id") String product_id );
 
 
     @Headers({
@@ -288,7 +289,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}/trash")
-    Call<JSONObject> MoveListFromCurrentListToOldList(@Path("list_id") int list_id);
+    Call<HashMap> MoveListFromCurrentListToOldList(@Path("list_id") int list_id);
 
 
     @Headers({
@@ -297,6 +298,34 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @DELETE("lists/{list_id}")
-    Call<JSONObject> deleteListPermanently(@Path("list_id") int list_id);
+    Call<HashMap> deleteListPermanently(@Path("list_id") int list_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/favs")
+    Call<Products> getFavouriteProducts(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/pins")
+    Call<Products> getPinProducts(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/keywords")
+    Call<HashMap> getKeywordsSearch(@Path("client_id") int client_id);
+
 
 }

@@ -11,8 +11,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mysmartlist.Models.Categories.Categories;
 import com.example.mysmartlist.Models.Category_1;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
-    ArrayList<Category_1> categories;
+    Categories categories;
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
@@ -33,8 +35,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public CategoryAdapter() {
     }
 
-    public CategoryAdapter(ArrayList<Category_1> categories, Context context) {
-        this.categories = new  ArrayList<Category_1>();
+    public CategoryAdapter(Categories categories, Context context) {
         this.categories = categories;
         this.context = context;
     }
@@ -53,10 +54,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        String detailsStr=categories.get(position).getName();
+        String detailsStr=categories.data.get(position).name;
         holder.textView.setText(detailsStr);
 
-        String urlStr = FetchCategoriesData.BasicUrl+categories.get(position).getImgUrl();
+        String urlStr = Constants.BasicUrl+categories.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
         setAnimation(holder.cardView, position);
@@ -71,9 +72,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     @Override
     public int getItemCount() {
-        if (categories == null)
+        if (categories == null || categories.data==null)
             return 0;
-        return categories.size();
+        return categories.data.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

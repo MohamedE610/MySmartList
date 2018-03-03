@@ -17,6 +17,8 @@ import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +27,7 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class deleteSingleProductRequest extends FetchData implements Callback<JSONObject>  {
+public class deleteSingleProductRequest extends FetchData implements Callback<HashMap>  {
 
     private int list_id;
     private int product_id;
@@ -38,18 +40,18 @@ public class deleteSingleProductRequest extends FetchData implements Callback<JS
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<JSONObject>   deleteSingleProductCall = apiInterface.deleteSingleProduct(list_id,product_id+"");
+        Call<HashMap>   deleteSingleProductCall = apiInterface.deleteSingleProduct(list_id,product_id+"");
         deleteSingleProductCall.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-        JSONObject  body =response.body();
+    public void onResponse(Call<HashMap> call, Response<HashMap> response) {
+        HashMap  body =response.body();
         callbacks.OnSuccess(body);
     }
 
     @Override
-    public void onFailure(Call<JSONObject> call, Throwable t) {
+    public void onFailure(Call<HashMap> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }

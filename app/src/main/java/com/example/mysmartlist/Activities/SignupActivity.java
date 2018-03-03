@@ -16,13 +16,45 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignUp;
+import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.Networking.createClientAccountRequest;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import okhttp3.RequestBody;
+
 public class SignupActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+
+    createClientAccountRequest createClient;
+    HashMap clientDetails;
+
+    Callbacks callbacks=new Callbacks() {
+        @Override
+        public void OnSuccess(Object obj) {
+
+            Client client=(Client)obj;
+            int Uid=client.data.id;
+            MySharedPreferences.setUpMySharedPreferences(SignupActivity.this);
+            MySharedPreferences.setUserSetting("uid",Uid+"");
+            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+            finish();
+        }
+
+        @Override
+        public void OnFailure(Object obj) {
+            Toast.makeText(SignupActivity.this, "Please, try to Sign Up again", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    String name,phone,email,gender,familyNum,salaryRang,reportType;
 
     Spinner spinnerFamilyMember;
     Spinner spinnerSalaryRang;
@@ -89,11 +121,15 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
             }
         });
 
+        clientDetails=new HashMap();
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
+                name = inuptUserName.getText().toString().trim();
+                phone = inputPhoneNum.getText().toString().trim();
+                email = inputEmail.getText().toString().trim();
+
                 String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
@@ -118,9 +154,24 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
                         Toast.makeText(SignupActivity.this, getString(R.string.createUserwithemailoncomplete) + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
+                        try {
+                            clientDetails = new HashMap();
+                            clientDetails.put("name", name);
+                            clientDetails.put("phone",phone);
+                            clientDetails.put("email",email);
+                            clientDetails.put("gender",gender);
+                            clientDetails.put("firebase_id",task.getResult().getUser().getUid());
+                            clientDetails.put("budget_type",reportType);
+                            clientDetails.put("family_count",familyNum);
+                            clientDetails.put("salary",salaryRang);
+                        }catch (Exception e){}
 
-                        startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                        finish();
+                        createClient=new createClientAccountRequest(clientDetails);
+                        createClient.setCallbacks(callbacks);
+                        createClient.start();
+
+                        /*startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                        finish();*/
                     }
 
                     @Override
@@ -169,6 +220,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
 
     String[] spinnerFamilyMemberData= {"","1","2","3","أكثر من 3"};
+    String[] familyMemberValues={"1","2","3","3+"};
     private void createFamilyMemberSpinner(){
         ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this,R.layout.spinner_item,spinnerFamilyMemberData);
         spinnerFamilyMember.setAdapter(SpinnerAdapter);
@@ -176,6 +228,8 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 familyMemberStr=spinnerFamilyMemberData[position];
+                if(position>0)
+                    familyNum=familyMemberValues[position-1];
             }
 
             @Override
@@ -186,6 +240,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     }
 
     String[] spinnerSalaryRangData= {"","من 2000 الى 5000","من 6000 الى 15000","من 16000 الى 25000"};
+    String[] salaryRangValues={"2000:5000","6000:15000","16000:25000"};
     private void createSalaryRangSpinner(){
         ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this,R.layout.spinner_item,spinnerSalaryRangData);
         spinnerSalaryRang.setAdapter(SpinnerAdapter);
@@ -193,6 +248,8 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 salaryRangStr=spinnerSalaryRangData[position];
+                if(position>0)
+                   salaryRang=salaryRangValues[position-1];
             }
 
             @Override
@@ -204,6 +261,30 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+        int id=compoundButton.getId();
+
+        switch (id){
+            case R.id.male_rb:
+                if(b)
+                    gender="male";
+                break;
+
+            case R.id.female_rb:
+                if(b)
+                    gender="female";
+                break;
+
+            case R.id.weekly_rb:
+                if(b)
+                    reportType="weekly";
+                break;
+
+            case R.id.monthly_rb:
+                if(b)
+                    reportType="monthly";
+                break;
+        }
 
     }
 }

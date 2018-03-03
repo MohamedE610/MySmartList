@@ -19,13 +19,18 @@ import android.widget.Spinner;
 
 import com.example.mysmartlist.Activities.ScannerActivity;
 import com.example.mysmartlist.Adapters.ProductAdapter;
+import com.example.mysmartlist.Models.List.Product;
 import com.example.mysmartlist.Models.Product_1;
+import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchProductSearchData;
 import com.example.mysmartlist.Utils.JsonParsingUtils;
+import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.NetworkState;
+import com.example.mysmartlist.Utils.Networking.FetchProductSearchData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,7 +43,8 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
     ImageView imgBarcode;
     EditText editTextSearch;
 
-    ArrayList<Product_1> products =new ArrayList<>();
+    //ArrayList<Product_1> products =new ArrayList<>();
+    Products  products;
     ProductAdapter productAdapter;
     FetchProductSearchData fetchProductsData;
     RecyclerView recyclerView;
@@ -68,9 +74,16 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
             public void onClick(View view) {
                 if(!TextUtils.isEmpty(editTextSearch.getText())) {
                     searchKey = editTextSearch.getText().toString();
-                    fetchProductsData = new FetchProductSearchData(searchKey, orderKey);
-                    fetchProductsData.setNetworkResponse(SearchFragment.this);
-                    fetchProductsData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    if(NetworkState.ConnectionAvailable(getActivity())) {
+                        MySharedPreferences.setUpMySharedPreferences(getContext());
+                        int uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+                        HashMap<String,String> hashMap=new HashMap<>();
+                        hashMap.put("keyword",searchKey);
+                        hashMap.put("order",orderKey);
+                        fetchProductsData = new FetchProductSearchData(hashMap,uid);
+                        fetchProductsData.setCallbacks(SearchFragment.this);
+                        fetchProductsData.start();
+                    }
                 }
             }
         });
@@ -104,8 +117,9 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
 
     @Override
     public void OnSuccess(Object obj) {
-        String json=(String)obj;
-        products= JsonParsingUtils.getAllProducts(json);
+        //String json=(String)obj;
+        //products= JsonParsingUtils.getAllProducts(json);
+        products=(Products)obj;
         productAdapter=new ProductAdapter(products,getActivity());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         productAdapter.setClickListener(this);

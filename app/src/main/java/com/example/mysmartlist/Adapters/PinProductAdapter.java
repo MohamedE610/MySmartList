@@ -11,8 +11,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mysmartlist.Models.List.Product;
 import com.example.mysmartlist.Models.Product_1;
+import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +27,8 @@ import java.util.ArrayList;
 
 public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.MyViewHolder> {
 
-    ArrayList<Product_1> products;
+    //ArrayList<Product_1> products;
+    Products products;
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
@@ -33,9 +37,8 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
     public PinProductAdapter() {
     }
 
-    public PinProductAdapter(ArrayList<Product_1> categories, Context context) {
-        this.products = new  ArrayList<Product_1>();
-        this.products = categories;
+    public PinProductAdapter(Products products, Context context) {
+        this.products = products;
         this.context = context;
     }
 
@@ -53,10 +56,10 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        String detailsStr=products.get(position).getName()+"\n"+products.get(position).getPrice();
+        String detailsStr=products.data.get(position).name+"\n"+products.data.get(position).price;
         holder.textView.setText(detailsStr);
 
-        String urlStr = FetchCategoriesData.BasicUrl+products.get(position).getImgUrl();
+        String urlStr = Constants.BasicUrl+products.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
         holder.imgPin.setOnClickListener(new View.OnClickListener() {
@@ -86,9 +89,9 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
 
     @Override
     public int getItemCount() {
-        if (products == null)
+        if (products == null || products.data==null)
             return 0;
-        return products.size();
+        return products.data.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

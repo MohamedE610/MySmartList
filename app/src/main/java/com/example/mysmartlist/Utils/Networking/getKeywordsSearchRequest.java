@@ -11,11 +11,10 @@ import retrofit2.Retrofit;
 
 */
 
+import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiClient;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiInterface;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -23,31 +22,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by abdallah on 12/18/2017.
- */
+public class getKeywordsSearchRequest extends FetchData implements Callback<HashMap>  {
 
-public class deleteMultipleProductRequest extends FetchData implements Callback<HashMap>  {
 
-    private int list_id;
-    HashMap  productsListIDs;
+    private int client_id;
 
-    public deleteMultipleProductRequest(int list_id , HashMap productsListIDs){
-        this.list_id=list_id;
-        this.productsListIDs=productsListIDs;
+    public getKeywordsSearchRequest(int client_id){
+        this.client_id=client_id;
     }
 
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<HashMap>  deleteMultipulProductCall = apiInterface.deleteMultipulProduct(list_id,productsListIDs);
-        deleteMultipulProductCall.enqueue(this);
+        Call<HashMap> keywordsSearchCall= apiInterface.getKeywordsSearch(client_id);
+        keywordsSearchCall.enqueue(this);
     }
 
     @Override
     public void onResponse(Call<HashMap> call, Response<HashMap> response) {
-        HashMap  body =response.body();
-        callbacks.OnSuccess(body);
+        HashMap   body =response.body();
+        callbacks.OnSuccess( body);
     }
 
     @Override

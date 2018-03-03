@@ -17,6 +17,8 @@ import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,12 +27,12 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class addProductToListRequest extends FetchData implements Callback<JSONObject>  {
+public class addProductToListRequest extends FetchData implements Callback<HashMap>  {
 
     private int list_id;
-    JSONObject productDetails;
+    HashMap productDetails;
 
-    public addProductToListRequest(int list_id, JSONObject productDetails){
+    public addProductToListRequest(int list_id, HashMap productDetails){
         this.list_id=list_id;
         this.productDetails=productDetails;
     }
@@ -38,18 +40,18 @@ public class addProductToListRequest extends FetchData implements Callback<JSONO
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<JSONObject>  addProductToListCall = apiInterface.addProductToList(list_id+"",productDetails);
+        Call<HashMap>  addProductToListCall = apiInterface.addProductToList(list_id+"",productDetails);
         addProductToListCall.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-        JSONObject  body =response.body();
+    public void onResponse(Call<HashMap> call, Response<HashMap> response) {
+        HashMap  body =response.body();
         callbacks.OnSuccess(body);
     }
 
     @Override
-    public void onFailure(Call<JSONObject> call, Throwable t) {
+    public void onFailure(Call<HashMap> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }
