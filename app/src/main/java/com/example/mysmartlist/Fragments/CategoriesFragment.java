@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class CategoriesFragment extends Fragment implements Callbacks, CategoryAdapter.RecyclerViewClickListener {
 
    //ArrayList<Category_1> categories=new ArrayList<>();
-    Categories categories;
+   Categories categories;
    CategoryAdapter categoryAdapter;
    FetchCategoriesData fetchCategoriesData;
    RecyclerView recyclerView;

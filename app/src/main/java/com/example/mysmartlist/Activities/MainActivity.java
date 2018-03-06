@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mysmartlist.Adapters.ListsFragment;
 import com.example.mysmartlist.Fragments.CategoriesFragment;
 import com.example.mysmartlist.Fragments.FavouriteFragment;
 import com.example.mysmartlist.Fragments.MainActivityFragment;
@@ -173,6 +174,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 break;
             case 4:
                 tab.setIcon(R.drawable.settings_selected);
+                addFragment();
+
                 break;
             default:
                 break;
@@ -182,6 +185,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     public static void addFavouriteFragment() {
         FavouriteFragment fragment=new FavouriteFragment();
+        FragmentManager fragmentManager1=fragmentManager;
+        fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+    }
+
+    public static void addFragment() {
+        ListsFragment fragment=new ListsFragment();
         FragmentManager fragmentManager1=fragmentManager;
         fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
