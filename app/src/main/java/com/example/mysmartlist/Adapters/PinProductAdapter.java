@@ -94,7 +94,7 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
         String detailsStr=products.data.get(position).name+"\n"+products.data.get(position).price;
         holder.textView.setText(detailsStr);
 
-        String urlStr = Constants.BasicUrl+products.data.get(position).image;
+        String urlStr = Constants.BasicUrlImg+products.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
         holder.imgPin.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
             }
         });
 
-        holder.pin= SignupActivity.isPinProduct(products.data.get(position).id);
+        //holder.pin= SignupActivity.isPinProduct(products.data.get(position).id);
         if(holder.pin)
             holder.imgPin.setImageResource(R.drawable.pin_red);
         else
@@ -153,7 +153,7 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
         ImageView imgPin;
         TextView textView;
         CardView cardView;
-        boolean pin=false;
+        boolean pin=true;
 
         public MyViewHolder(View itemView) {
             super(itemView);

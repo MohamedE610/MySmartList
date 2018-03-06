@@ -6,6 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 */
 
+import com.example.mysmartlist.Utils.Constants;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -15,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://smartlist.frb.io/api/";
+    public static final String BASE_URL = Constants.BasicUrl;
     private static Retrofit retrofit = null;
 
 

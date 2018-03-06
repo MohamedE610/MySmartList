@@ -61,6 +61,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
     }
 
+
     public static boolean isPinProduct(int id){
         for (Pin pin :client.data.pins) {
             if(pin.product.id==id)

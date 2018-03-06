@@ -56,6 +56,7 @@ public class createClientAccountRequest extends FetchData implements Callback<Cl
 
     @Override
     public void onFailure(Call<Client> call, Throwable t) {
+
         callbacks.OnFailure(t.getMessage());
     }
 }

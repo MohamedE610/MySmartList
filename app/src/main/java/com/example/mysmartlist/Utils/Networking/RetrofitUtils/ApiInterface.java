@@ -11,6 +11,7 @@ import com.example.mysmartlist.Models.PopularProducts.PopularProduct;
 import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.ProductData;
 import com.example.mysmartlist.Models.Products.Products;
+import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
 import com.example.mysmartlist.Models.TopProducts.TopProduct;
 import com.example.mysmartlist.Utils.Constants;
 
@@ -80,7 +81,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("clients/{client_id}/products/search")
-    Call<Products> getProductSearchResult(@Path("client_id") int client_id , @Body HashMap searchDetails);
+    Call<ArrayList<ProductsByClientID>> getProductSearchResult(@Path("client_id") int client_id , @Body HashMap searchDetails);
 
 
     @Headers({
@@ -90,6 +91,15 @@ public interface ApiInterface {
     })
     @GET("products")
     Call<Products> getProducts();
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("products/client/{client_id}")
+    Call< ArrayList<ProductsByClientID>> getProductsByClientID(@Path("client_id") int client_id);
 
 
     @Headers({

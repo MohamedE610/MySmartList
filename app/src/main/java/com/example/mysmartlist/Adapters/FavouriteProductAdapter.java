@@ -92,10 +92,10 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         String detailsStr=products.data.get(position).name+"\n"+products.data.get(position).price;
         holder.textView.setText(detailsStr);
 
-        String urlStr = Constants.BasicUrl+products.data.get(position).image;
+        String urlStr = Constants.BasicUrlImg+products.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
-        holder.fav= SignupActivity.isFavProduct(products.data.get(position).id);
+       // holder.fav= SignupActivity.isFavProduct(products.data.get(position).id);
         if(holder.fav)
             holder.imgFavourite.setImageResource(R.drawable.heart_red);
         else
@@ -145,7 +145,7 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         ImageView imgFavourite;
         TextView textView;
         CardView cardView;
-        boolean fav=false;
+        boolean fav=true;
 
         public MyViewHolder(View itemView) {
             super(itemView);

@@ -22,6 +22,7 @@ import com.example.mysmartlist.Adapters.ProductAdapter;
 import com.example.mysmartlist.Models.List.Product;
 import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.Products;
+import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.JsonParsingUtils;
@@ -44,7 +45,7 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
     EditText editTextSearch;
 
     //ArrayList<Product_1> products =new ArrayList<>();
-    Products  products;
+    ArrayList<ProductsByClientID>  products;
     ProductAdapter productAdapter;
     FetchProductSearchData fetchProductsData;
     RecyclerView recyclerView;
@@ -119,7 +120,7 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
     public void OnSuccess(Object obj) {
         //String json=(String)obj;
         //products= JsonParsingUtils.getAllProducts(json);
-        products=(Products)obj;
+        products=( ArrayList<ProductsByClientID>)obj;
         productAdapter=new ProductAdapter(products,getActivity());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         productAdapter.setClickListener(this);

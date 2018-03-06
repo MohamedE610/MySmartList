@@ -16,6 +16,7 @@ import com.example.mysmartlist.Fragments.MainActivityFragment;
 import com.example.mysmartlist.Models.List.Product;
 import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.Products;
+import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
-    Products products;
+    ArrayList<ProductsByClientID>  products;
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
@@ -114,8 +115,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public ProductAdapter() {
     }
 
-    public ProductAdapter(Products categories, Context context) {
-        this.products = categories;
+    public ProductAdapter(  ArrayList<ProductsByClientID>  products, Context context) {
+        this.products = products;
         this.context = context;
     }
 
@@ -133,13 +134,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     MyViewHolder viewHolder;
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        String detailsStr=products.data.get(position).name+"\n"+products.data.get(position).price;
+        String detailsStr=products.get(position).data.name+"\n"+products.get(position).data.price;
         holder.textView.setText(detailsStr);
 
-        String urlStr = Constants.BasicUrl+products.data.get(position).image;
+        String urlStr = Constants.BasicUrlImg+products.get(position).data.image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
-        holder.fav= SignupActivity.isFavProduct(products.data.get(position).id);
+        holder.fav= products.get(position).client.fav;
+        ///holder.fav= SignupActivity.isFavProduct(products.get(position).data.id);
         if(holder.fav)
             holder.imgFavourit.setImageResource(R.drawable.heart_red);
         else
@@ -151,13 +153,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 if(!holder.fav){
                     holder.imgFavourit.setImageResource(R.drawable.heart_red);
                     addfavouriteProductRequest=new AddFavouriteProductRequest(SignupActivity.client.data.id,
-                            products.data.get(position).id);
+                            products.get(position).data.id);
                     addfavouriteProductRequest.setCallbacks(addFavCallbacks);
                     addfavouriteProductRequest.start();
                 }else {
                     holder.imgFavourit.setImageResource(R.drawable.heart);
                     deleteFavouriteProductRequest=new DeleteFavouriteProductRequest(SignupActivity.client.data.id,
-                            products.data.get(position).id);
+                            products.get(position).data.id);
                     deleteFavouriteProductRequest.setCallbacks(deleteFavCallbacks);
                     deleteFavouriteProductRequest.start();
                 }
@@ -165,7 +167,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             }
         });
 
-        holder.pin= SignupActivity.isPinProduct(products.data.get(position).id);
+        //holder.pin= SignupActivity.isPinProduct(products.data.get(position).id);
+        holder.pin= products.get(position).client.pin;
         if(holder.pin)
             holder.imgPin.setImageResource(R.drawable.pin_red);
         else
@@ -176,13 +179,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 if(!holder.pin){
                     holder.imgPin.setImageResource(R.drawable.pin_red);
                     addPinProductRequest =new AddPinProductRequest(SignupActivity.client.data.id,
-                            products.data.get(position).id);
+                            products.get(position).data.id);
                     addPinProductRequest.setCallbacks(addPinCallbacks);
                     addPinProductRequest.start();
                 }else{
                     holder.imgPin.setImageResource(R.drawable.pin);
                     deletePinProductRequest=new DeletePinProductRequest(SignupActivity.client.data.id,
-                            products.data.get(position).id);
+                            products.get(position).data.id);
                     deletePinProductRequest.setCallbacks(deletePinCallbacks);
                     deletePinProductRequest.start();
                 }
@@ -202,9 +205,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        if (products == null || products.data==null)
+        if (products == null)
             return 0;
-        return products.data.size();
+        return products.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
