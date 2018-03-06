@@ -11,12 +11,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mysmartlist.Activities.SignupActivity;
+import com.example.mysmartlist.Fragments.MainActivityFragment;
 import com.example.mysmartlist.Models.List.Product;
 import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
+import com.example.mysmartlist.Utils.Networking.AddPinProductRequest;
+import com.example.mysmartlist.Utils.Networking.DeletePinProductRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,6 +37,36 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
+
+    AddPinProductRequest addPinProductRequest;
+    DeletePinProductRequest deletePinProductRequest;
+
+
+    Callbacks addPinCallbacks=new Callbacks() {
+        @Override
+        public void OnSuccess(Object obj) {
+            MainActivityFragment.addPinFragment();
+        }
+
+        @Override
+        public void OnFailure(Object obj) {
+
+        }
+    };
+
+    Callbacks deletePinCallbacks=new Callbacks() {
+        @Override
+        public void OnSuccess(Object obj) {
+            MainActivityFragment.addPinFragment();
+        }
+
+        @Override
+        public void OnFailure(Object obj) {
+
+        }
+    };
+
+
 
 
     public PinProductAdapter() {
@@ -69,10 +104,28 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
             }
         });
 
+        holder.pin= SignupActivity.isPinProduct(products.data.get(position).id);
+        if(holder.pin)
+            holder.imgPin.setImageResource(R.drawable.pin_red);
+        else
+            holder.imgPin.setImageResource(R.drawable.pin);
         holder.imgPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(!holder.pin){
+                    holder.imgPin.setImageResource(R.drawable.pin_red);
+                    addPinProductRequest =new AddPinProductRequest(SignupActivity.client.data.id,
+                            products.data.get(position).id);
+                    addPinProductRequest.setCallbacks(addPinCallbacks);
+                    addPinProductRequest.start();
+                }else{
+                    holder.imgPin.setImageResource(R.drawable.pin);
+                    deletePinProductRequest=new DeletePinProductRequest(SignupActivity.client.data.id,
+                            products.data.get(position).id);
+                    deletePinProductRequest.setCallbacks(deletePinCallbacks);
+                    deletePinProductRequest.start();
+                }
+                holder.pin=!holder.pin;
             }
         });
 
@@ -100,7 +153,7 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
         ImageView imgPin;
         TextView textView;
         CardView cardView;
-
+        boolean pin=false;
 
         public MyViewHolder(View itemView) {
             super(itemView);

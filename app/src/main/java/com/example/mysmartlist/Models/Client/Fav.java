@@ -10,7 +10,7 @@ public class Fav implements Serializable
 
     @SerializedName("product")
     @Expose
-    public Product_ product;
-    private final static long serialVersionUID = 1214983920772794035L;
+    public Product product;
+    private final static long serialVersionUID = -1116194551354110445L;
 
 }

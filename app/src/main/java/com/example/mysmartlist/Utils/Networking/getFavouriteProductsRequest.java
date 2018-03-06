@@ -44,7 +44,7 @@ public class getFavouriteProductsRequest extends FetchData implements Callback<P
 
     @Override
     public void onResponse(Call<Products> call, Response<Products> response) {
-        Products   body =response.body();
+        Products body =response.body();
         callbacks.OnSuccess( body);
     }
 

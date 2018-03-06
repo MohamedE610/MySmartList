@@ -42,7 +42,7 @@ public class getClientByIDRequest extends FetchData implements Callback<Client> 
 
     @Override
     public void onResponse(Call<Client> call, Response<Client> response) {
-        Client   client =response.body();
+        Client client =response.body();
         callbacks.OnSuccess( client);
     }
 

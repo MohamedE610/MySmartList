@@ -30,6 +30,7 @@ public class FavouriteFragment extends Fragment implements Callbacks, FavouriteP
     FavouriteProductAdapter productAdapter;
     getFavouriteProductsRequest favouriteProductsRequest;
     RecyclerView recyclerView;
+
     private View view;
 
     public FavouriteFragment() {
@@ -73,4 +74,5 @@ public class FavouriteFragment extends Fragment implements Callbacks, FavouriteP
     public void ItemClicked(View v, int position) {
 
     }
+
 }

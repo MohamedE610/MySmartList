@@ -19,13 +19,13 @@ public class Product_ implements Serializable
     public Float price;
     @SerializedName("category")
     @Expose
-    public Category category;
+    public Category_ category;
     @SerializedName("image")
     @Expose
     public String image;
     @SerializedName("favs")
     @Expose
     public Integer favs;
-    private final static long serialVersionUID = 3510132868368605416L;
+    private final static long serialVersionUID = 7956184143475294895L;
 
 }

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseCheckAuth;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignOut;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     //private FirebaseAuth auth;
     FirebaseSignOut firebaseSignOut;
     FirebaseCheckAuth firebaseCheckAuth;
+
+    static FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +49,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //final TextView textView=(TextView) findViewById(R.id.asd);
+        fragmentManager=getSupportFragmentManager();
 
+        MySharedPreferences.setUpMySharedPreferences(this);
+        int uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        SignupActivity.getClient(uid);
+
+        //final TextView textView=(TextView) findViewById(R.id.asd);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.addOnTabSelectedListener(this);
-        addHomeFragment();
+        //addHomeFragment();
         tabLayout.getTabAt(0).setIcon(R.drawable.home__selected);
 
         //get firebase auth instance
@@ -171,10 +180,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     }
 
-    private void addFavouriteFragment() {
+    public static void addFavouriteFragment() {
         FavouriteFragment fragment=new FavouriteFragment();
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        FragmentManager fragmentManager1=fragmentManager;
+        fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
     private void addSearchFragment() {
@@ -183,10 +192,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
-    private void addHomeFragment() {
+
+    public static void addHomeFragment() {
         MainActivityFragment fragment=new MainActivityFragment();
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        FragmentManager fragmentManager1=fragmentManager;
+        fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
     public void addCategoriesFragment() {
@@ -204,4 +214,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+
 }

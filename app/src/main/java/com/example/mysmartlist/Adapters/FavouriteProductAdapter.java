@@ -11,11 +11,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mysmartlist.Activities.MainActivity;
+import com.example.mysmartlist.Activities.SignupActivity;
+import com.example.mysmartlist.Fragments.MainActivityFragment;
 import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
+import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
+import com.example.mysmartlist.Utils.Networking.DeleteFavouriteProductRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,6 +36,35 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
+
+
+    AddFavouriteProductRequest addfavouriteProductRequest;
+    DeleteFavouriteProductRequest deleteFavouriteProductRequest;
+
+    Callbacks addFavCallbacks=new Callbacks() {
+        @Override
+        public void OnSuccess(Object obj) {
+            MainActivity.addFavouriteFragment();
+        }
+
+        @Override
+        public void OnFailure(Object obj) {
+
+        }
+    };
+
+    Callbacks deleteFavCallbacks=new Callbacks() {
+        @Override
+        public void OnSuccess(Object obj) {
+            MainActivity.addFavouriteFragment();
+        }
+
+        @Override
+        public void OnFailure(Object obj) {
+
+        }
+    };
+
 
 
     public FavouriteProductAdapter() {
@@ -60,10 +95,29 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         String urlStr = Constants.BasicUrl+products.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
+        holder.fav= SignupActivity.isFavProduct(products.data.get(position).id);
+        if(holder.fav)
+            holder.imgFavourite.setImageResource(R.drawable.heart_red);
+        else
+            holder.imgFavourite.setImageResource(R.drawable.heart);
+
         holder.imgFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(!holder.fav){
+                    holder.imgFavourite.setImageResource(R.drawable.heart_red);
+                    addfavouriteProductRequest=new AddFavouriteProductRequest(SignupActivity.client.data.id,
+                            products.data.get(position).id);
+                    addfavouriteProductRequest.setCallbacks(addFavCallbacks);
+                    addfavouriteProductRequest.start();
+                }else {
+                    holder.imgFavourite.setImageResource(R.drawable.heart);
+                    deleteFavouriteProductRequest=new DeleteFavouriteProductRequest(SignupActivity.client.data.id,
+                            products.data.get(position).id);
+                    deleteFavouriteProductRequest.setCallbacks(deleteFavCallbacks);
+                    deleteFavouriteProductRequest.start();
+                }
+                holder.fav=!holder.fav;
             }
         });
 
@@ -91,7 +145,7 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         ImageView imgFavourite;
         TextView textView;
         CardView cardView;
-
+        boolean fav=false;
 
         public MyViewHolder(View itemView) {
             super(itemView);

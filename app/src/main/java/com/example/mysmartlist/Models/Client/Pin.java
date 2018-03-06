@@ -10,7 +10,7 @@ public class Pin implements Serializable
 
     @SerializedName("product")
     @Expose
-    public Product__ product;
-    private final static long serialVersionUID = 3986788957534849711L;
+    public Product_ product;
+    private final static long serialVersionUID = -8916437502788895961L;
 
 }

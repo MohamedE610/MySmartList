@@ -158,7 +158,7 @@ public interface ApiInterface {
             "Content-Type: application/json",
             "Authorization: "+ Constants.accessToken
     })
-    @GET("/clients/{client_id}")
+    @GET("clients/{client_id}")
     Call<Client> getClientByID(@Path("client_id") int client_id);
 
 

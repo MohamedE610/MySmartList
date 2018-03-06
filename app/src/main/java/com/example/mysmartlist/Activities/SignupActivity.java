@@ -1,9 +1,11 @@
 package com.example.mysmartlist.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,11 +19,15 @@ import android.widget.Toast;
 
 
 import com.example.mysmartlist.Models.Client.Client;
+import com.example.mysmartlist.Models.Client.Fav;
+import com.example.mysmartlist.Models.Client.Pin;
+import com.example.mysmartlist.Models.Products.ProductData;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignUp;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.createClientAccountRequest;
+import com.example.mysmartlist.Utils.Networking.getClientByIDRequest;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
@@ -36,12 +42,51 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     createClientAccountRequest createClient;
     HashMap clientDetails;
 
+    public static void getClient(int id){
+
+        getClientByIDRequest clientByIDRequest=new getClientByIDRequest(id);
+        clientByIDRequest.setCallbacks(new Callbacks() {
+            @Override
+            public void OnSuccess(Object obj) {
+                client=(Client)obj;
+                MainActivity.addHomeFragment();
+            }
+
+            @Override
+            public void OnFailure(Object obj) {
+
+            }
+        });
+        clientByIDRequest.start();
+
+    }
+
+    public static boolean isPinProduct(int id){
+        for (Pin pin :client.data.pins) {
+            if(pin.product.id==id)
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean isFavProduct(int id){
+        for (Fav fav :client.data.favs) {
+            if(fav.product.id==id)
+                return true;
+        }
+        return false;
+    }
+
+    public static Client client;
     Callbacks callbacks=new Callbacks() {
         @Override
         public void OnSuccess(Object obj) {
 
-            Client client=(Client)obj;
+
+            client=(Client)obj;
             int Uid=client.data.id;
+
             MySharedPreferences.setUpMySharedPreferences(SignupActivity.this);
             MySharedPreferences.setUserSetting("uid",Uid+"");
             startActivity(new Intent(SignupActivity.this, MainActivity.class));
@@ -73,7 +118,8 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        //a a1=new a();
+       // Log.d("asdasdasd",a1.i+"");
         //Get Firebase auth instance
         //auth = FirebaseAuth.getInstance();
         firebaseSignUp=new FirebaseSignUp();

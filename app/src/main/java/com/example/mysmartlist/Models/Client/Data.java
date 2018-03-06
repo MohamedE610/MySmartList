@@ -2,6 +2,7 @@
 package com.example.mysmartlist.Models.Client;
 
 import java.io.Serializable;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -34,16 +35,16 @@ public class Data implements Serializable
     public String budget;
     @SerializedName("lists")
     @Expose
-    public java.util.List<com.example.mysmartlist.Models.Client.List> lists = null;
+    public List<Object> lists = null;
     @SerializedName("favs")
     @Expose
-    public java.util.List<Fav> favs = null;
-    @SerializedName("keywords")
-    @Expose
-    public java.util.List<String> keywords = null;
+    public List<Fav> favs = null;
     @SerializedName("pins")
     @Expose
-    public java.util.List<Pin> pins = null;
-    private final static long serialVersionUID = -3259815550809910005L;
+    public List<Pin> pins = null;
+    @SerializedName("keywords")
+    @Expose
+    public List<Keyword> keywords = null;
+    private final static long serialVersionUID = -7126546955113879796L;
 
 }
