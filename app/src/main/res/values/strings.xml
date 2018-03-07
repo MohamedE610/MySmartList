@@ -128,5 +128,7 @@
     <string name="space">" "</string>
     <string name="test">test</string>
     <string name="test_">test@test.com</string>
+    <string name="title_activity_lists">ListsActivity</string>
+    <string name="title_activity_list_products">ListProductsActivity</string>
 
 </resources>

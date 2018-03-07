@@ -40,7 +40,7 @@ public class addListRequest extends FetchData implements Callback<HashMap>  {
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<HashMap>  addListToDatabaseCall = apiInterface.addListToDatabase(client_id+"",listDetails);
+        Call<HashMap>  addListToDatabaseCall = apiInterface.addListToDatabase(client_id,listDetails);
         addListToDatabaseCall.enqueue(this);
     }
 

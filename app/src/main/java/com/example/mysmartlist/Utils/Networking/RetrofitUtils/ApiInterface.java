@@ -245,7 +245,7 @@ public interface ApiInterface {
     })
     //pass json{}
     @POST("clients/{client_id}/lists")
-    Call<HashMap> addListToDatabase(@Path("client_id") String client_id , @Body HashMap list);
+    Call<HashMap> addListToDatabase(@Path("client_id") int client_id , @Body HashMap list);
 
 
     @Headers({

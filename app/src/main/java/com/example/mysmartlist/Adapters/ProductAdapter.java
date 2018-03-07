@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mysmartlist.Activities.SignupActivity;
 import com.example.mysmartlist.Fragments.MainActivityFragment;
@@ -30,6 +32,7 @@ import com.example.mysmartlist.Utils.Networking.addProductToListRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by abdallah on 2/21/2018.
@@ -40,6 +43,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     ArrayList<ProductsByClientID>  products;
     Context context;
     int LastPosition = -1;
+    int pos;
     RecyclerViewClickListener ClickListener;
 
     Callbacks addPinCallbacks=new Callbacks() {
@@ -134,6 +138,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     MyViewHolder viewHolder;
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        myViewHolder=holder;
+        pos=position;
         String detailsStr=products.get(position).data.name+"\n"+products.get(position).data.price;
         holder.textView.setText(detailsStr);
 
@@ -192,6 +198,62 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 holder.pin=!holder.pin;
             }
         });
+        holder.linearLayoutAdd.setClickable(true);
+        holder.linearLayoutAdd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if(holder.isReadyToAdd){
+                    HashMap<String,String> hashMap=new HashMap<>();
+                    hashMap.put("product_id",products.get(position).data.id.toString());
+                    hashMap.put("count",holder.productCount+"");
+                    int list_id=6;
+                    productToListRequest=new addProductToListRequest(list_id,hashMap);
+                    productToListRequest.setCallbacks(new Callbacks() {
+                        @Override
+                        public void OnSuccess(Object obj) {
+                            Toast.makeText(context, "Product Added", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void OnFailure(Object obj) {
+
+                        }
+                    });
+
+                    productToListRequest.start();
+                }else{
+                    myViewHolder.isReadyToAdd=true;
+                    myViewHolder.linearLayout.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
+
+
+        holder.textViewPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.productCount++;
+                holder.textViewCount.setText(holder.productCount+"");
+            }
+        });
+
+
+        holder.textViewMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.productCount>1) {
+                    holder.productCount--;
+                    holder.textViewCount.setText(holder.productCount+"");
+                }else if (holder.productCount==1){
+                    //holder.linearLayoutAdd.setVisibility(View.GONE);
+                    //holder.isReadyToAdd=false;
+                    holder.textViewCount.setText(holder.productCount+"");
+                }
+            }
+        });
 
         setAnimation(holder.cardView, position);
     }
@@ -220,6 +282,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         boolean pin=false;
         boolean fav=false;
 
+        LinearLayout linearLayout;
+        LinearLayout linearLayoutAdd;
+        //TextView textViewAdd;
+        TextView textViewPlus;
+        TextView textViewMinus;
+        TextView textViewCount;
+        boolean isReadyToAdd=true;
+        int productCount=1;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -228,6 +299,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             imgFavourit = (ImageView) itemView.findViewById(R.id.img_favourite);
             textView = (TextView) itemView.findViewById(R.id.text_details);
             cardView = (CardView) itemView.findViewById(R.id.card);
+            linearLayout=(LinearLayout) itemView.findViewById(R.id.linearLayout1);
+            linearLayoutAdd = (LinearLayout) itemView.findViewById(R.id.linearLayoutAdd);
+            textViewPlus = (TextView) itemView.findViewById(R.id.text_plus);
+            textViewMinus= (TextView) itemView.findViewById(R.id.text_minus);
+            textViewCount = (TextView) itemView.findViewById(R.id.text_count);
 
         }
 
@@ -262,15 +338,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.clearAnimation();
     }
 
-    /* clients = new Clients();
-                            clients=(Clients)obj;
-                            clientsAdapter=new ClientsAdapter(clients,getActivity());
-                            clientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-                            clientsAdapter.setClickListener(ClientsFragment.this);
-                            clientsRecyclerView.setAdapter(clientsAdapter);
-                            clientsRecyclerView.scrollToPosition(clients.getData().size()/2);
-                            clientsAdapter.notifyDataSetChanged();
-                            */
+    MyViewHolder myViewHolder;
+    addProductToListRequest productToListRequest;
+
+
+
+
 
 }
 
