@@ -17,7 +17,8 @@
             android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:id="@+id/img"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:id="@+id/linearLayout1"
-            android:visibility="visible">
+            android:visibility="gone">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

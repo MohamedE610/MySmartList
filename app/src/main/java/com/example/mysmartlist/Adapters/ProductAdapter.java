@@ -2,8 +2,10 @@ package com.example.mysmartlist.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -15,20 +17,18 @@ import android.widget.Toast;
 
 import com.example.mysmartlist.Activities.SignupActivity;
 import com.example.mysmartlist.Fragments.MainActivityFragment;
-import com.example.mysmartlist.Models.List.Product;
-import com.example.mysmartlist.Models.Product_1;
-import com.example.mysmartlist.Models.Products.Products;
+import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
 import com.example.mysmartlist.Utils.Networking.AddPinProductRequest;
-import com.example.mysmartlist.Utils.Networking.AddProductRequest;
 import com.example.mysmartlist.Utils.Networking.DeleteFavouriteProductRequest;
 import com.example.mysmartlist.Utils.Networking.DeletePinProductRequest;
 import com.example.mysmartlist.Utils.Networking.addProductToListRequest;
+import com.example.mysmartlist.Utils.Networking.getCurrentClientListsRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -114,7 +114,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     AddPinProductRequest addPinProductRequest;
     DeletePinProductRequest deletePinProductRequest;
 
-    addProductToListRequest addProductToList;
 
     public ProductAdapter() {
     }
@@ -138,7 +137,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     MyViewHolder viewHolder;
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        myViewHolder=holder;
         pos=position;
         String detailsStr=products.get(position).data.name+"\n"+products.get(position).data.price;
         holder.textView.setText(detailsStr);
@@ -204,29 +202,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 if(holder.isReadyToAdd){
-                    HashMap<String,String> hashMap=new HashMap<>();
-                    hashMap.put("product_id",products.get(position).data.id.toString());
-                    hashMap.put("count",holder.productCount+"");
-                    int list_id=6;
-                    productToListRequest=new addProductToListRequest(list_id,hashMap);
-                    productToListRequest.setCallbacks(new Callbacks() {
-                        @Override
-                        public void OnSuccess(Object obj) {
-                            Toast.makeText(context, "Product Added", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void OnFailure(Object obj) {
-
-                        }
-                    });
-
-                    productToListRequest.start();
+                     showPopUpMenu(holder,position);
                 }else{
-                    myViewHolder.isReadyToAdd=true;
-                    myViewHolder.linearLayout.setVisibility(View.VISIBLE);
+                    holder.isReadyToAdd=true;
+                    holder.linearLayout.setVisibility(View.VISIBLE);
                 }
-
             }
         });
 
@@ -239,7 +219,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 holder.textViewCount.setText(holder.productCount+"");
             }
         });
-
 
         holder.textViewMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -272,6 +251,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         return products.size();
     }
 
+    public void addProduct(MyViewHolder holder, int position){
+            HashMap<String,String> hashMap=new HashMap<>();
+            hashMap.put("product_id",products.get(position).data.id.toString());
+            hashMap.put("count",holder.productCount+"");
+            MySharedPreferences.setUpMySharedPreferences(context);
+            int list_id=Integer.valueOf(MySharedPreferences.getUserSetting("list_id"));
+            productToListRequest=new addProductToListRequest(list_id,hashMap);
+            productToListRequest.setCallbacks(new Callbacks() {
+                @Override
+                public void OnSuccess(Object obj) {
+                    Toast.makeText(context, "Product Added", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void OnFailure(Object obj) {
+
+                }
+            });
+
+            productToListRequest.start();
+
+
+    }
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView img;
@@ -288,7 +290,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         TextView textViewPlus;
         TextView textViewMinus;
         TextView textViewCount;
-        boolean isReadyToAdd=true;
+        boolean isReadyToAdd=false;
         int productCount=1;
 
         public MyViewHolder(View itemView) {
@@ -338,8 +340,49 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.clearAnimation();
     }
 
-    MyViewHolder myViewHolder;
     addProductToListRequest productToListRequest;
+
+      int groubId=11;
+        PopupMenu popupMenu;
+
+        public void showPopUpMenu(final MyViewHolder holder, final int position) {
+
+        popupMenu=new PopupMenu(context,holder.linearLayoutAdd);
+        //popupMenu.getMenu().add(11,1001,0,"add");
+        MySharedPreferences.setUpMySharedPreferences(context);
+        int id=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        getCurrentClientListsRequest currentClientListsRequest=new getCurrentClientListsRequest(id);
+        currentClientListsRequest.setCallbacks(new Callbacks() {
+            @Override
+            public void OnSuccess(Object obj) {
+                final ClientLists clientLists=(ClientLists)obj;
+                for (int i = 0; i <clientLists.data.size() ; i++) {
+                    popupMenu.getMenu().add(groubId,1000+i,i,clientLists.data.get(i).name);
+                   }
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id =item.getItemId();
+                        for (int j = 0; j <clientLists.data.size() ; j++) {
+                            if(1000+j==id){
+                                MySharedPreferences.setUserSetting("list_id",clientLists.data.get(j).id+"");
+                                addProduct(holder,position);
+                                break;
+                            }
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+
+            @Override
+            public void OnFailure(Object obj) {
+
+            }
+        });
+        currentClientListsRequest.start();
+    }
 
 
 

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.mysmartlist.Fragments.ListProductsFragment;
 import com.example.mysmartlist.Fragments.SearchFragment;
 import com.example.mysmartlist.R;
 
@@ -20,7 +21,8 @@ public class ListProductsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        addListProductsFragment();
+        Bundle bundle=getIntent().getExtras();
+        addListProductsFragment(bundle);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,10 +36,11 @@ public class ListProductsActivity extends AppCompatActivity {
     }
 
 
-    private void addListProductsFragment() {
-        SearchFragment fragment=new SearchFragment();
+    private void addListProductsFragment(Bundle bundle) {
+        ListProductsFragment fragment=new ListProductsFragment();
+        fragment.setArguments(bundle);
         FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_list_products_container,fragment).commit();
     }
 
 
