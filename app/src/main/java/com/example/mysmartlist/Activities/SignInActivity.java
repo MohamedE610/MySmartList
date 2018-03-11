@@ -1,6 +1,7 @@
 package com.example.mysmartlist.Activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
+import com.example.mysmartlist.Utils.WebCrawler.CategoriesWebCrawling;
 import com.example.mysmartlist.Utils.WebCrawler.ProductsWebCrawling;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
 
@@ -34,10 +36,10 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //CategoriesWebCrawling categoriesWebCrawling =new CategoriesWebCrawling();
-        //categoriesWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);
-        productsWebCrawling.execute();
+        /*CategoriesWebCrawling categoriesWebCrawling =new CategoriesWebCrawling();
+        categoriesWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
+        /*ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);
+        productsWebCrawling.execute();*/
 
 
 

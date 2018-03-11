@@ -37,7 +37,7 @@ public class ListsActivity extends AppCompatActivity {
               hashMap.put("name",name);
               MySharedPreferences.setUpMySharedPreferences(ListsActivity.this);
               int id= Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-              listRequest=new addListRequest(id,hashMap);
+              listRequest=new AddMultipleProductsRequest(id,hashMap);
               listRequest.setCallbacks(new Callbacks() {
                   @Override
                   public void OnSuccess(Object obj) {

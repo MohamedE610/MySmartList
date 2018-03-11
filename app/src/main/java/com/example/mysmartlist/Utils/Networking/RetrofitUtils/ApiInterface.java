@@ -227,6 +227,25 @@ public interface ApiInterface {
     Call<Client> createClientAccount(@Body HashMap client);
 
 
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @POST("categories/multiple")
+    Call<HashMap> AddMultipleCategories(@Body HashMap categories);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @POST("products/multiple")
+    Call<HashMap> AddMultipleProducts(@Body HashMap products);
+
+
     /***************         List           *****************/
 
     @Headers({

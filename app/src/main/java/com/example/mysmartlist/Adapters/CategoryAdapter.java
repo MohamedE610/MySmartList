@@ -53,7 +53,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         String detailsStr=categories.data.get(position).name;
         holder.textView.setText(detailsStr);
 
-        String urlStr = Constants.BasicUrlImg+categories.data.get(position).image;
+        String urlStr =categories.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
         setAnimation(holder.cardView, position);

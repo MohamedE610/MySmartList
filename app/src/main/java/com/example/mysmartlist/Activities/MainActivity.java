@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         /************************  SignupActivity.getClient(uid);  **************************/
         //SignupActivity.getClient(uid);
-
         //final TextView textView=(TextView) findViewById(R.id.asd);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

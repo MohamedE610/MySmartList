@@ -90,12 +90,12 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
                     String name = nameElements.get(0).text();
                     String price = priceElements.get(0).text();
                     price=price.substring(price.indexOf(" "),price.length()-1);
-                    price= arabicToDecimal(price);
-                    price=price.replace('.',',');
+                    price= convertArabicNumToEnglishNum(price);
+                    price=price.replace("٫",".");
                     ProductData productData = new ProductData();
                     productData.name = name;
                     productData.image = imgUrl;
-                    //productData.price=Float.valueOf(price);
+                    productData.price=Float.valueOf(price);
                     products.data.add(productData);
                     count = elements.size();
                 }
@@ -110,7 +110,7 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
     }
 
     private static final String arabic = "\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9";
-    private static String arabicToDecimal(String number) {
+    private static String convertArabicNumToEnglishNum(String number) {
         char[] chars = new char[number.length()];
         for(int i=0;i<number.length();i++) {
             char ch = number.charAt(i);
