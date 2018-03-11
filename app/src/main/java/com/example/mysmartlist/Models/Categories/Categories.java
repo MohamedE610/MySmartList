@@ -11,7 +11,7 @@ public class Categories implements Serializable
 
     @SerializedName("data")
     @Expose
-    public List<Datum> data = null;
+    public List<CategoryData> data = null;
     private final static long serialVersionUID = 3397678407791556975L;
 
 }
