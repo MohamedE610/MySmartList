@@ -12,20 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mysmartlist.Activities.MainActivity;
-import com.example.mysmartlist.Activities.SignupActivity;
-import com.example.mysmartlist.Fragments.MainActivityFragment;
-import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
 import com.example.mysmartlist.Utils.Networking.DeleteFavouriteProductRequest;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by abdallah on 2/21/2018.

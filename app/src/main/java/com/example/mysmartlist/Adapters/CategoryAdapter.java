@@ -12,13 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mysmartlist.Models.Categories.Categories;
-import com.example.mysmartlist.Models.Category_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Constants;
-import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by abdallah on 2/21/2018.

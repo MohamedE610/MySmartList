@@ -1,17 +1,13 @@
-package com.example.mysmartlist.Utils.FetchDataFromServer;
+package com.example.mysmartlist.Utils.WebCrawler;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.example.mysmartlist.Models.Categories.Categories;
 import com.example.mysmartlist.Models.Categories.CategoryData;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;

@@ -1,7 +1,6 @@
 package com.example.mysmartlist.Activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,8 +16,7 @@ import android.widget.Toast;
 
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.FetchDataFromServer.CategoriesWebCrawling;
-import com.example.mysmartlist.Utils.FetchDataFromServer.ProductsWebCrawling;
+import com.example.mysmartlist.Utils.WebCrawler.ProductsWebCrawling;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
 
 
