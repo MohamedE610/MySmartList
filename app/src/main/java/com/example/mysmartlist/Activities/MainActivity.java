@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.mysmartlist.Fragments.ListsFragment;
 import com.example.mysmartlist.Fragments.CategoriesFragment;
@@ -22,6 +25,10 @@ import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseCheckAu
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignOut;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     TabLayout tabLayout;
@@ -31,12 +38,79 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     FirebaseCheckAuth firebaseCheckAuth;
 
     static FragmentManager fragmentManager;
+
+    class HtmlHandler {
+        @JavascriptInterface
+        @SuppressWarnings("unused")
+        public void handleHtml(String html) {
+            // scrape the content here
+            Document document= Jsoup.parse(html);
+            Elements elements =document.getElementsByClass("product-box product-box--add-to-cart");
+            Elements elements1 =document.getElementsByClass("product-box");
+            //Elements elements=document.select("div.product-box product-box--add-to-cart");
+            //Elements elements=document.getElementsByTag("script");
+            int i=elements.size();
+        }
+    }
+
+    public void jsouptest(){
+        final String urlToLoad="https://danube.sa/departments/just-for-women?p=1";
+        final WebView mWebView=new WebView(this);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.addJavascriptInterface(new HtmlHandler(), "HtmlHandler");
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                    mWebView.loadUrl("javascript:HtmlHandler.handleHtml(document.documentElement.outerHTML);");
+            }
+
+        });
+
+        mWebView.loadUrl(urlToLoad);
+
+        /*new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                try {
+                    //URL url=new URL("https://danube.sa/departments/just-for-women?p=1");
+                    //DesiredCapabilities dc=new DesiredCapabilities("android","4.4", Platform.ANDROID);
+                    //WebDriver webDriver=new SelendroidDriver(url,dc);
+                    //String htmlSrt=webDriver.getPageSource();
+                     Document document= Jsoup.parse("");
+                    *//*Document document=Jsoup.connect("https://danube.sa/departments/just-for-women?p=1")
+                            .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0").get();*//*
+                    Elements elements =document.getElementsByClass("product-box product-box--add-to-cart");
+                    Elements elements1 =document.getElementsByClass("product-box");
+                    //Elements elements=document.select("div.product-box product-box--add-to-cart");
+                    //Elements elements=document.getElementsByTag("script");
+                    int i=elements.size();
+                    Element sc=elements.get(0);
+                    String s=sc.html();
+                    String ss=s.toLowerCase();
+                    String sss=ss+s;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();*/
+
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //jsouptest();
 
         fragmentManager=getSupportFragmentManager();
 

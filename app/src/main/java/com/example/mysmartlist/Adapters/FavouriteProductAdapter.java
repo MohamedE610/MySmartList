@@ -20,6 +20,7 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
 import com.example.mysmartlist.Utils.Networking.DeleteFavouriteProductRequest;
 import com.squareup.picasso.Picasso;
@@ -101,18 +102,20 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         else
             holder.imgFavourite.setImageResource(R.drawable.heart);
 
+        MySharedPreferences.setUpMySharedPreferences(context);
+        final int id=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
         holder.imgFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!holder.fav){
                     holder.imgFavourite.setImageResource(R.drawable.heart_red);
-                    addfavouriteProductRequest=new AddFavouriteProductRequest(SignupActivity.client.data.id,
+                    addfavouriteProductRequest=new AddFavouriteProductRequest(id,
                             products.data.get(position).id);
                     addfavouriteProductRequest.setCallbacks(addFavCallbacks);
                     addfavouriteProductRequest.start();
                 }else {
                     holder.imgFavourite.setImageResource(R.drawable.heart);
-                    deleteFavouriteProductRequest=new DeleteFavouriteProductRequest(SignupActivity.client.data.id,
+                    deleteFavouriteProductRequest=new DeleteFavouriteProductRequest(id,
                             products.data.get(position).id);
                     deleteFavouriteProductRequest.setCallbacks(deleteFavCallbacks);
                     deleteFavouriteProductRequest.start();

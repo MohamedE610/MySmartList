@@ -20,6 +20,7 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.FetchDataFromServer.FetchCategoriesData;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.AddPinProductRequest;
 import com.example.mysmartlist.Utils.Networking.DeletePinProductRequest;
 import com.squareup.picasso.Picasso;
@@ -109,18 +110,21 @@ public class PinProductAdapter extends RecyclerView.Adapter<PinProductAdapter.My
             holder.imgPin.setImageResource(R.drawable.pin_red);
         else
             holder.imgPin.setImageResource(R.drawable.pin);
+
+        MySharedPreferences.setUpMySharedPreferences(context);
+        final int id=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
         holder.imgPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!holder.pin){
                     holder.imgPin.setImageResource(R.drawable.pin_red);
-                    addPinProductRequest =new AddPinProductRequest(SignupActivity.client.data.id,
+                    addPinProductRequest =new AddPinProductRequest(id,
                             products.data.get(position).id);
                     addPinProductRequest.setCallbacks(addPinCallbacks);
                     addPinProductRequest.start();
                 }else{
                     holder.imgPin.setImageResource(R.drawable.pin);
-                    deletePinProductRequest=new DeletePinProductRequest(SignupActivity.client.data.id,
+                    deletePinProductRequest=new DeletePinProductRequest(id,
                             products.data.get(position).id);
                     deletePinProductRequest.setCallbacks(deletePinCallbacks);
                     deletePinProductRequest.start();

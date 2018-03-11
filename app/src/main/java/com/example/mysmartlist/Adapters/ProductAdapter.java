@@ -151,18 +151,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         else
             holder.imgFavourit.setImageResource(R.drawable.heart);
 
+        MySharedPreferences.setUpMySharedPreferences(context);
+        final int id=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
         holder.imgFavourit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(!holder.fav){
                     holder.imgFavourit.setImageResource(R.drawable.heart_red);
-                    addfavouriteProductRequest=new AddFavouriteProductRequest(SignupActivity.client.data.id,
+                    addfavouriteProductRequest=new AddFavouriteProductRequest(id,
                             products.get(position).data.id);
                     addfavouriteProductRequest.setCallbacks(addFavCallbacks);
                     addfavouriteProductRequest.start();
                 }else {
                     holder.imgFavourit.setImageResource(R.drawable.heart);
-                    deleteFavouriteProductRequest=new DeleteFavouriteProductRequest(SignupActivity.client.data.id,
+                    deleteFavouriteProductRequest=new DeleteFavouriteProductRequest(id,
                             products.get(position).data.id);
                     deleteFavouriteProductRequest.setCallbacks(deleteFavCallbacks);
                     deleteFavouriteProductRequest.start();
@@ -182,13 +185,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             public void onClick(View view) {
                 if(!holder.pin){
                     holder.imgPin.setImageResource(R.drawable.pin_red);
-                    addPinProductRequest =new AddPinProductRequest(SignupActivity.client.data.id,
+                    addPinProductRequest =new AddPinProductRequest(id,
                             products.get(position).data.id);
                     addPinProductRequest.setCallbacks(addPinCallbacks);
                     addPinProductRequest.start();
                 }else{
                     holder.imgPin.setImageResource(R.drawable.pin);
-                    deletePinProductRequest=new DeletePinProductRequest(SignupActivity.client.data.id,
+                    deletePinProductRequest=new DeletePinProductRequest(id,
                             products.get(position).data.id);
                     deletePinProductRequest.setCallbacks(deletePinCallbacks);
                     deletePinProductRequest.start();
