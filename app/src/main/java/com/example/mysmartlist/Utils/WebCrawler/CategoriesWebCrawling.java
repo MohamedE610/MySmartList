@@ -6,8 +6,12 @@ import android.widget.Toast;
 
 import com.example.mysmartlist.Models.Categories.Categories;
 import com.example.mysmartlist.Models.Categories.CategoryData;
+import com.example.mysmartlist.Models.CategoriesRespone.CategoriesResponse;
+import com.example.mysmartlist.Models.List.Product;
 import com.example.mysmartlist.Utils.Callbacks;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.AddMultipleCategoriesRequest;
+import com.google.gson.internal.LinkedTreeMap;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +20,9 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by abdallah on 3/11/2018.
@@ -31,7 +38,8 @@ public class CategoriesWebCrawling extends AsyncTask<Void, Void, String> {
     Context context;
     private int count;
 
-    public CategoriesWebCrawling() {
+    public CategoriesWebCrawling(Context context) {
+        this.context=context;
     }
 
     @Override
@@ -54,12 +62,12 @@ public class CategoriesWebCrawling extends AsyncTask<Void, Void, String> {
     public void jsoupMethod() {
         final String urlToLoad = "https://danube.sa/departments";
         Document document = null;
-        HashMap<String,ArrayList<HashMap<String,String>>> categories=new HashMap<>();
-        ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
+        final HashMap<String,ArrayList<HashMap<String,String>>> categories=new HashMap<>();
+        final ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
         try {
             document = Jsoup.connect(urlToLoad).get();
             Elements elements = document.getElementsByClass(categoryClass);
-            for (int i = 0; i < elements.size(); i++) {
+            for (int i = 3; i < elements.size(); i++) {
                 Elements imgElements= elements.get(i).select("div."+categoryImageClass);
                 Elements nameElements= elements.get(i).select("div."+categoryNameClass);
                 Elements linkElements= elements.get(i).select("a."+categoryLinkClass);
@@ -83,12 +91,21 @@ public class CategoriesWebCrawling extends AsyncTask<Void, Void, String> {
             multipleCategoriesRequest.setCallbacks(new Callbacks() {
                 @Override
                 public void OnSuccess(Object obj) {
+                            CategoriesResponse categoriesResponse=(CategoriesResponse)obj;
+                            MySharedPreferences.setUpMySharedPreferences(context);
+                            MySharedPreferences.setUserSetting("wc_cat","1");
+
+                    for (int i = 0; i <hashMaps.size() ; i++) {
+                        ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(context,categoriesResponse.data.get(0).id+"",hashMaps.get(0).get("link"));
+                        productsWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
 
                 }
 
                 @Override
                 public void OnFailure(Object obj) {
-
+                    MySharedPreferences.setUpMySharedPreferences(context);
+                    MySharedPreferences.setUserSetting("wc_cat","-1");
                 }
             });
 
@@ -102,3 +119,5 @@ public class CategoriesWebCrawling extends AsyncTask<Void, Void, String> {
     }
 
 }
+
+

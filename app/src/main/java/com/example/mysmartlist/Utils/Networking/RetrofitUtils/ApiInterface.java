@@ -4,6 +4,7 @@ package com.example.mysmartlist.Utils.Networking.RetrofitUtils;
 
 
 import com.example.mysmartlist.Models.Categories.Categories;
+import com.example.mysmartlist.Models.CategoriesRespone.CategoriesResponse;
 import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.List.List;
@@ -234,7 +235,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @POST("categories/multiple")
-    Call<HashMap> AddMultipleCategories(@Body HashMap categories);
+    Call<CategoriesResponse> AddMultipleCategories(@Body HashMap categories);
 
 
     @Headers({

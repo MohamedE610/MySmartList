@@ -21,12 +21,11 @@ import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseCheckAuth;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignOut;
 import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.WebCrawler.CategoriesWebCrawling;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     TabLayout tabLayout;
-    //private FirebaseAuth.AuthStateListener authListener;
-    //private FirebaseAuth auth;
     FirebaseSignOut firebaseSignOut;
     FirebaseCheckAuth firebaseCheckAuth;
 
@@ -39,16 +38,25 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //jsouptest();
+
+        MySharedPreferences.setUpMySharedPreferences(this);
+
+        String wc_cat=MySharedPreferences.getUserSetting("wc_cat");
+
+        if(wc_cat.equals("1")) {
+
+        }
+       /* CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
+        categoriesWebCrawling.execute();*/
 
 
         fragmentManager=getSupportFragmentManager();
-        MySharedPreferences.setUpMySharedPreferences(this);
         int uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
 
         /************************  SignupActivity.getClient(uid);  **************************/
         //SignupActivity.getClient(uid);
         //final TextView textView=(TextView) findViewById(R.id.asd);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,18 +92,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
         firebaseCheckAuth.checkFirebaseAuth();
 
-        /*authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
-                    MainActivity.this.finish();
-                }
-            }
-        };*/
     }
 
 

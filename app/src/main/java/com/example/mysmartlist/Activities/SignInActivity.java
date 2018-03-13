@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.WebCrawler.CategoriesWebCrawling;
 import com.example.mysmartlist.Utils.WebCrawler.ProductsWebCrawling;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
@@ -36,11 +37,19 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*CategoriesWebCrawling categoriesWebCrawling =new CategoriesWebCrawling();
-        categoriesWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
-        /*ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);
-        productsWebCrawling.execute();*/
 
+
+        MySharedPreferences.setUpMySharedPreferences(this);
+
+        String wc_cat=MySharedPreferences.getUserSetting("wc_cat");
+
+        /*if(!wc_cat.equals("1")) {
+            CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
+            categoriesWebCrawling.execute();
+        }*/
+
+        CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
+        categoriesWebCrawling.execute();
 
 
         //Get Firebase auth instance

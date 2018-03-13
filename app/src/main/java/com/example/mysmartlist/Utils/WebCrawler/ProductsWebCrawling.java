@@ -8,12 +8,17 @@ import android.webkit.WebViewClient;
 
 import com.example.mysmartlist.Models.Products.ProductData;
 import com.example.mysmartlist.Models.Products.Products;
+import com.example.mysmartlist.Utils.Callbacks;
+import com.example.mysmartlist.Utils.Constants;
+import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
+import com.example.mysmartlist.Utils.Networking.AddMultipleProductsRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by abdallah on 3/11/2018.
@@ -28,8 +33,13 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
     final String productPriceClass = "product-price__current-price";
     Context context;
 
-    public ProductsWebCrawling(Context context) {
+    String category_id;
+    String category_link;
+
+    public ProductsWebCrawling(Context context,String category_id, String category_link) {
         this.context = context;
+        this.category_id=category_id;
+        this.category_link=category_link;
     }
 
     @Override
@@ -50,8 +60,7 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
 
 
     public void jsoupMethod() {
-
-        final String urlToLoad = "https://danube.sa/departments/health-and-beauty?p=0";
+        final String urlToLoad = Constants.danubeBasicUrl+category_link;
         final WebView mWebView = new WebView(context);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(new HtmlHandler(), "HtmlHandler");
@@ -72,11 +81,12 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
         public void handleHtml(String html) {
             // scrape the content here
             Document document = null;
-            Products  products = new Products();
-            products.data = new ArrayList<>();
             try {
                 document = Jsoup.parse(html);
                 Elements elements = document.getElementsByClass(productClass);
+                HashMap<String,ArrayList<HashMap<String,String>>> products=new HashMap<>();
+                ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
+
                 int count;
                 for (int i = 0; i < elements.size(); i++) {
                     Elements imgElements = elements.get(i).select("div." + productImageClass);
@@ -92,20 +102,34 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
                     price=price.substring(price.indexOf(" "),price.length()-1);
                     price= convertArabicNumToEnglishNum(price);
                     price=price.replace("٫",".");
-                    ProductData productData = new ProductData();
-                    productData.name = name;
-                    productData.image = imgUrl;
-                    productData.price=Float.valueOf(price);
-                    products.data.add(productData);
-                    count = elements.size();
-                }
+                    HashMap<String,String> productData = new HashMap<>();
+                    productData.put("name",name);
+                    productData.put("image",imgUrl);
+                    productData.put("price",price);
+                    productData.put("category_id",category_id);
+                    hashMaps.add(productData);
 
-                count = elements.size();
+                }
+                products.put("data",hashMaps);
+
+                AddMultipleProductsRequest addMultipleProductsRequest=new AddMultipleProductsRequest(products);
+                addMultipleProductsRequest.setCallbacks(new Callbacks() {
+                    @Override
+                    public void OnSuccess(Object obj) {
+                        String s=obj.toString();
+                    }
+
+                    @Override
+                    public void OnFailure(Object obj) {
+                        String s=obj.toString();
+                    }
+                });
+
+                addMultipleProductsRequest.start();
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 
