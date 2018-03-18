@@ -95,15 +95,16 @@ public class CategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                             MySharedPreferences.setUpMySharedPreferences(context);
                             MySharedPreferences.setUserSetting("wc_cat","1");
 
-                    for (int i = 0; i <hashMaps.size() ; i++) {
-                        ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(context,categoriesResponse.data.get(0).id+"",hashMaps.get(0).get("link"));
-                        productsWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }
+                    ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(context,categoriesResponse.data.get(0).id+"",hashMaps.get(0).get("link"));
+                    productsWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
+                    //for (int i = 0; i <hashMaps.size() ; i++) {
+                    //}
                 }
 
                 @Override
                 public void OnFailure(Object obj) {
+
                     MySharedPreferences.setUpMySharedPreferences(context);
                     MySharedPreferences.setUserSetting("wc_cat","-1");
                 }

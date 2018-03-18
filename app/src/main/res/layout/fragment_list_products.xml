@@ -1,16 +1,94 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.mysmartlist.Fragments.ListProductsFragment">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linear_edit">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/img_edit"
+            android:src="@drawable/edit_img"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تعديل"
+            android:textSize="25sp"/>
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/recycler_cat"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
-
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp">
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/btn_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="3dp"
+        android:background="@color/orange_90"
+        android:text="اضافة المنتجات لتقرير الميزانيه"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="80dp"
+        />
+
+
+</LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/bottom_tablayout"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        app:tabTextColor="@android:color/black"
+        app:tabBackground="@android:color/darker_gray"
+        app:tabIndicatorColor="@color/blackColor"
+        app:tabSelectedTextColor="@color/blackColor"
+        android:layout_gravity="bottom"
+        >
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/remove_tab"
+            android:text="حذف"
+            />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/share_tab"
+            android:text="مشاركة"
+            />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel_tab"
+            android:text="الغاء"
+            />
+
+    </android.support.design.widget.TabLayout>
+
 </FrameLayout>
+
+</ScrollView>

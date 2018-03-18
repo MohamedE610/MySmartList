@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +17,11 @@ import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.List.List;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Constants;
+import com.example.mysmartlist.Utils.Networking.decrementProductCountInListRequest;
+import com.example.mysmartlist.Utils.Networking.incrementProductCountInListRequest;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * Created by abdallah on 2/21/2018.
@@ -27,14 +33,23 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
-
+    ArrayList<Integer> checkedList=new ArrayList<>();
+    ISendCheckedList iSendCheckedList;
+    boolean isEditable;
+    int list_id;
 
     public ListProductsAdapter() {
     }
 
-    public ListProductsAdapter(List list, Context context) {
+    public void setISendCheckedListLisnter(ISendCheckedList iSendCheckedList){
+        this.iSendCheckedList=iSendCheckedList;
+    }
+
+    public ListProductsAdapter(List list, Context context,boolean isEditable,int list_id) {
         this.list = list;
         this.context = context;
+        this.isEditable=isEditable;
+        this.list_id=list_id;
     }
 
 
@@ -51,6 +66,12 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
+        if(isEditable){
+            holder.checkBox.setVisibility(View.VISIBLE);
+        }else {
+            holder.checkBox.setVisibility(View.GONE);
+        }
+
         String detailsStr=list.data.products.get(position).name;
         holder.textViewName.setText(detailsStr);
         holder.textViewPrice.setText(list.data.products.get(position).price+"");
@@ -58,8 +79,37 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
 
 
         String urlStr = Constants.BasicUrlImg+list.data.products.get(position).image;
-
         Picasso.with(context).load(urlStr).into(holder.img);
+
+
+        holder.textViewPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //incrementProductCountInListRequest incrementProductCount=new incrementProductCountInListRequest()
+            }
+        });
+
+
+        holder.textViewMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //decrementProductCountInListRequest decrementProductCountInList=new decrementProductCountInListRequest();
+            }
+        });
+
+       holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+               if(b)
+                   checkedList.add(position);
+               else
+                   checkedList.remove(position);
+
+               iSendCheckedList.send(checkedList);
+
+           }
+       });
 
         setAnimation(holder.cardView, position);
     }
@@ -87,6 +137,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         TextView textViewPlus;
         TextView textViewMinus;
         CardView cardView;
+        CheckBox checkBox;
 
 
         public MyViewHolder(View itemView) {
@@ -99,7 +150,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
             textViewMinus = (TextView) itemView.findViewById(R.id.text_m);
             textViewCount = (TextView) itemView.findViewById(R.id.text_count);
             cardView = (CardView) itemView.findViewById(R.id.card);
-
+            checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
         }
 
         @Override
@@ -132,8 +183,9 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         holder.clearAnimation();
     }
 
-    /*
-                            */
+   public interface ISendCheckedList{
+        void send(ArrayList<Integer> list);
+    }
 
 }
 

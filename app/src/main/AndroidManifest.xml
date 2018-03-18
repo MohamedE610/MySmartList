@@ -56,7 +56,12 @@
         <activity
             android:name=".Activities.ListProductsActivity"
             android:label="@string/title_activity_list_products"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.ContactUsActivity" />
+        <activity android:name=".Activities.QuestionsActivity" />
+        <activity android:name=".Activities.ProfileActivity" />
+        <activity android:name=".Activities.OldListsActivity" />
+        <activity android:name=".Activities.ReportsActivity"></activity>
     </application>
 
 </manifest>

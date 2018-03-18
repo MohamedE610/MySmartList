@@ -16,6 +16,7 @@ import com.example.mysmartlist.Fragments.CategoriesFragment;
 import com.example.mysmartlist.Fragments.FavouriteFragment;
 import com.example.mysmartlist.Fragments.MainActivityFragment;
 import com.example.mysmartlist.Fragments.SearchFragment;
+import com.example.mysmartlist.Fragments.SettingsFragment;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseCheckAuth;
@@ -26,7 +27,6 @@ import com.example.mysmartlist.Utils.WebCrawler.CategoriesWebCrawling;
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     TabLayout tabLayout;
-    FirebaseSignOut firebaseSignOut;
     FirebaseCheckAuth firebaseCheckAuth;
 
     static FragmentManager fragmentManager;
@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         //get firebase auth instance
         //auth = FirebaseAuth.getInstance();
-        firebaseSignOut=new FirebaseSignOut();
 
         firebaseCheckAuth=new FirebaseCheckAuth();
         firebaseCheckAuth.setCallback(new Callbacks() {
@@ -98,9 +97,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     //sign out method
     public void signOut() {
         //auth.signOut();
-        firebaseSignOut.signOut();
+        /*firebaseSignOut.signOut();
         startActivity(new Intent(this, SignInActivity.class));
-        this.finish();
+        this.finish();*/
     }
 
     @Override
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 break;
             case 4:
                 tab.setIcon(R.drawable.settings_selected);
-                addFragment();
+                addSettingsFragment();
                 break;
             default:
                 break;
@@ -178,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
-    public static void addFragment() {
-        ListsFragment fragment=new ListsFragment();
+    public void addSettingsFragment() {
+        SettingsFragment fragment=new SettingsFragment();
         FragmentManager fragmentManager1=fragmentManager;
         fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }

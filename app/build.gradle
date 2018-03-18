@@ -46,7 +46,7 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.8.0'
     compile 'org.jsoup:jsoup:1.11.2'
 
-   /* compile ('io.selendroid:selendroid-standalone:0.16.0') {
+    /* compile ('io.selendroid:selendroid-standalone:0.16.0') {
         exclude group: 'io.selendroid', module: 'selendroid-server'
         exclude group: 'io.selendroid', module: 'android-driver-app'
     }
@@ -58,6 +58,11 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5'*/
     implementation "com.android.support:multidex:1.0.3"
 }
+
+
+
+
+
 
 
 

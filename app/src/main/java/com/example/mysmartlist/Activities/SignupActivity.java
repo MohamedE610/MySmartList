@@ -103,13 +103,13 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     String name,phone,email,gender,familyNum,salaryRang,reportType;
 
     Spinner spinnerFamilyMember;
-    Spinner spinnerSalaryRang;
+    //Spinner spinnerSalaryRang;
     String familyMemberStr;
     String salaryRangStr;
 
     RadioButton maleRadioBtn,femaleRadioBtn,weeklyRadioBtn,monthlyRadioBtn;
 
-    private EditText inputEmail, inputPassword,inuptUserName,inputPhoneNum,inputPasswordConfirm;
+    private EditText inputEmail, inputPassword,inuptUserName,inputPhoneNum,inputPasswordConfirm,inputSalary;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     //private FirebaseAuth auth;
@@ -134,6 +134,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         inputPasswordConfirm = (EditText) findViewById(R.id.password_confirm);
+        inputSalary = (EditText) findViewById(R.id.salary_text);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -148,9 +149,9 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
         monthlyRadioBtn.setOnCheckedChangeListener(this);
 
 
-        spinnerSalaryRang=(Spinner)findViewById(R.id.spinner_salary_rang);
+        //spinnerSalaryRang=(Spinner)findViewById(R.id.spinner_salary_rang);
         spinnerFamilyMember=(Spinner)findViewById(R.id.spinner_family_member);
-        createSalaryRangSpinner();
+        //createSalaryRangSpinner();
         createFamilyMemberSpinner();
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +177,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                 name = inuptUserName.getText().toString().trim();
                 phone = inputPhoneNum.getText().toString().trim();
                 email = inputEmail.getText().toString().trim();
+                salaryRangStr=inputSalary.getText().toString().trim();
 
                 String password = inputPassword.getText().toString().trim();
 
@@ -210,7 +212,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                             clientDetails.put("firebase_id",task.getResult().getUser().getUid());
                             clientDetails.put("budget_type",reportType);
                             clientDetails.put("family_count",familyNum);
-                            clientDetails.put("salary",salaryRang);
+                            clientDetails.put("salary",salaryRangStr);
                         }catch (Exception e){}
 
                         createClient=new createClientAccountRequest(clientDetails);
@@ -277,6 +279,14 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                 familyMemberStr=spinnerFamilyMemberData[position];
                 if(position>0)
                     familyNum=familyMemberValues[position-1];
+
+                if(salaryRangStr!=null&&salaryRangStr.equals("")){
+                    if(familyNum.equals(familyMemberValues[1])){
+                        salaryRangStr="5000";
+                    }else {
+                        salaryRangStr="10000";
+                    }
+                }
             }
 
             @Override
@@ -286,7 +296,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
         });
     }
 
-    String[] spinnerSalaryRangData= {"","من 2000 الى 5000","من 6000 الى 15000","من 16000 الى 25000"};
+    /*String[] spinnerSalaryRangData= {"","من 2000 الى 5000","من 6000 الى 15000","من 16000 الى 25000"};
     String[] salaryRangValues={"2000:5000","6000:15000","16000:25000"};
     private void createSalaryRangSpinner(){
         ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this,R.layout.spinner_item,spinnerSalaryRangData);
@@ -304,7 +314,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
             }
         });
-    }
+    }*/
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

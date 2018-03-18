@@ -6,11 +6,8 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.mysmartlist.Models.Products.ProductData;
-import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
-import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
 import com.example.mysmartlist.Utils.Networking.AddMultipleProductsRequest;
 
 import org.jsoup.Jsoup;
@@ -33,13 +30,18 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
     final String productPriceClass = "product-price__current-price";
     Context context;
 
-    String category_id;
+    String category_id="2";
     String category_link;
+
 
     public ProductsWebCrawling(Context context,String category_id, String category_link) {
         this.context = context;
         this.category_id=category_id;
         this.category_link=category_link;
+    }
+
+    public ProductsWebCrawling(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -60,19 +62,35 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
 
 
     public void jsoupMethod() {
-        final String urlToLoad = Constants.danubeBasicUrl+category_link;
+        //final String urlToLoad = Constants.danubeBasicUrl+category_link;
+        final String urlToLoad ="https://danube.sa/departments/fresh-fruits-and-vegetables";
         final WebView mWebView = new WebView(context);
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.addJavascriptInterface(new HtmlHandler(), "HtmlHandler");
+        mWebView.getSettings().setDomStorageEnabled(true);
+        //mWebView.addJavascriptInterface(new HtmlHandler(), "HtmlHandler");
+        mWebView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mWebView.loadUrl("javascript:HtmlHandler.handleHtml(document.documentElement.outerHTML);");
+                //mWebView.loadUrl("javascript:HtmlHandler.handleHtml(document.documentElement.outerHTML);");
+                mWebView.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
             }
 
         });
         mWebView.loadUrl(urlToLoad);
+    }
+
+
+    class MyJavaScriptInterface
+    {
+        @JavascriptInterface
+        @SuppressWarnings("unused")
+        public void processHTML(String html)
+        {
+            // process the html as needed by the app
+            productsCrawling(html);
+        }
     }
 
     class HtmlHandler {
@@ -80,56 +98,61 @@ public class ProductsWebCrawling extends AsyncTask<Void, Void, String> {
         @SuppressWarnings("unused")
         public void handleHtml(String html) {
             // scrape the content here
-            Document document = null;
-            try {
-                document = Jsoup.parse(html);
-                Elements elements = document.getElementsByClass(productClass);
-                HashMap<String,ArrayList<HashMap<String,String>>> products=new HashMap<>();
-                ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
+            productsCrawling(html);
+        }
+    }
 
-                int count;
-                for (int i = 0; i < elements.size(); i++) {
-                    Elements imgElements = elements.get(i).select("div." + productImageClass);
-                    Elements nameElements = elements.get(i).select("div." + productNameClass);
-                    Elements priceElements=elements.get(i).select("div."+productPriceClass);
-                    String imgUrl = imgElements.get(0).attr("style");
-                    int index, lastIndex;
-                    index = imgUrl.indexOf('(');
-                    lastIndex = imgUrl.indexOf(')');
-                    imgUrl = imgUrl.substring(++index, lastIndex);
-                    String name = nameElements.get(0).text();
-                    String price = priceElements.get(0).text();
-                    price=price.substring(price.indexOf(" "),price.length()-1);
-                    price= convertArabicNumToEnglishNum(price);
-                    price=price.replace("٫",".");
-                    HashMap<String,String> productData = new HashMap<>();
-                    productData.put("name",name);
-                    productData.put("image",imgUrl);
-                    productData.put("price",price);
-                    productData.put("category_id",category_id);
-                    hashMaps.add(productData);
+    void productsCrawling(String html){
+        Document document = null;
+        try {
+            document = Jsoup.parse(html);
+            Elements elements = document.getElementsByClass(productClass);
+            HashMap<String,ArrayList<HashMap<String,String>>> products=new HashMap<>();
+            ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
 
-                }
-                products.put("data",hashMaps);
+            int count;
+            for (int i = 0; i < elements.size(); i++) {
+                Elements imgElements = elements.get(i).select("div." + productImageClass);
+                Elements nameElements = elements.get(i).select("div." + productNameClass);
+                Elements priceElements=elements.get(i).select("div."+productPriceClass);
+                String imgUrl = imgElements.get(0).attr("style");
+                int index, lastIndex;
+                index = imgUrl.indexOf('(');
+                lastIndex = imgUrl.indexOf(')');
+                imgUrl = imgUrl.substring(++index, lastIndex);
+                String name = nameElements.get(0).text();
+                String price = priceElements.get(0).text();
+                price=price.substring(0,price.indexOf(" "));
+                price= convertArabicNumToEnglishNum(price);
+                price=price.replace("٫",".");
+                HashMap<String,String> productData = new HashMap<>();
+                productData.put("name",name);
+                productData.put("image",imgUrl);
+                productData.put("price",price);
 
-                AddMultipleProductsRequest addMultipleProductsRequest=new AddMultipleProductsRequest(products);
-                addMultipleProductsRequest.setCallbacks(new Callbacks() {
-                    @Override
-                    public void OnSuccess(Object obj) {
-                        String s=obj.toString();
-                    }
+                productData.put("category_id",category_id);
+                hashMaps.add(productData);
 
-                    @Override
-                    public void OnFailure(Object obj) {
-                        String s=obj.toString();
-                    }
-                });
-
-                addMultipleProductsRequest.start();
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+            products.put("data",hashMaps);
+
+            AddMultipleProductsRequest addMultipleProductsRequest=new AddMultipleProductsRequest(products);
+            addMultipleProductsRequest.setCallbacks(new Callbacks() {
+                @Override
+                public void OnSuccess(Object obj) {
+                    String s=obj.toString();
+                }
+
+                @Override
+                public void OnFailure(Object obj) {
+                    String s=obj.toString();
+                }
+            });
+
+            addMultipleProductsRequest.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

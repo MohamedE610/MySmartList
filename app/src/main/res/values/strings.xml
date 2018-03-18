@@ -2,6 +2,7 @@
     <string name="app_name">قائمتى الزكيه</string>
     <string name="action_settings">Settings</string>
 
+    <string name="questions_answers">what ??!!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -65,66 +66,10 @@
     <string name="createUserwithemailoncomplete">createUserWithEmail:onComplete:</string>
     <string name="authentication_failed">Authentication failed.</string>
     <string name="error">error</string>
-    <string name="img.youtube.com">https://img.youtube.com/vi/</string>
-    <string name="hqdefault">/hqdefault.jpg</string>
-    <string name="www.youtube.com_watch">https://www.youtube.com/watch?v=</string>
-    <string name="anime_saved">Anime Saved</string>
-    <string name="all_ages">All Ages</string>
-    <string name="manga_saved">Manga Saved</string>
-    <string name="manga">manga</string>
-    <string name="most_popular_anime_link"><![CDATA[https://kitsu.io/api/edge/anime?sort=popularityRank&page[limit]=20&page[offset]=0]]></string>
-    <string name="top_upcoming_anime_link"><![CDATA[https://kitsu.io/api/edge/anime?sort=popularityRank&filter[status]=upcoming&page[limit]=20&page[offset]=0]]></string>
-    <string name="top_airing_anime_link"><![CDATA[https://kitsu.io/api/edge/anime?sort=popularityRank,-averageRating&filter[status]=current&page[limit]=20&page[offset]=0]]></string>
-    <string name="highest_rated_anime_link"><![CDATA[https://kitsu.io/api/edge/anime?sort=-averageRating&page[limit]=20&page[offset]=0]]></string>
-    <string name="most_popular">Most Popular</string>
-    <string name="top_upcoming">Top Upcoming</string>
-    <string name="top_airing">Top Airing</string>
-    <string name="highest_rated">Highest Rated</string>
-    <string name="most_popular_manga_link"><![CDATA[https://kitsu.io/api/edge/manga?sort=popularityRank&page[limit]=20&page[offset]=0]]></string>
-    <string name="highest_rated_manga_link"><![CDATA[https://kitsu.io/api/edge/manga?sort=-averageRating&page[limit]=20&page[offset]=0]]></string>
-    <string name="top_upcoming_manga_link"><![CDATA[https://kitsu.io/api/edge/manga?sort=popularityRank&filter[status]=upcoming&page[limit]=20&page[offset]=0]]></string>
-    <string name="top_publishing_manga_link"><![CDATA[https://kitsu.io/api/edge/manga?sort=-userCount&filter[status]=current&page[limit]=20&page[offset]=0]]></string>
-    <string name="top_publishing">Top Publishing</string>
-    <string name="anime_rating">Anime Rating</string>
-    <string name="start_watch">Start Watch</string>
-    <string name="overview">Overview</string>
-    <string name="age_guide">Age Guide</string>
-    <string name="status">Status</string>
-    <string name="episodes">Episodes</string>
-    <string name="episodes_count_is">Episodes Count is</string>
-    <string name="episode_duration_is">Episode Duration is</string>
-    <string name="trailer">Trailer</string>
-    <string name="click_here">Click here</string>
-    <string name="tangled">Tangled</string>
-    <string name="anime_story">Anime Story</string>
-    <string name="rating">Rating</string>
-    <string name="asd">Asd</string>
-    <string name="manga_rating">Manga Rating</string>
-    <string name="start_reading">Start Reading</string>
-    <string name="chapters">Chapters</string>
-    <string name="chapters_count_is">Chapters Count is</string>
-    <string name="volume_count_is">volume Count is</string>
-    <string name="serialization">Serialization</string>
-    <string name="manga_type">Manga Type</string>
-    <string name="welcome_in_animesan">Welcome in AnimeSan</string>
-    <string name="anime_san">AnimeSan</string>
-    <string name="share_content_body">Here is the share content body</string>
-    <string name="subject_here">Subject Here</string>
-    <string name="share_via">Share via</string>
-    <string name="this_image_contain_a_cover_of_anime_or_manga">This image contain a cover of anime or manga</string>
-    <string name="this_image_contain_heart_to_save_or_remove_anime_data">this image contain heart to save or remove anime or manga data</string>
-    <string name="this_image_contain_a_a_checked_image_to_save_or_remove_anime_data">this image contain a a checked image to save or remove anime or manga data</string>
-    <string name="this_image_contain_poster_of_anime_or_manga">this image contain Poster of anime or manga</string>
-    <string name="anime_">Anime</string>
-    <string name="manga_">Manga</string>
-    <string name="anime_library">Anime Library</string>
-    <string name="manga_library">Manga Library</string>
-    <string name="communicate">Communicate</string>
-    <string name="sign_out_">Sign Out</string>
-    <string name="user_info">userInfo</string>
-    <string name="no_internet">No internet Connection</string>
-    <string name="text_plain">text/plain</string>
-    <string name="this_is_float_action_button_to_share_content_and_name_of_anime_or_manga">this is Float Action Button to share content and name of anime or manga</string>
+
+
+
+
     <string name="space">" "</string>
     <string name="test">test</string>
     <string name="test_">test@test.com</string>
