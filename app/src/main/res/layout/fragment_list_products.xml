@@ -39,7 +39,7 @@
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/btn_signup"
+        android:id="@+id/btn_add_reports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
@@ -66,12 +66,14 @@
         app:tabSelectedTextColor="@color/blackColor"
         android:layout_gravity="bottom"
         >
+
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/remove_tab"
-            android:text="حذف"
+            android:id="@+id/cancel_tab"
+            android:text="الغاء"
             />
+
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
@@ -80,11 +82,12 @@
             android:text="مشاركة"
             />
 
+
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cancel_tab"
-            android:text="الغاء"
+            android:id="@+id/remove_tab"
+            android:text="حذف"
             />
 
     </android.support.design.widget.TabLayout>

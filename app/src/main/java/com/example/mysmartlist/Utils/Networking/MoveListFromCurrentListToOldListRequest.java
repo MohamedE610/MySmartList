@@ -31,7 +31,7 @@ public class MoveListFromCurrentListToOldListRequest extends FetchData implement
 
     private int list_id;
 
-    public MoveListFromCurrentListToOldListRequest(int list_id , int product_id){
+    public MoveListFromCurrentListToOldListRequest(int list_id){
         this.list_id=list_id;
     }
 

@@ -50,8 +50,8 @@ public class SignInActivity extends AppCompatActivity {
 
         /*CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
         categoriesWebCrawling.execute();*/
-        ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);
-        productsWebCrawling.execute();
+        /*ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);
+        productsWebCrawling.execute();*/
 
 
         //Get Firebase auth instance

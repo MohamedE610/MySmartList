@@ -25,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -295,12 +296,15 @@ public interface ApiInterface {
     Call<HashMap> decrementProductCountInList(@Path("list_id") String list_id , @Path("product_id") String product_id , @Body HashMap jsonObject);
 
 
+
+
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json",
             "Authorization: "+ Constants.accessToken
     })
-    @DELETE("lists/{list_id}/products")
+    //@DELETE("lists/{list_id}/products")
+    @HTTP(method = "DELETE", path = "lists/{list_id}/products", hasBody = true)
     Call<HashMap> deleteMultipulProduct(@Path("list_id") int list_id, @Body HashMap jsonObject);
 
 

@@ -12,16 +12,19 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.List.List;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.Networking.decrementProductCountInListRequest;
 import com.example.mysmartlist.Utils.Networking.incrementProductCountInListRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by abdallah on 2/21/2018.
@@ -85,7 +88,29 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         holder.textViewPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //incrementProductCountInListRequest incrementProductCount=new incrementProductCountInListRequest()
+                HashMap<String,String>  hashMap=new HashMap<>();
+                hashMap.put("count","1");
+                incrementProductCountInListRequest incrementProductCount=new incrementProductCountInListRequest(list_id,list.data.products.get(position).id,hashMap);
+                incrementProductCount.setCallbacks(new Callbacks() {
+                    @Override
+                    public void OnSuccess(Object obj) {
+                        Toast.makeText(context, "العملية تمت بنجاح", Toast.LENGTH_SHORT).show();
+                        int count=1;
+
+                        try {
+                             count = Integer.valueOf(holder.textViewCount.getText().toString());
+                        }catch (Exception e){count=1;}
+
+                        holder.textViewCount.setText((++count)+"");
+                    }
+
+                    @Override
+                    public void OnFailure(Object obj) {
+
+                    }
+                });
+
+                incrementProductCount.start();
             }
         });
 
@@ -93,7 +118,31 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         holder.textViewMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //decrementProductCountInListRequest decrementProductCountInList=new decrementProductCountInListRequest();
+                HashMap<String,String>  hashMap=new HashMap<>();
+                hashMap.put("count","1");
+                decrementProductCountInListRequest decrementProductCountInList=new decrementProductCountInListRequest(list_id,list.data.products.get(position).id,hashMap);
+
+                decrementProductCountInList.setCallbacks(new Callbacks() {
+                    @Override
+                    public void OnSuccess(Object obj) {
+                        Toast.makeText(context, "العملية تمت بنجاح", Toast.LENGTH_SHORT).show();
+
+                        int count=1;
+
+                        try {
+                            count = Integer.valueOf(holder.textViewCount.getText().toString());
+                        }catch (Exception e){count=1;}
+
+                        holder.textViewCount.setText((--count)+"");
+                    }
+
+                    @Override
+                    public void OnFailure(Object obj) {
+
+                    }
+                });
+
+                decrementProductCountInList.start();
             }
         });
 
@@ -102,9 +151,9 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                if(b)
-                   checkedList.add(position);
+                   checkedList.add(list.data.products.get(position).id);
                else
-                   checkedList.remove(position);
+                   checkedList.remove(list.data.products.get(position).id);
 
                iSendCheckedList.send(checkedList);
 
