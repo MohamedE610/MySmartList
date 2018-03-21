@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.mysmartlist.Activities.ContactUsActivity;
+import com.example.mysmartlist.Activities.OldListsActivity;
+import com.example.mysmartlist.Activities.ProfileActivity;
 import com.example.mysmartlist.Activities.QuestionsActivity;
 import com.example.mysmartlist.Activities.SignInActivity;
 import com.example.mysmartlist.R;
@@ -102,11 +104,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void profileMethod() {
+        startActivity(new Intent(getActivity(), ProfileActivity.class));
     }
 
     private void reportsMethod() {
     }
 
     private void oldListsMethod() {
+        startActivity(new Intent(getActivity(), OldListsActivity.class));
     }
 }
