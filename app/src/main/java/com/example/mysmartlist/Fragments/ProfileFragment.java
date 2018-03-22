@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment implements Callbacks, View.OnClick
         email.setText(client.data.email);
         gender.setText(client.data.gender);
         phoneNum.setText(client.data.phone);
-        familyNum.setText(client.data.familyMembers.toString());
+        familyNum.setText(client.data.familyMembers);
         salary.setText("10000");
         budget.setText("700");
 

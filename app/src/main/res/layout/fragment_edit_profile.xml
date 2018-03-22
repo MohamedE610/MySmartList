@@ -188,7 +188,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <!--android:imeActionId="@+id/login"-->
                 <EditText
@@ -207,7 +208,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <!--android:imeActionId="@+id/login"-->
                 <EditText
@@ -242,20 +244,19 @@
         android:layout_alignParentBottom="true"
         >
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cancel_tab"
-            android:text="الغاء"
-            />
-
-
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/remove_tab"
             android:text="حفظ"
+            />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel_tab"
+            android:text="الغاء"
             />
 
     </android.support.design.widget.TabLayout>
@@ -266,4 +267,5 @@
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="20dp"
         android:visibility="gone" />
+
 </RelativeLayout>

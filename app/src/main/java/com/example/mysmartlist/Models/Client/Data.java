@@ -29,7 +29,7 @@ public class Data implements Serializable
     public String firebaseId;
     @SerializedName("family_members")
     @Expose
-    public Integer familyMembers;
+    public String familyMembers;
     @SerializedName("budget")
     @Expose
     public String budget;
