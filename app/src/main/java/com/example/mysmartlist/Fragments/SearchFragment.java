@@ -1,7 +1,6 @@
 package com.example.mysmartlist.Fragments;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,16 +18,12 @@ import android.widget.Spinner;
 
 import com.example.mysmartlist.Activities.ScannerActivity;
 import com.example.mysmartlist.Adapters.ProductAdapter;
-import com.example.mysmartlist.Models.List.Product;
-import com.example.mysmartlist.Models.Product_1;
-import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.JsonParsingUtils;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
-import com.example.mysmartlist.Utils.Networking.FetchProductSearchData;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.FetchProductSearchData;
 
 import java.util.ArrayList;
 import java.util.HashMap;

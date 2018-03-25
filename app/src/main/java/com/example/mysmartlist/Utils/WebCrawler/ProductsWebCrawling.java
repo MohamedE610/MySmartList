@@ -7,8 +7,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.Constants;
-import com.example.mysmartlist.Utils.Networking.AddMultipleProductsRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.AddMultipleProductsRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

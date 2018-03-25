@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mysmartlist.Activities.ListsActivity;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
-import com.example.mysmartlist.Utils.Networking.addListRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.addListRequest;
 
 import java.util.HashMap;
 

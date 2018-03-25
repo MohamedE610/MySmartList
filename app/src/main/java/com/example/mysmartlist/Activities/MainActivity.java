@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     FirebaseCheckAuth firebaseCheckAuth;
 
     static FragmentManager fragmentManager;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         //SignupActivity.getClient(uid);
         //final TextView textView=(TextView) findViewById(R.id.asd);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,22 +148,27 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
             case 0:
                 tab.setIcon(R.drawable.home__selected);
+                fab.setVisibility(View.VISIBLE);
                 addHomeFragment();
                 break;
             case 1:
                 tab.setIcon(R.drawable.view_grid_selected);
                 addCategoriesFragment();
+                fab.setVisibility(View.GONE);
                 break;
             case 2:
                 tab.setIcon(R.drawable.magnify_plus_outline_selected);
+                fab.setVisibility(View.GONE);
                 addSearchFragment();
                 break;
             case 3:
                 tab.setIcon(R.drawable.heart_outline_selected);
+                fab.setVisibility(View.GONE);
                 addFavouriteFragment();
                 break;
             case 4:
                 tab.setIcon(R.drawable.settings_selected);
+                fab.setVisibility(View.GONE);
                 addSettingsFragment();
                 break;
             default:

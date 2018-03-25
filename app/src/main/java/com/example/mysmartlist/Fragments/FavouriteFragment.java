@@ -1,6 +1,5 @@
 package com.example.mysmartlist.Fragments;
 
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,16 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.FavouriteProductAdapter;
-import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.JsonParsingUtils;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
-import com.example.mysmartlist.Utils.Networking.getFavouriteProductsRequest;
-
-import java.util.ArrayList;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getFavouriteProductsRequest;
 
 /**
  * A placeholder fragment containing a simple view.

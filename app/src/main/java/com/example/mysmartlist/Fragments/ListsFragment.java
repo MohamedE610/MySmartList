@@ -16,7 +16,7 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
-import com.example.mysmartlist.Utils.Networking.getCurrentClientListsRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getCurrentClientListsRequest;
 
 
 public class ListsFragment extends Fragment implements Callbacks, ListsAdapter.RecyclerViewClickListener {
@@ -32,12 +32,9 @@ public class ListsFragment extends Fragment implements Callbacks, ListsAdapter.R
 
 
     View view;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_categories, container, false);
-        recyclerView=(RecyclerView)view.findViewById(R.id.recycler_cat);
+    public void onResume() {
 
         if(NetworkState.ConnectionAvailable(getActivity())) {
             MySharedPreferences.setUpMySharedPreferences(getActivity());
@@ -46,6 +43,17 @@ public class ListsFragment extends Fragment implements Callbacks, ListsAdapter.R
             currentClientListsRequest.setCallbacks(this);
             currentClientListsRequest.start();
         }
+
+        super.onResume();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view=inflater.inflate(R.layout.fragment_categories, container, false);
+        recyclerView=(RecyclerView)view.findViewById(R.id.recycler_cat);
+
 
         return view;
     }

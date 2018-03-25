@@ -1,6 +1,5 @@
 package com.example.mysmartlist.Fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,14 +10,10 @@ import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.CategoryAdapter;
 import com.example.mysmartlist.Models.Categories.Categories;
-import com.example.mysmartlist.Models.Category_1;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.JsonParsingUtils;
 import com.example.mysmartlist.Utils.NetworkState;
-import com.example.mysmartlist.Utils.Networking.FetchCategoriesData;
-
-import java.util.ArrayList;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.FetchCategoriesData;
 
 
 public class CategoriesFragment extends Fragment implements Callbacks, CategoryAdapter.RecyclerViewClickListener {

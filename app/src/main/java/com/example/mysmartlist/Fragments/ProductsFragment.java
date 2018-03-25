@@ -1,6 +1,5 @@
 package com.example.mysmartlist.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,8 +14,7 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
-import com.example.mysmartlist.Utils.Networking.FetchProductsData;
-import com.example.mysmartlist.Utils.Networking.getProductsByClientIDRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getProductsByClientIDRequest;
 
 import java.util.ArrayList;
 

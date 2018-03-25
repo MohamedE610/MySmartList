@@ -10,7 +10,7 @@ import android.view.View;
 import com.example.mysmartlist.Fragments.ListsFragment;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Dialogs.ListNameDialog;
-import com.example.mysmartlist.Utils.Networking.addListRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.addListRequest;
 
 public class ListsActivity extends AppCompatActivity {
 

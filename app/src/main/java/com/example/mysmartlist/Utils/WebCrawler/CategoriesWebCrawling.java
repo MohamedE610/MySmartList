@@ -2,16 +2,11 @@ package com.example.mysmartlist.Utils.WebCrawler;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-import com.example.mysmartlist.Models.Categories.Categories;
-import com.example.mysmartlist.Models.Categories.CategoryData;
 import com.example.mysmartlist.Models.CategoriesRespone.CategoriesResponse;
-import com.example.mysmartlist.Models.List.Product;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
-import com.example.mysmartlist.Utils.Networking.AddMultipleCategoriesRequest;
-import com.google.gson.internal.LinkedTreeMap;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.AddMultipleCategoriesRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,9 +15,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Created by abdallah on 3/11/2018.

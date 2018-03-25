@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mysmartlist.Activities.SignupActivity;
 import com.example.mysmartlist.Fragments.MainActivityFragment;
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
@@ -23,12 +22,12 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.MySharedPreferences;
-import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
-import com.example.mysmartlist.Utils.Networking.AddPinProductRequest;
-import com.example.mysmartlist.Utils.Networking.DeleteFavouriteProductRequest;
-import com.example.mysmartlist.Utils.Networking.DeletePinProductRequest;
-import com.example.mysmartlist.Utils.Networking.addProductToListRequest;
-import com.example.mysmartlist.Utils.Networking.getCurrentClientListsRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.AddFavouriteProductRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.AddPinProductRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.DeleteFavouriteProductRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.DeletePinProductRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.addProductToListRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getCurrentClientListsRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

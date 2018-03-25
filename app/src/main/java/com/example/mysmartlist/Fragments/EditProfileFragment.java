@@ -4,6 +4,7 @@ package com.example.mysmartlist.Fragments;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,19 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
-import com.example.mysmartlist.Utils.Networking.getClientByIDRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.UpdateClientAccountRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getClientByIDRequest;
+
+import java.util.HashMap;
 
 
-public class EditProfileFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, TabLayout.OnTabSelectedListener {
+public class EditProfileFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, TabLayout.OnTabSelectedListener, View.OnClickListener {
 
     private TabLayout tabLayout;
 
@@ -32,7 +37,6 @@ public class EditProfileFragment extends Fragment implements CompoundButton.OnCh
     Spinner spinnerFamilyMember;
     //Spinner spinnerSalaryRang;
     String familyMemberStr;
-    String salaryRangStr;
 
     RadioButton maleRadioBtn,femaleRadioBtn,weeklyRadioBtn,monthlyRadioBtn;
 
@@ -40,7 +44,12 @@ public class EditProfileFragment extends Fragment implements CompoundButton.OnCh
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
 
+    Button btnSave,btnCancel;
+
     View view;
+    private String budget;
+    private UpdateClientAccountRequest updateClientAccountRequest;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,6 +86,12 @@ public class EditProfileFragment extends Fragment implements CompoundButton.OnCh
         createFamilyMemberSpinner();
 
 
+        btnCancel=(Button)view.findViewById(R.id.btn_cancel);
+        btnSave=(Button)view.findViewById(R.id.btn_save);
+
+        btnSave.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+
         getClientData();
 
 
@@ -91,36 +106,46 @@ public class EditProfileFragment extends Fragment implements CompoundButton.OnCh
             @Override
             public void OnSuccess(Object obj) {
                 Client client=(Client) obj;
-                inuptUserName.setText(client.data.name);
-                inputPhoneNum.setText(client.data.phone);
-                inputEmail.setText(client.data.email);
+                name=client.data.name;
+                phone=client.data.phone;
+                email=client.data.email;
+                salaryRang="10000";
+                gender=client.data.gender;
+                budget=client.data.budget;
+                familyMemberStr=client.data.familyMembers;
+
+
+                inuptUserName.setText(name);
+                inputPhoneNum.setText(phone);
+                inputEmail.setText(email);
                 //inputSalary.setText(client.data.salary);
-                inputSalary.setText("10000");
-                if(client.data.gender.equals("male")) {
-                    maleRadioBtn.setSelected(true);
-                    femaleRadioBtn.setSelected(false);
+                inputSalary.setText(salaryRang);
+                if(gender.equals("male")) {
+                    maleRadioBtn.setChecked(true);
+                    femaleRadioBtn.setChecked(false);
                 }else {
-                    maleRadioBtn.setSelected(false);
-                    femaleRadioBtn.setSelected(true);
+                    maleRadioBtn.setChecked(false);
+                    femaleRadioBtn.setChecked(true);
                 }
 
-                if(client.data.budget.equals("weekly")){
-                    weeklyRadioBtn.setSelected(true);
-                    monthlyRadioBtn.setSelected(false);
+                if(budget.equals("weekly")){
+                    weeklyRadioBtn.setChecked(true);
+                    monthlyRadioBtn.setChecked(false);
                 }else {
-                    weeklyRadioBtn.setSelected(false);
-                    monthlyRadioBtn.setSelected(true);
+                    weeklyRadioBtn.setChecked(false);
+                    monthlyRadioBtn.setChecked(true);
                 }
 
-                if(client.data.familyMembers.equals("1")){
+                if(familyMemberStr.equals("1")){
                     spinnerFamilyMember.setSelection(1);
-                }else if(client.data.familyMembers.equals("2")){
+
+                }else if(familyMemberStr.equals("2")){
                     spinnerFamilyMember.setSelection(2);
 
-                }else if(client.data.familyMembers.equals("3")){
+                }else if(familyMemberStr.equals("3")){
 
                     spinnerFamilyMember.setSelection(3);
-                }else if(client.data.familyMembers.equals("3+")) {
+                }else if(familyMemberStr.equals("3+")) {
                     spinnerFamilyMember.setSelection(4);
 
                 }
@@ -180,11 +205,11 @@ public class EditProfileFragment extends Fragment implements CompoundButton.OnCh
                 if(position>0)
                     familyNum=familyMemberValues[position-1];
 
-                if(salaryRangStr!=null&&salaryRangStr.equals("")){
+                if(salaryRang!=null&&salaryRang.equals("")){
                     if(familyNum.equals(familyMemberValues[1])){
-                        salaryRangStr="5000";
+                        salaryRang="5000";
                     }else {
-                        salaryRangStr="10000";
+                        salaryRang="10000";
                     }
                 }
             }
@@ -217,6 +242,53 @@ public class EditProfileFragment extends Fragment implements CompoundButton.OnCh
 
     private void saveMethod() {
 
+        if(TextUtils.isEmpty(inputEmail.getText())){
+            Toast.makeText(getActivity(), "Please, enter your email", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(TextUtils.isEmpty(inputPhoneNum.getText())){
+            Toast.makeText(getActivity(), "Please, enter your phone number", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(TextUtils.isEmpty(inputSalary.getText())){
+            Toast.makeText(getActivity(), "Please, enter your salary", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(TextUtils.isEmpty(inuptUserName.getText())){
+            Toast.makeText(getActivity(), "Please, enter your username", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        name=inuptUserName.getText().toString();
+        phone=inputPhoneNum.getText().toString();
+        email=inputEmail.getText().toString();
+        salaryRang=inputSalary.getText().toString();
+
+        HashMap<String,String> clientDetails=new HashMap<>();
+        clientDetails.put("name", name);
+        clientDetails.put("phone",phone);
+        clientDetails.put("email",email);
+        clientDetails.put("gender",gender);
+        clientDetails.put("budget_type",reportType);
+        clientDetails.put("family_count",familyMemberStr);
+        clientDetails.put("salary",salaryRang);
+
+
+        MySharedPreferences.setUpMySharedPreferences(getActivity());
+        int uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        updateClientAccountRequest=new UpdateClientAccountRequest(uid,clientDetails);
+        updateClientAccountRequest.setCallbacks(new Callbacks() {
+            @Override
+            public void OnSuccess(Object obj) {
+                Toast.makeText(getActivity(), "تمت العمليه بنجاح", Toast.LENGTH_SHORT).show();
+                cancelMethod();
+            }
+
+            @Override
+            public void OnFailure(Object obj) {
+                Toast.makeText(getActivity(), "لقد حدث خطاء... الرجاء اعد المحاوله ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        updateClientAccountRequest.start();
+
     }
 
     private void cancelMethod() {
@@ -228,4 +300,19 @@ public class EditProfileFragment extends Fragment implements CompoundButton.OnCh
 
     }
 
+    @Override
+    public void onClick(View view) {
+        int id=view.getId();
+
+        switch (id){
+
+            case R.id.btn_cancel:
+            cancelMethod();
+            break;
+
+            case R.id.btn_save:
+                saveMethod();
+                break;
+        }
+    }
 }

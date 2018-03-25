@@ -17,8 +17,8 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
 import com.example.mysmartlist.Utils.MySharedPreferences;
-import com.example.mysmartlist.Utils.Networking.AddFavouriteProductRequest;
-import com.example.mysmartlist.Utils.Networking.DeleteFavouriteProductRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.AddFavouriteProductRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.DeleteFavouriteProductRequest;
 import com.squareup.picasso.Picasso;
 
 /**

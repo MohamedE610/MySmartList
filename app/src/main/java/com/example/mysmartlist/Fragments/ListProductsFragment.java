@@ -1,39 +1,33 @@
 package com.example.mysmartlist.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mysmartlist.Adapters.ListProductsAdapter;
-import com.example.mysmartlist.Adapters.ListsAdapter;
-import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.List.List;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
-import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
-import com.example.mysmartlist.Utils.Networking.MoveListFromCurrentListToOldListRequest;
-import com.example.mysmartlist.Utils.Networking.deleteMultipleProductRequest;
-import com.example.mysmartlist.Utils.Networking.getCurrentClientListsRequest;
-import com.example.mysmartlist.Utils.Networking.getListByIdRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.MoveListFromCurrentListToOldListRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.deleteMultipleProductRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getListByIdRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ListProductsFragment extends Fragment implements Callbacks, ListProductsAdapter.RecyclerViewClickListener ,ListProductsAdapter.ISendCheckedList, TabLayout.OnTabSelectedListener {
+public class ListProductsFragment extends Fragment implements Callbacks, ListProductsAdapter.RecyclerViewClickListener ,ListProductsAdapter.ISendCheckedList, TabLayout.OnTabSelectedListener, View.OnClickListener {
 
     private TabLayout tabLayout;
     private int list_id;
@@ -52,6 +46,8 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
     boolean isEditable=false;
     TextView addToReportsView;
 
+    Button btnShare,btnRemove,btnCancel;
+
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,22 +57,36 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_cat);
         addToReportsView=(TextView) view.findViewById(R.id.btn_add_reports);
 
+        btnCancel=(Button)view.findViewById(R.id.btn_cancel);
+        btnRemove=(Button)view.findViewById(R.id.btn_remove);
+        btnShare=(Button)view.findViewById(R.id.btn_share);
+
+        btnShare.setOnClickListener(this);
+        btnRemove.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+
+        btnRemove.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
+        btnShare.setVisibility(View.GONE);
+
          list_id=getArguments().getInt("list_id");
         if(NetworkState.ConnectionAvailable(getActivity())) {
-            listByIdRequest = new getListByIdRequest(list_id);
-            listByIdRequest.setCallbacks(this);
-            listByIdRequest.start();
+            getListProduct();
         }
 
         tabLayout = (TabLayout) view.findViewById(R.id.bottom_tablayout);
         editLinear = (LinearLayout) view.findViewById(R.id.linear_edit);
         tabLayout.addOnTabSelectedListener(this);
-        tabLayout.setVisibility(View.GONE);
+        //tabLayout.setVisibility(View.GONE);
 
         editLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tabLayout.setVisibility(View.VISIBLE);
+               // tabLayout.setVisibility(View.VISIBLE);
+                btnRemove.setVisibility(View.VISIBLE);
+                btnCancel.setVisibility(View.VISIBLE);
+                btnShare.setVisibility(View.VISIBLE);
+
                 isEditable=true;
 
                 if(isEditable)
@@ -116,6 +126,12 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         return view;
     }
 
+    private void getListProduct() {
+        listByIdRequest = new getListByIdRequest(list_id);
+        listByIdRequest.setCallbacks(this);
+        listByIdRequest.start();
+    }
+
     Object object;
     void DisplayData(Object obj,boolean isEditable, int id){
         object=obj;
@@ -130,7 +146,11 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
     @Override
     public void OnSuccess(Object obj) {
         editLinear.setVisibility(View.VISIBLE);
-        tabLayout.setVisibility(View.INVISIBLE);
+        //tabLayout.setVisibility(View.INVISIBLE);
+        btnRemove.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
+        btnShare.setVisibility(View.GONE);
+
         isEditable=false;
       DisplayData(obj,isEditable,list_id);
     }
@@ -170,7 +190,10 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
 
     private void cancelMethod() {
         editLinear.setVisibility(View.VISIBLE);
-        tabLayout.setVisibility(View.INVISIBLE);
+        //tabLayout.setVisibility(View.INVISIBLE);
+        btnRemove.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
+        btnShare.setVisibility(View.GONE);
         isEditable=false;
         DisplayData(object,isEditable,list_id);
     }
@@ -193,7 +216,11 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
         editLinear.setVisibility(View.VISIBLE);
-        tabLayout.setVisibility(View.INVISIBLE);
+        //tabLayout.setVisibility(View.INVISIBLE);
+        btnRemove.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
+        btnShare.setVisibility(View.GONE);
+
         isEditable=false;
         DisplayData(object,isEditable,list_id);
     }
@@ -206,6 +233,9 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
             @Override
             public void OnSuccess(Object obj) {
                 Toast.makeText(getActivity(), "العملية تمت بنجاح", Toast.LENGTH_SHORT).show();
+                listByIdRequest = new getListByIdRequest(list_id);
+                listByIdRequest.setCallbacks(ListProductsFragment.this);
+                listByIdRequest.start();
             }
 
             @Override
@@ -217,7 +247,11 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         deleteMultipleProduct.start();
 
         editLinear.setVisibility(View.VISIBLE);
-        tabLayout.setVisibility(View.INVISIBLE);
+        //tabLayout.setVisibility(View.INVISIBLE);
+        btnRemove.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
+        btnShare.setVisibility(View.GONE);
+
         isEditable=false;
 
         DisplayData(object,isEditable,list_id);
@@ -231,5 +265,22 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id=view.getId();
+
+        switch (id){
+            case R.id.btn_cancel:
+                cancelMethod();
+                break;
+            case R.id.btn_remove:
+                removeProducts();
+                break;
+            case R.id.btn_share:
+                shareProducts();
+                break;
+        }
     }
 }

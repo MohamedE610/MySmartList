@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scroll_view"
-        android:layout_above="@+id/tablayout"
-        android:layout_marginBottom="80dp">
+        android:layout_above="@+id/linear_bottom"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +20,9 @@
             android:background="@android:color/white"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:padding="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="60dp"
+            >
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -242,6 +245,7 @@
         app:tabSelectedTextColor="@color/blackColor"
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         >
 
 
@@ -260,6 +264,33 @@
             />
 
     </android.support.design.widget.TabLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linear_bottom"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="50dp"
+            android:text="حفظ"
+            android:id="@+id/btn_save"
+            android:layout_gravity="center_horizontal|bottom"/>
+
+        <Button
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="50dp"
+            android:text="حذف"
+            android:id="@+id/btn_cancel"/>
+
+    </LinearLayout>
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="30dp"

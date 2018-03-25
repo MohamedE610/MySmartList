@@ -14,7 +14,7 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
-import com.example.mysmartlist.Utils.Networking.getPinProductsRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getPinProductsRequest;
 
 
 public class PinPruductsFragment extends Fragment implements Callbacks, PinProductAdapter.RecyclerViewClickListener {

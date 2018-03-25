@@ -28,6 +28,7 @@ import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 
@@ -188,6 +189,42 @@ public interface ApiInterface {
             "Content-Type: application/json",
             "Authorization: "+ Constants.accessToken
     })
+    @GET("clients/{client_id}/reports")
+    Call<HashMap> getAllClientReports(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/reports/thisWeek")
+    Call<HashMap> getWeeklyClientReports(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/reports/thisMonth")
+    Call<HashMap> getMonthlyClientReports(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/reports/thisYear")
+    Call<HashMap> getYearlyClientReports(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
     @GET("clients/{client_id}/lists/old")
     Call<ClientLists> getOldClientLists(@Path("client_id") int client_id);
 
@@ -228,6 +265,14 @@ public interface ApiInterface {
     @POST("clients")
     Call<Client> createClientAccount(@Body HashMap client);
 
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @PUT("clients/{client_id}")
+    Call<HashMap> updateClientAccount(@Path("client_id") int client_id,@Body HashMap client);
 
 
     @Headers({

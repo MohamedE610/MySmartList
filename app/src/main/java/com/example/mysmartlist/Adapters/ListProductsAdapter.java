@@ -14,13 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.List.List;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
-import com.example.mysmartlist.Utils.Networking.decrementProductCountInListRequest;
-import com.example.mysmartlist.Utils.Networking.incrementProductCountInListRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.decrementProductCountInListRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.incrementProductCountInListRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

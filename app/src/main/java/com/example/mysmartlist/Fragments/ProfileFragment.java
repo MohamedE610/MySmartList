@@ -13,7 +13,7 @@ import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
-import com.example.mysmartlist.Utils.Networking.getClientByIDRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getClientByIDRequest;
 
 
 public class ProfileFragment extends Fragment implements Callbacks, View.OnClickListener {
