@@ -66,7 +66,12 @@
         <service
             android:name=".Services.ReportService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity
+            android:name=".Activities.ReportDetailsActivity"
+            android:label="@string/title_activity_report_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
