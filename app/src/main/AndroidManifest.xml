@@ -61,7 +61,12 @@
         <activity android:name=".Activities.QuestionsActivity" />
         <activity android:name=".Activities.ProfileActivity" />
         <activity android:name=".Activities.OldListsActivity" />
-        <activity android:name=".Activities.ReportsActivity"></activity>
+        <activity android:name=".Activities.ReportsActivity" />
+
+        <service
+            android:name=".Services.ReportService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

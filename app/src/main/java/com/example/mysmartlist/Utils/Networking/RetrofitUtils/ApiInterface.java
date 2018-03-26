@@ -13,6 +13,7 @@ import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.ProductData;
 import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
+import com.example.mysmartlist.Models.Reports.Reports;
 import com.example.mysmartlist.Models.TopProducts.TopProduct;
 import com.example.mysmartlist.Utils.Constants;
 
@@ -190,7 +191,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/reports")
-    Call<HashMap> getAllClientReports(@Path("client_id") int client_id);
+    Call<Reports> getAllClientReports(@Path("client_id") int client_id);
 
 
     @Headers({
@@ -199,7 +200,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/reports/thisWeek")
-    Call<HashMap> getWeeklyClientReports(@Path("client_id") int client_id);
+    Call<Reports> getWeeklyClientReports(@Path("client_id") int client_id);
 
 
     @Headers({
@@ -208,7 +209,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/reports/thisMonth")
-    Call<HashMap> getMonthlyClientReports(@Path("client_id") int client_id);
+    Call<Reports> getMonthlyClientReports(@Path("client_id") int client_id);
 
 
     @Headers({
@@ -217,7 +218,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/reports/thisYear")
-    Call<HashMap> getYearlyClientReports(@Path("client_id") int client_id);
+    Call<Reports> getYearlyClientReports(@Path("client_id") int client_id);
 
 
     @Headers({

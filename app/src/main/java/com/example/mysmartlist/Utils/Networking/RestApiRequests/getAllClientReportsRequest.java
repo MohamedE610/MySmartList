@@ -11,6 +11,7 @@ import retrofit2.Retrofit;
 
 */
 
+import com.example.mysmartlist.Models.Reports.Reports;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiClient;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiInterface;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
@@ -25,7 +26,7 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class getAllClientReportsRequest extends FetchData implements Callback<HashMap>  {
+public class getAllClientReportsRequest extends FetchData implements Callback<Reports>  {
 
 
     private int client_id;
@@ -37,18 +38,18 @@ public class getAllClientReportsRequest extends FetchData implements Callback<Ha
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<HashMap>  allClientReports = apiInterface.getAllClientReports(client_id);
+        Call<Reports>  allClientReports = apiInterface.getAllClientReports(client_id);
         allClientReports.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<HashMap> call, Response<HashMap> response) {
-        HashMap  body =response.body();
+    public void onResponse(Call<Reports> call, Response<Reports> response) {
+        Reports  body =response.body();
         callbacks.OnSuccess(body);
     }
 
     @Override
-    public void onFailure(Call<HashMap> call, Throwable t) {
+    public void onFailure(Call<Reports> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }

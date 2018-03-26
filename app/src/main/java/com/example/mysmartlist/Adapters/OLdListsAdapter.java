@@ -173,7 +173,7 @@ public class OLdListsAdapter extends RecyclerView.Adapter<OLdListsAdapter.MyView
 
     private void reuseMethod(int postion) {
 
-        int list_id=0;
+/*        int list_id=0;
         MySharedPreferences.setUpMySharedPreferences(context);
         int uid =Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
 
@@ -211,7 +211,7 @@ public class OLdListsAdapter extends RecyclerView.Adapter<OLdListsAdapter.MyView
 
             productToListRequest.start();
 
-        }
+        }*/
 
 
     }

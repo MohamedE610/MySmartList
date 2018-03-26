@@ -12,6 +12,7 @@ import retrofit2.Retrofit;
 */
 
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
+import com.example.mysmartlist.Models.Reports.Reports;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiClient;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiInterface;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
@@ -26,7 +27,7 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class getYearlyClientReportsRequest extends FetchData implements Callback<HashMap>  {
+public class getYearlyClientReportsRequest extends FetchData implements Callback<Reports>  {
 
 
     private int client_id;
@@ -38,18 +39,18 @@ public class getYearlyClientReportsRequest extends FetchData implements Callback
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<HashMap>  yearlyClientReports = apiInterface.getYearlyClientReports(client_id);
+        Call<Reports>  yearlyClientReports = apiInterface.getYearlyClientReports(client_id);
         yearlyClientReports.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<HashMap> call, Response<HashMap> response) {
-        HashMap  body =response.body();
+    public void onResponse(Call<Reports> call, Response<Reports> response) {
+        Reports  body =response.body();
         callbacks.OnSuccess(body);
     }
 
     @Override
-    public void onFailure(Call<HashMap> call, Throwable t) {
+    public void onFailure(Call<Reports> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }
