@@ -8,9 +8,24 @@ import com.google.gson.annotations.SerializedName;
 public class Fav implements Serializable
 {
 
-    @SerializedName("product")
+    @SerializedName("id")
     @Expose
-    public Product product;
-    private final static long serialVersionUID = -1116194551354110445L;
+    public Integer id;
+    @SerializedName("name")
+    @Expose
+    public String name;
+    @SerializedName("price")
+    @Expose
+    public Float price;
+    @SerializedName("category")
+    @Expose
+    public Category category;
+    @SerializedName("image")
+    @Expose
+    public String image;
+    @SerializedName("favs")
+    @Expose
+    public Integer favs;
+    private final static long serialVersionUID = -2332396751684094150L;
 
 }

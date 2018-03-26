@@ -22,6 +22,6 @@ public class ReportsActivity extends AppCompatActivity {
     private void addReportsFragment() {
         fragmentManager=getSupportFragmentManager();
         ReportsFragment reportsFragment=new ReportsFragment();
-        fragmentManager.beginTransaction().add(R.id.old_lists_container,reportsFragment).commit();
+        fragmentManager.beginTransaction().add(android.R.id.content,reportsFragment).commit();
     }
 }

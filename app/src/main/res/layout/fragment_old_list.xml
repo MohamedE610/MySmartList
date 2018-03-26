@@ -10,7 +10,7 @@
         android:id="@+id/recycler_cat"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="65dp">
+        android:layout_marginBottom="15dp">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -20,7 +20,7 @@
         android:orientation="horizontal"
         android:weightSum="1"
         android:layout_gravity="bottom"
-
+        android:visibility="gone"
         >
         <Button
             android:layout_width="0dp"

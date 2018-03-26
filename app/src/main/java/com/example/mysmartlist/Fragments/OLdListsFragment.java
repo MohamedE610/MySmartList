@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.mysmartlist.Adapters.ListsAdapter;
+import com.example.mysmartlist.Adapters.OLdListsAdapter;
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
@@ -18,11 +19,11 @@ import com.example.mysmartlist.Utils.NetworkState;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getOldClientListsRequest;
 
 
-public class OLdListsFragment extends Fragment implements Callbacks, ListsAdapter.RecyclerViewClickListener, View.OnClickListener {
+public class OLdListsFragment extends Fragment implements Callbacks, OLdListsAdapter.RecyclerViewClickListener, View.OnClickListener {
 
    //ArrayList<Category_1> categories=new ArrayList<>();
     ClientLists  clientLists;
-    ListsAdapter listsAdapter;
+    OLdListsAdapter listsAdapter;
     getOldClientListsRequest oldClientListsRequest;
     RecyclerView recyclerView;
     public OLdListsFragment() {
@@ -65,7 +66,7 @@ public class OLdListsFragment extends Fragment implements Callbacks, ListsAdapte
         //String json=(String)obj;
         //categories= JsonParsingUtils.getAllCategories(json);
         clientLists=(ClientLists) obj;
-        listsAdapter=new ListsAdapter(clientLists,getActivity());
+        listsAdapter=new OLdListsAdapter(clientLists,getActivity());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         listsAdapter.setClickListener(this);
         recyclerView.setAdapter(listsAdapter);

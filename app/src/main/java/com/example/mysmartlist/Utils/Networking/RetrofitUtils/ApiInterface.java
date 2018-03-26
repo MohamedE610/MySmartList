@@ -172,8 +172,42 @@ public interface ApiInterface {
             "Content-Type: application/json",
             "Authorization: "+ Constants.accessToken
     })
+    @GET("clients/{client_id}/lists/{list_id}/copy")
+    Call<List> reuseList(@Path("client_id") int client_id,@Path("list_id") int list_id);
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/reports/month/close")
+    Call<Reports> calculateClientMonthlyReports(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/reports/week/close")
+    Call<Reports> calculateClientWeeklyReports(@Path("client_id") int client_id);
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
     @GET("clients/{client_id}")
     Call<Client> getClientByID(@Path("client_id") int client_id);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/fb/{firebaseId}")
+    Call<Client> getClientByFirebaseID(@Path("firebaseId") String firebaseId);
 
 
     @Headers({

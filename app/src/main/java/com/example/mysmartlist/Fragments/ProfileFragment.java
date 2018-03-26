@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.mysmartlist.Activities.SignupActivity;
 import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
@@ -70,13 +71,23 @@ public class ProfileFragment extends Fragment implements Callbacks, View.OnClick
     public void OnSuccess(Object obj) {
         Client client=(Client)obj;
 
+        int Uid=client.data.id;
+        int clientSalary=client.data.salary;
+        String clientBudget=client.data.budget;
+
+        MySharedPreferences.setUpMySharedPreferences(getActivity());
+        MySharedPreferences.setUserSetting("uid",Uid+"");
+        MySharedPreferences.setUserSetting("clientSalary",clientSalary+"");
+        MySharedPreferences.setUserSetting("clientBudget",clientBudget+"");
+
         userName.setText(client.data.name);
         email.setText(client.data.email);
         gender.setText(client.data.gender);
         phoneNum.setText(client.data.phone);
         familyNum.setText(client.data.familyMembers);
-        salary.setText("10000");
-        budget.setText("700");
+        salary.setText(client.data.salary+"");
+
+        budget.setText((clientSalary/4)+"");
 
     }
 

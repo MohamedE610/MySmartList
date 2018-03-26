@@ -17,15 +17,21 @@ public class Product implements Serializable
     @SerializedName("price")
     @Expose
     public Float price;
-    @SerializedName("category")
-    @Expose
-    public Category category;
     @SerializedName("image")
     @Expose
     public String image;
-    @SerializedName("favs")
+    @SerializedName("category_id")
     @Expose
-    public Integer favs;
-    private final static long serialVersionUID = -1478718195962607419L;
+    public Integer categoryId;
+    @SerializedName("created_at")
+    @Expose
+    public String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    public String updatedAt;
+    @SerializedName("pivot")
+    @Expose
+    public Pivot pivot;
+    private final static long serialVersionUID = 2013951104404277739L;
 
 }

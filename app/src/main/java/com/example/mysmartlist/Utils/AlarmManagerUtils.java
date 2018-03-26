@@ -68,12 +68,12 @@ public class AlarmManagerUtils {
 
     }
 
-    private void stopService() {
+    public void stopService() {
         context.stopService(new Intent(context, ReportService.class));
         cancelAlarms();
     }
 
-    private void cancelAlarms() {
+    public void cancelAlarms() {
         Intent intentWeeklyReports = new Intent(context, ReportService.class);
         PendingIntent pendingIntentWeeklyReports = PendingIntent.getService(context, WEEKLY_ID, intentWeeklyReports, 0);
 

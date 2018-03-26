@@ -20,6 +20,7 @@ import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.Models.Client.Fav;
 import com.example.mysmartlist.Models.Client.Pin;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.AlarmManagerUtils;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignUp;
 import com.example.mysmartlist.Utils.MySharedPreferences;
@@ -35,7 +36,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     createClientAccountRequest createClient;
     HashMap clientDetails;
 
-    public static void getClient(int id){
+    /*public static void getClient(int id){
 
         getClientByIDRequest clientByIDRequest=new getClientByIDRequest(id);
         clientByIDRequest.setCallbacks(new Callbacks() {
@@ -52,27 +53,10 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
         });
         clientByIDRequest.start();
 
-    }
+    }*/
 
-
-    public static boolean isPinProduct(int id){
-        for (Pin pin :client.data.pins) {
-            if(pin.product.id==id)
-                return true;
-        }
-
-        return false;
-    }
-
-    public static boolean isFavProduct(int id){
-        for (Fav fav :client.data.favs) {
-            if(fav.product.id==id)
-                return true;
-        }
-        return false;
-    }
-
-    public static Client client;
+    //public static Client client;
+    public Client client;
     Callbacks callbacks=new Callbacks() {
         @Override
         public void OnSuccess(Object obj) {
@@ -80,9 +64,19 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
             client=(Client)obj;
             int Uid=client.data.id;
+            int clientSalary=client.data.salary;
+            String clientBudget=client.data.budget;
 
             MySharedPreferences.setUpMySharedPreferences(SignupActivity.this);
             MySharedPreferences.setUserSetting("uid",Uid+"");
+            MySharedPreferences.setUserSetting("clientSalary",clientSalary+"");
+            MySharedPreferences.setUserSetting("clientBudget",clientBudget+"");
+            AlarmManagerUtils alarmManagerUtils=new AlarmManagerUtils(SignupActivity.this);
+            if(clientBudget.equals("weekly")){
+                alarmManagerUtils.setWeeklyAlarm();
+            }else if(equals("monthly")){
+                alarmManagerUtils.setMonthlyAlarm();
+            }
             startActivity(new Intent(SignupActivity.this, MainActivity.class));
             finish();
         }

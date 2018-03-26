@@ -11,7 +11,7 @@ public class Reports implements Serializable
 
     @SerializedName("data")
     @Expose
-    public List<Datum> data = null;
+    public List<ReportData> data = null;
     private final static long serialVersionUID = -5500741264001846378L;
 
 }

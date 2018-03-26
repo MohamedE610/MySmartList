@@ -20,6 +20,7 @@ import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.ReuseListRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.addListRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.addProductToListRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.deleteListPermanentlyRequest;
@@ -172,15 +173,13 @@ public class OLdListsAdapter extends RecyclerView.Adapter<OLdListsAdapter.MyView
     }
 
     private void reuseMethod(int postion) {
-
-/*        int list_id=0;
+        int list_id=0;
         MySharedPreferences.setUpMySharedPreferences(context);
         int uid =Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        list_id=clientLists.data.get(postion).id;
 
-        HashMap<String,String> hashMap=new HashMap<>();
-        hashMap.put("name",clientLists.data.get(postion).name+"_");
-        addListRequest listRequest =new addListRequest(uid,hashMap);
-        listRequest.setCallbacks(new Callbacks() {
+        ReuseListRequest reuseListRequest=new ReuseListRequest(uid, list_id);
+        reuseListRequest.setCallbacks(new Callbacks() {
             @Override
             public void OnSuccess(Object obj) {
                 Toast.makeText(context, "العمليه تمت بنجاح", Toast.LENGTH_SHORT).show();
@@ -192,28 +191,7 @@ public class OLdListsAdapter extends RecyclerView.Adapter<OLdListsAdapter.MyView
             }
         });
 
-        for (int i = 0; i <clientLists.data.get(postion).products.size() ; i++) {
-            HashMap<String,String> hashMap1=new HashMap<>();
-            hashMap1.put("product_id",clientLists.data.get(postion).products.get(i).id.toString());
-            hashMap1.put("count",1+"");
-            addProductToListRequest productToListRequest=new addProductToListRequest(list_id,hashMap1);
-            productToListRequest.setCallbacks(new Callbacks() {
-                @Override
-                public void OnSuccess(Object obj) {
-
-                }
-
-                @Override
-                public void OnFailure(Object obj) {
-
-                }
-            });
-
-            productToListRequest.start();
-
-        }*/
-
-
+        reuseListRequest.start();
     }
 
     private void removeMethod(int postion) {

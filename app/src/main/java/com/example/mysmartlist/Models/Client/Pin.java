@@ -8,9 +8,24 @@ import com.google.gson.annotations.SerializedName;
 public class Pin implements Serializable
 {
 
-    @SerializedName("product")
+    @SerializedName("id")
     @Expose
-    public Product_ product;
-    private final static long serialVersionUID = -8916437502788895961L;
+    public Integer id;
+    @SerializedName("name")
+    @Expose
+    public String name;
+    @SerializedName("price")
+    @Expose
+    public Float price;
+    @SerializedName("category")
+    @Expose
+    public Category_ category;
+    @SerializedName("image")
+    @Expose
+    public String image;
+    @SerializedName("favs")
+    @Expose
+    public Integer favs;
+    private final static long serialVersionUID = -7842277949924514760L;
 
 }

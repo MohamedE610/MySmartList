@@ -15,16 +15,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getClientByFirebaseIDRequest;
 import com.example.mysmartlist.Utils.WebCrawler.CategoriesWebCrawling;
 import com.example.mysmartlist.Utils.WebCrawler.ProductsWebCrawling;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class SignInActivity extends AppCompatActivity {
 
+
+    getClientByFirebaseIDRequest clientByFirebaseIDRequest;
     private EditText inputEmail, inputPassword;
     //private FirebaseAuth auth;
     private ProgressBar progressBar;
@@ -128,10 +133,38 @@ public class SignInActivity extends AppCompatActivity {
                 firebaseSignIn.setCallback(new Callbacks() {
                     @Override
                     public void OnSuccess(Object obj) {
-                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        btnLogin.setEnabled(true);
-                        finish();
+
+                        FirebaseUser firebaseUser=firebaseSignIn.getFirebaseUser();
+                        clientByFirebaseIDRequest=new getClientByFirebaseIDRequest(firebaseUser.getUid());
+                        clientByFirebaseIDRequest.setCallbacks(new Callbacks() {
+                            @Override
+                            public void OnSuccess(Object obj) {
+
+                                Client client = (Client) obj;
+                                int Uid=client.data.id;
+                                int clientSalary=client.data.salary;
+                                String clientBudget=client.data.budget;
+
+                                MySharedPreferences.setUpMySharedPreferences(SignInActivity.this);
+                                MySharedPreferences.setUserSetting("uid",Uid+"");
+                                MySharedPreferences.setUserSetting("clientSalary",clientSalary+"");
+                                MySharedPreferences.setUserSetting("clientBudget",clientBudget+"");
+
+
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                btnLogin.setEnabled(true);
+                                finish();
+
+                            }
+
+                            @Override
+                            public void OnFailure(Object obj) {
+
+                            }
+                        });
+
+                        clientByFirebaseIDRequest.start();
                     }
 
                     @Override

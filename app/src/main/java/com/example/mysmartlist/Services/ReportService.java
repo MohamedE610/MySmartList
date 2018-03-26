@@ -11,13 +11,15 @@ import android.os.IBinder;
 import com.example.mysmartlist.Activities.ReportsActivity;
 import com.example.mysmartlist.Models.Reports.Reports;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.AlarmManagerUtils;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.CalculateClientMonthlyReportRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.CalculateClientWeeklyReportRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getAllClientReportsRequest;
 
 public class ReportService extends Service {
 
-    getAllClientReportsRequest allClientReportsRequest;
     private Integer uid;
 
     public ReportService() {
@@ -34,29 +36,36 @@ public class ReportService extends Service {
 
         MySharedPreferences.setUpMySharedPreferences(getApplicationContext());
         uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        String clientBudget=MySharedPreferences.getUserSetting("clientBudget");
+
+        if(!clientBudget.equals(action)){
+            AlarmManagerUtils alarmManagerUtils=new AlarmManagerUtils(getApplicationContext());
+            alarmManagerUtils.cancelAlarms();
+
+            if(clientBudget.equals("weekly")){
+                alarmManagerUtils.setWeeklyAlarm();
+            }else if( clientBudget.equals("monthly")){
+                alarmManagerUtils.setMonthlyAlarm();
+            }
+
+            stopSelf();
+        }
+
 
         if(action.equals("weekly")){
-            getWeeklyReports();
-        }else if(action.equals("monthly")){
-            getMonthlyReports();
+           calculateWeeklyReports();
+        }else if( action.equals("monthly")){
+            calculateMonthlyReports();
         }
 
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void getMonthlyReports() {
-
-    }
-
-    private void getWeeklyReports() {
-
-        allClientReportsRequest=new getAllClientReportsRequest(uid);
-        allClientReportsRequest.setCallbacks(new Callbacks() {
+    private void calculateMonthlyReports() {
+        CalculateClientMonthlyReportRequest monthlyReportRequest=new CalculateClientMonthlyReportRequest(uid);
+        monthlyReportRequest.setCallbacks(new Callbacks() {
             @Override
             public void OnSuccess(Object obj) {
-                Reports reports=(Reports)obj;
-
-
                 createNotification();
             }
 
@@ -66,7 +75,27 @@ public class ReportService extends Service {
             }
         });
 
-        allClientReportsRequest.start();
+        monthlyReportRequest.start();
+    }
+
+    private void calculateWeeklyReports() {
+        CalculateClientWeeklyReportRequest weeklyReportRequest=new CalculateClientWeeklyReportRequest(uid);
+        weeklyReportRequest.setCallbacks(new Callbacks() {
+            @Override
+            public void OnSuccess(Object obj) {
+                createNotification();
+            }
+
+            @Override
+            public void OnFailure(Object obj) {
+
+            }
+        });
+        weeklyReportRequest.start();
+    }
+
+    private void getMonthlyReports() {
+
     }
 
 

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
+import com.example.mysmartlist.Models.Reports.Reports;
 import com.example.mysmartlist.R;
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +22,7 @@ import com.squareup.picasso.Picasso;
 
 public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.MyViewHolder> {
 
-    ClientLists  clientLists;
+    Reports  reports;
     Context context;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
@@ -30,8 +31,8 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.MyViewHo
     public ReportsAdapter() {
     }
 
-    public ReportsAdapter(ClientLists  clientLists, Context context) {
-        this.clientLists = clientLists;
+    public ReportsAdapter(Reports  reports, Context context) {
+        this.reports = reports;
         this.context = context;
     }
 
@@ -49,7 +50,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        String detailsStr=clientLists.data.get(position).name;
+        String detailsStr="تقرير : "+reports.data.get(position).createdAt;
         holder.textView.setText(detailsStr);
 
         //String urlStr = Constants.BasicUrlImg+categories.data.get(position).image;
@@ -68,9 +69,9 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        if (clientLists == null || clientLists.data==null)
+        if (reports == null || reports.data==null)
             return 0;
-        return clientLists.data.size();
+        return reports.data.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
