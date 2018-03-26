@@ -29,7 +29,7 @@ public class deleteListPermanentlyRequest extends FetchData implements Callback<
 
     private int list_id;
 
-    public deleteListPermanentlyRequest(int list_id , int product_id){
+    public deleteListPermanentlyRequest(int list_id){
         this.list_id=list_id;
     }
 
