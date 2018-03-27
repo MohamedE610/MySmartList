@@ -46,15 +46,9 @@ public class SignInActivity extends AppCompatActivity {
 
         MySharedPreferences.setUpMySharedPreferences(this);
 
-        String wc_cat=MySharedPreferences.getUserSetting("wc_cat");
-
-        /*if(!wc_cat.equals("1")) {
-            CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
-            categoriesWebCrawling.execute();
-        }*/
-
         /*CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
         categoriesWebCrawling.execute();*/
+
         /*ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);
         productsWebCrawling.execute();*/
 

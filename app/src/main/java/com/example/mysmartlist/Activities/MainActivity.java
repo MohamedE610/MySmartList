@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.addOnTabSelectedListener(this);
         addHomeFragment();
-        tabLayout.getTabAt(0).setIcon(R.drawable.home__selected);
+        tabLayout.getTabAt(4).setIcon(R.drawable.home__selected);
+        tabLayout.getTabAt(4).select();
 
         //get firebase auth instance
         //auth = FirebaseAuth.getInstance();
