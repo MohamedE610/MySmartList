@@ -168,15 +168,41 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
                 String password = inputPassword.getText().toString().trim();
 
+                String passwordConfirm = inputPasswordConfirm.getText().toString().trim();
+
+
+
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), R.string.enter_email_address, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "ادخل البريد الالكترونى", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), R.string.enter_password, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "ادخل كلمه السر", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if (TextUtils.isEmpty(phone)) {
+                    Toast.makeText(getApplicationContext(), "ادخل رقم الهاتف", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(getApplicationContext(), "ادخل اسم المستخدم", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+               /* if (TextUtils.isEmpty(salaryRangStr)) {
+                    Toast.makeText(getApplicationContext(), R.string.enter_password, Toast.LENGTH_SHORT).show();
+                    return;
+                }*/
+
+                if (!password.equals(passwordConfirm)) {
+                    Toast.makeText(getApplicationContext(),"تاكيد كلمه السر غير صحيح", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
 
                 if (password.length() < 6) {
                     Toast.makeText(getApplicationContext(), R.string.password_too_short_enter_minimum_6_characters, Toast.LENGTH_SHORT).show();

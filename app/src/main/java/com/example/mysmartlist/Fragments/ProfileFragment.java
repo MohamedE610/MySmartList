@@ -1,6 +1,7 @@
 package com.example.mysmartlist.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.mysmartlist.Activities.ResetPasswordActivity;
 import com.example.mysmartlist.Activities.SignupActivity;
 import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.R;
@@ -118,5 +120,6 @@ public class ProfileFragment extends Fragment implements Callbacks, View.OnClick
     }
 
     private void changePasswordMethod() {
+        getActivity().startActivity(new Intent(getActivity(), ResetPasswordActivity.class));
     }
 }

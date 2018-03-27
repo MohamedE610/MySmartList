@@ -1,7 +1,7 @@
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_margin="5dp"
     android:padding="5dp">
@@ -26,7 +26,7 @@
                 android:layout_height="15dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/imgPin"
-                android:src="@drawable/pin_red"
+                app:srcCompat="@drawable/pin_red"
                 android:layout_marginBottom="5dp"
                 android:layout_gravity="end"/>
         </FrameLayout>

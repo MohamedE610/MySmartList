@@ -59,10 +59,9 @@ public class AlarmManagerUtils {
         PendingIntent pendingIntent = PendingIntent.getService(context, id, intent, 0);
         long _alarm = 0;
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        _alarm=calendar.getTimeInMillis();
-
+        //calendar.set(Calendar.HOUR_OF_DAY, hour);
+        //calendar.set(Calendar.MINUTE, minute);
+        _alarm=calendar.getTimeInMillis()+10*60*100;
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, _alarm, interval , pendingIntent);
 
@@ -80,6 +79,7 @@ public class AlarmManagerUtils {
         Intent intentMonthlyReports = new Intent(context, ReportService.class);
         PendingIntent pendingIntentMonthlyReports = PendingIntent.getService(context, MONTHLY_ID, intentMonthlyReports, 0);
 
+        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntentWeeklyReports);
         alarmManager.cancel(pendingIntentMonthlyReports);
     }

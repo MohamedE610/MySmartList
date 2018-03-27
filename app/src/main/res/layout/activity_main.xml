@@ -33,25 +33,9 @@
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/home_tab"
-                android:icon="@drawable/home"
-                android:text="الرئيسيه"
-                />
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/category_tab"
-                android:icon="@drawable/view_grid"
-                android:text="الفئات"
-                />
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/search_tab"
-                android:icon="@drawable/magnify_plus_outline"
-                android:text="البحث"
+                android:id="@+id/settings_tab"
+                android:icon="@drawable/settings"
+                android:text="الاعدادات"
                 />
 
             <android.support.design.widget.TabItem
@@ -65,10 +49,28 @@
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/settings_tab"
-                android:icon="@drawable/settings"
-                android:text="الاعدادات"
+                android:id="@+id/search_tab"
+                android:icon="@drawable/magnify_plus_outline"
+                android:text="البحث"
                 />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/category_tab"
+                android:icon="@drawable/view_grid"
+                android:text="الفئات"
+                />
+
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/home_tab"
+                android:icon="@drawable/home"
+                android:text="الرئيسيه"
+                />
+
 
         </android.support.design.widget.TabLayout>
 

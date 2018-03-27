@@ -130,15 +130,15 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabSelected(TabLayout.Tab tab) {
 
         for (int i = 0; i < 5 ; i++) {
-            if(i==0) {
+            if(i==4) {
                 tabLayout.getTabAt(i).setIcon(R.drawable.home);
-            }else if(i==1) {
+            }else if(i==3) {
                 tabLayout.getTabAt(i).setIcon(R.drawable.view_grid);
             }else if(i==2) {
                 tabLayout.getTabAt(i).setIcon(R.drawable.magnify_plus_outline);
-            }else if(i==3) {
+            }else if(i==1) {
                 tabLayout.getTabAt(i).setIcon(R.drawable.heart_outline);
-            }else if(i==4) {
+            }else if(i==0) {
                 tabLayout.getTabAt(i).setIcon(R.drawable.settings);
             }
         }
@@ -146,12 +146,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         int position=tab.getPosition();
         switch (position){
 
-            case 0:
+            case 4:
                 tab.setIcon(R.drawable.home__selected);
                 fab.setVisibility(View.VISIBLE);
                 addHomeFragment();
                 break;
-            case 1:
+            case 3:
                 tab.setIcon(R.drawable.view_grid_selected);
                 addCategoriesFragment();
                 fab.setVisibility(View.GONE);
@@ -161,12 +161,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 fab.setVisibility(View.GONE);
                 addSearchFragment();
                 break;
-            case 3:
+            case 1:
                 tab.setIcon(R.drawable.heart_outline_selected);
                 fab.setVisibility(View.GONE);
                 addFavouriteFragment();
                 break;
-            case 4:
+            case 0:
                 tab.setIcon(R.drawable.settings_selected);
                 fab.setVisibility(View.GONE);
                 addSettingsFragment();

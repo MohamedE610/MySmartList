@@ -17,10 +17,11 @@ public class FirebaseSignIn extends FirebaseHelper {
     private FirebaseUser firebaseUser;
 
     public FirebaseSignIn(){
-        firebaseUser=auth.getCurrentUser();
+
     }
 
     public FirebaseUser getFirebaseUser() {
+        firebaseUser=auth.getCurrentUser();
         return firebaseUser;
     }
 
