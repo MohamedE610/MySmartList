@@ -18,6 +18,8 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
+
+        setTitle("تواصل معنا");
         
         facebookImg=(ImageView)findViewById(R.id.facebook_img);
         twitterImg=(ImageView)findViewById(R.id.twitter);

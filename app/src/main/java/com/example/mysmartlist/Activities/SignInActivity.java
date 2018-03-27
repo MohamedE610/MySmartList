@@ -79,10 +79,31 @@ public class SignInActivity extends AppCompatActivity {
         btnSignup.setClickable(true);
         btnReset.setClickable(true);
 
+
+        String remember_me=MySharedPreferences.getUserSetting("remember_me");
+        if(remember_me.equals("1")){
+            checkBox.setChecked(true);
+            //checkBox.setSelected(true);
+            inputEmail.setText(MySharedPreferences.getUserSetting("email"));
+            inputPassword.setText(MySharedPreferences.getUserSetting("password"));
+        }
+
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 // TODO use SharedPref to Save email
+
+                if(b){
+                    MySharedPreferences.setUserSetting("remember_me","1");
+                    MySharedPreferences.setUserSetting("email",inputEmail.getText().toString());
+                    MySharedPreferences.setUserSetting("password",inputPassword.getText().toString());
+
+                }else {
+                    MySharedPreferences.setUserSetting("remember_me","0");
+                    MySharedPreferences.setUserSetting("email","");
+                    MySharedPreferences.setUserSetting("password","");
+                }
             }
         });
 
@@ -120,6 +141,16 @@ public class SignInActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(),"ادخل كلمه السر", Toast.LENGTH_SHORT).show();
                     return;
+                }
+
+
+                String remember_me=MySharedPreferences.getUserSetting("remember_me");
+                if(remember_me.equals("1")){
+                    MySharedPreferences.setUserSetting("email",inputEmail.getText().toString());
+                    MySharedPreferences.setUserSetting("password",inputPassword.getText().toString());
+                }else {
+                    MySharedPreferences.setUserSetting("email","");
+                    MySharedPreferences.setUserSetting("password","");
                 }
 
                 progressBar.setVisibility(View.VISIBLE);

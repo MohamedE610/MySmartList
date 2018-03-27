@@ -146,7 +146,7 @@
                         android:focusableInTouchMode="true"
                         android:hint="الراتب"
                         android:imeOptions="actionUnspecified"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@android:color/black" />

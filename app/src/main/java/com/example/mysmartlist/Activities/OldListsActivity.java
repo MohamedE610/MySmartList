@@ -16,6 +16,7 @@ public class OldListsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_lists);
         addOldListsFragment();
+        setTitle("القوائم السابقة");
     }
 
     private void addOldListsFragment() {

@@ -21,6 +21,8 @@ public class ListProductsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("المنتجات");
+
         Bundle bundle=getIntent().getExtras();
         addListProductsFragment(bundle);
 

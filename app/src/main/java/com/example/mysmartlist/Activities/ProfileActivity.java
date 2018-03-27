@@ -12,6 +12,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        setTitle("الصفحة الشخصيه");
+
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_profile_container,new ProfileFragment()).commit();
     }
 }

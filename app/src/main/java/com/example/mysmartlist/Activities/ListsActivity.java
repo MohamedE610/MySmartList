@@ -22,6 +22,9 @@ public class ListsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        setTitle("القوائم");
+
         fragmentManager=getSupportFragmentManager();
         addListsFragment();
 
