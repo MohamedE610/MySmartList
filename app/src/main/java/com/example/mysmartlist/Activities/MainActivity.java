@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.mysmartlist.Fragments.ListsFragment;
 import com.example.mysmartlist.Fragments.CategoriesFragment;
 import com.example.mysmartlist.Fragments.FavouriteFragment;
 import com.example.mysmartlist.Fragments.MainActivityFragment;
@@ -20,9 +19,7 @@ import com.example.mysmartlist.Fragments.SettingsFragment;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseCheckAuth;
-import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignOut;
 import com.example.mysmartlist.Utils.MySharedPreferences;
-import com.example.mysmartlist.Utils.WebCrawler.CategoriesWebCrawling;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         if(wc_cat.equals("1")) {
 
         }
-       /* CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
+       /* BandaProductsWebCrawling categoriesWebCrawling = new BandaProductsWebCrawling(this);
         categoriesWebCrawling.execute();*/
 
 

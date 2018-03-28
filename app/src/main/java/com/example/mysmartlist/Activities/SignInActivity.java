@@ -1,7 +1,6 @@
 package com.example.mysmartlist.Activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,9 +19,8 @@ import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getClientByFirebaseIDRequest;
-import com.example.mysmartlist.Utils.WebCrawler.CategoriesWebCrawling;
-import com.example.mysmartlist.Utils.WebCrawler.ProductsWebCrawling;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
+import com.example.mysmartlist.Utils.WebCrawler.Banda.BandaProductsWebCrawling;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -46,10 +44,19 @@ public class SignInActivity extends AppCompatActivity {
 
         MySharedPreferences.setUpMySharedPreferences(this);
 
-       /* CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
+
+
+
+        BandaProductsWebCrawling bandaProductsWebCrawling=new BandaProductsWebCrawling(this,"1","");
+        bandaProductsWebCrawling.execute();
+
+        /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling=new BandaCategoriesWebCrawling(this);
+        bandaCategoriesWebCrawling.execute();*/
+
+       /* BandaProductsWebCrawling categoriesWebCrawling = new BandaProductsWebCrawling(this);
         categoriesWebCrawling.execute();*/
 
-        /*ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);
+        /*DanobProductsWebCrawling productsWebCrawling=new DanobProductsWebCrawling(this);
         productsWebCrawling.execute();*/
 
 
