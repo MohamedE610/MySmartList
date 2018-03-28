@@ -46,7 +46,7 @@ public class SignInActivity extends AppCompatActivity {
 
         MySharedPreferences.setUpMySharedPreferences(this);
 
-        /*CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
+       /* CategoriesWebCrawling categoriesWebCrawling = new CategoriesWebCrawling(this);
         categoriesWebCrawling.execute();*/
 
         /*ProductsWebCrawling productsWebCrawling=new ProductsWebCrawling(this);

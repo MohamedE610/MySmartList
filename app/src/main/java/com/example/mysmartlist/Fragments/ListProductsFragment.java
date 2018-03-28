@@ -45,6 +45,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
     LinearLayout editLinear;
     boolean isEditable=false;
     TextView addToReportsView;
+    TextView expensesTextView;
 
     Button btnShare,btnRemove,btnCancel;
 
@@ -56,6 +57,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         view=inflater.inflate(R.layout.fragment_list_products, container, false);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_cat);
         addToReportsView=(TextView) view.findViewById(R.id.btn_add_reports);
+        expensesTextView=(TextView) view.findViewById(R.id.text_expenses);
 
         btnCancel=(Button)view.findViewById(R.id.btn_cancel);
         btnRemove=(Button)view.findViewById(R.id.btn_remove);
@@ -142,7 +144,10 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         listProductsAdapter.setISendCheckedListLisnter(this);
         recyclerView.setAdapter(listProductsAdapter);
         listProductsAdapter.notifyDataSetChanged();
+        if(list.data.expenses!=null)
+           expensesTextView.setText(list.data.expenses.toString());
     }
+
     @Override
     public void OnSuccess(Object obj) {
         editLinear.setVisibility(View.VISIBLE);
