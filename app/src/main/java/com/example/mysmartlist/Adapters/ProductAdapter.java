@@ -140,7 +140,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         String detailsStr=products.get(position).data.name+"\n"+products.get(position).data.price;
         holder.textView.setText(detailsStr);
 
-        String urlStr = Constants.BasicUrlImg+products.get(position).data.image;
+        //String urlStr = Constants.BasicUrlImg+products.get(position).data.image;
+        String urlStr =products.get(position).data.image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
         holder.fav= products.get(position).client.fav;

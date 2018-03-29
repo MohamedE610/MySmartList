@@ -87,7 +87,8 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         String detailsStr=products.data.get(position).name+"\n"+products.data.get(position).price;
         holder.textView.setText(detailsStr);
 
-        String urlStr = Constants.BasicUrlImg+products.data.get(position).image;
+        //String urlStr = Constants.BasicUrlImg+products.data.get(position).image;
+        String urlStr =products.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
        // holder.fav= SignupActivity.isFavProduct(products.data.get(position).id);
