@@ -149,7 +149,7 @@ public class DanobProductsWebCrawling extends AsyncTask<Void, Void, String> {
                 }
             });
 
-            addMultipleProductsRequest.start();
+            //addMultipleProductsRequest.start();
 
         } catch (Exception e) {
             e.printStackTrace();

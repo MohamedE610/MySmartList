@@ -102,7 +102,7 @@ public class DanobCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                 }
             });
 
-            multipleCategoriesRequest.start();
+            //multipleCategoriesRequest.start();
 
 
         } catch (IOException e) {

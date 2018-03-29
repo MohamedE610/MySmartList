@@ -39,14 +39,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         MySharedPreferences.setUpMySharedPreferences(this);
 
-        String wc_cat=MySharedPreferences.getUserSetting("wc_cat");
-
-        if(wc_cat.equals("1")) {
-
-        }
-       /* BandaProductsWebCrawling categoriesWebCrawling = new BandaProductsWebCrawling(this);
-        categoriesWebCrawling.execute();*/
-
 
         fragmentManager=getSupportFragmentManager();
         int uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));

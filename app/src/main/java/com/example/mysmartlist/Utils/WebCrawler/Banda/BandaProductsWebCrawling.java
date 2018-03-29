@@ -53,7 +53,9 @@ public class BandaProductsWebCrawling extends AsyncTask<Void, Void, String> {
 
 
     public void jsoupMethod() {
-        final String urlToLoad = "http://www.panda.com.sa/stores/riyadh/food-products.html";
+        //final String urlToLoad = "http://www.panda.com.sa/stores/riyadh/food-products.html";
+        final String urlToLoad = url;
+
         Document document = null;
         final HashMap<String,ArrayList<HashMap<String,String>>> products=new HashMap<>();
         final ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();

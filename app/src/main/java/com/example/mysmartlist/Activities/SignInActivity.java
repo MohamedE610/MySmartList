@@ -47,8 +47,8 @@ public class SignInActivity extends AppCompatActivity {
 
 
 
-        BandaProductsWebCrawling bandaProductsWebCrawling=new BandaProductsWebCrawling(this,"1","");
-        bandaProductsWebCrawling.execute();
+        /*BandaProductsWebCrawling bandaProductsWebCrawling=new BandaProductsWebCrawling(this,"1","");
+        bandaProductsWebCrawling.execute();*/
 
         /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling=new BandaCategoriesWebCrawling(this);
         bandaCategoriesWebCrawling.execute();*/
