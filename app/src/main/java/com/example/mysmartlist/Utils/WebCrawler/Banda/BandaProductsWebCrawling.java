@@ -57,7 +57,7 @@ public class BandaProductsWebCrawling extends AsyncTask<Void, Void, String> {
         final String urlToLoad = url;
 
         Document document = null;
-        final HashMap<String,ArrayList<HashMap<String,String>>> products=new HashMap<>();
+        final HashMap<String,Object> products=new HashMap<>();
         final ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
         try {
             document = Jsoup.connect(urlToLoad).get();
@@ -91,6 +91,7 @@ public class BandaProductsWebCrawling extends AsyncTask<Void, Void, String> {
                 hashMaps.add(hashMap);
             }
             products.put("data",hashMaps);
+            products.put("market_id","2");
 
             AddMultipleProductsRequest addMultipleProductsRequest=new AddMultipleProductsRequest(products);
             addMultipleProductsRequest.setCallbacks(new Callbacks() {
@@ -105,7 +106,7 @@ public class BandaProductsWebCrawling extends AsyncTask<Void, Void, String> {
                 }
             });
 
-            //addMultipleProductsRequest.start();
+            addMultipleProductsRequest.start();
 
 
         } catch (IOException e) {

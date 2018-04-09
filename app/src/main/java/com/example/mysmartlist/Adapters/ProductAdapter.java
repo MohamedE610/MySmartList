@@ -140,6 +140,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         String detailsStr=products.get(position).data.name+"\n"+products.get(position).data.price;
         holder.textView.setText(detailsStr);
 
+        String market=products.get(position).data.market;
+        String marketStr;
+        if(market.equals("1"))
+            marketStr="الدانوب";
+        else
+            marketStr="هايبر باندا";
+        holder.market.setText(marketStr);
+
         //String urlStr = Constants.BasicUrlImg+products.get(position).data.image;
         String urlStr =products.get(position).data.image;
         Picasso.with(context).load(urlStr).into(holder.img);
@@ -284,6 +292,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         ImageView imgFavourit;
         TextView textView;
         CardView cardView;
+        TextView market;
         boolean pin=false;
         boolean fav=false;
 
@@ -309,6 +318,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             textViewPlus = (TextView) itemView.findViewById(R.id.text_plus);
             textViewMinus= (TextView) itemView.findViewById(R.id.text_minus);
             textViewCount = (TextView) itemView.findViewById(R.id.text_count);
+            market = (TextView) itemView.findViewById(R.id.market);
 
         }
 
@@ -359,6 +369,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             @Override
             public void OnSuccess(Object obj) {
                 final ClientLists clientLists=(ClientLists)obj;
+
+                if(clientLists.data.size()==0){
+                    Toast.makeText(context, "من فضلك قوم بانشاء قائمة اولا", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 for (int i = 0; i <clientLists.data.size() ; i++) {
                     popupMenu.getMenu().add(groubId,1000+i,i,clientLists.data.get(i).name);
                    }

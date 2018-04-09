@@ -26,6 +26,10 @@ public class PopularProduct implements Serializable
     @SerializedName("category_id")
     @Expose
     public Integer categoryId;
+    @SerializedName("market")
+    @Expose
+    public String market;
+
     private final static long serialVersionUID = 7314724218558418418L;
 
 }

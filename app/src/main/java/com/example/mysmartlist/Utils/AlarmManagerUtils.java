@@ -1,11 +1,18 @@
 package com.example.mysmartlist.Utils;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.PersistableBundle;
 
 import com.example.mysmartlist.Services.ReportService;
+import com.example.mysmartlist.Services.WebCrawlingService;
 
 import java.util.Calendar;
 
@@ -40,48 +47,50 @@ public class AlarmManagerUtils {
     }
 
     private void setAlarmManager(int alarmType) {
-        int hour,minute,id = 0;
-        long interval = 0;
-        hour=10;
-        minute=10;
-        Intent intent = new Intent(context, ReportService.class);
 
         if(alarmType==WEEKLY){
-            id=WEEKLY_ID;
-            interval=weekInterval;
-            intent.setAction("weekly");
+           scheduleJobWeekly();
         }else if(alarmType==MONTHLY){
-            id=MONTHLY_ID;
-            interval=monthInterval;
-            intent.setAction("monthly");
+           scheduleJobMonthly();
         }
 
-        PendingIntent pendingIntent = PendingIntent.getService(context, id, intent, 0);
-        long _alarm = 0;
-        Calendar calendar = Calendar.getInstance();
-        //calendar.set(Calendar.HOUR_OF_DAY, hour);
-        //calendar.set(Calendar.MINUTE, minute);
-        _alarm=calendar.getTimeInMillis()+10*60*100;
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, _alarm, interval , pendingIntent);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void scheduleJobWeekly() {
+        ComponentName serviceComponent = new ComponentName(context, ReportService.class);
+        JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
+        builder.setMinimumLatency(7*24*60*60*1000); // wait at least
+        builder.setOverrideDeadline((7*24*60*60*1000)+(60*1000)); // maximum delay
+        //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
+        //builder.setRequiresDeviceIdle(true); // device should be idle
+        //builder.setRequiresCharging(false); // we don't care if the device is charging or not
+        PersistableBundle bundle=new PersistableBundle();
+        bundle.putString("action","weekly");
+        builder.setExtras(bundle);
+
+        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        jobScheduler.schedule(builder.build());
 
     }
 
-    public void stopService() {
-        context.stopService(new Intent(context, ReportService.class));
-        cancelAlarms();
-    }
 
-    public void cancelAlarms() {
-        Intent intentWeeklyReports = new Intent(context, ReportService.class);
-        PendingIntent pendingIntentWeeklyReports = PendingIntent.getService(context, WEEKLY_ID, intentWeeklyReports, 0);
+    @TargetApi(Build.VERSION_CODES.M)
+    public void scheduleJobMonthly() {
+        ComponentName serviceComponent = new ComponentName(context, ReportService.class);
+        JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
+        builder.setMinimumLatency(30*24*60*60*1000); // wait at least
+        builder.setOverrideDeadline((30*24*60*60*1000)+(60*1000)); // maximum delay
+        //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
+        //builder.setRequiresDeviceIdle(true); // device should be idle
+        //builder.setRequiresCharging(false); // we don't care if the device is charging or not
 
-        Intent intentMonthlyReports = new Intent(context, ReportService.class);
-        PendingIntent pendingIntentMonthlyReports = PendingIntent.getService(context, MONTHLY_ID, intentMonthlyReports, 0);
+        PersistableBundle bundle=new PersistableBundle();
+        bundle.putString("action","monthly");
+        builder.setExtras(bundle);
+        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        jobScheduler.schedule(builder.build());
 
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntentWeeklyReports);
-        alarmManager.cancel(pendingIntentMonthlyReports);
     }
 
 }

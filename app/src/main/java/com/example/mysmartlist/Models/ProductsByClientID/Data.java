@@ -26,6 +26,11 @@ public class Data implements Serializable
     @SerializedName("favs")
     @Expose
     public Integer favs;
+
+    @SerializedName("market")
+    @Expose
+    public String market;
+
     private final static long serialVersionUID = 8587654032520806074L;
 
 }

@@ -57,28 +57,31 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
     //public static Client client;
     public Client client;
-    Callbacks callbacks=new Callbacks() {
+    Callbacks callbacks = new Callbacks() {
         @Override
         public void OnSuccess(Object obj) {
+            try {
+                client = (Client) obj;
+                int Uid = client.data.id;
+                int clientSalary = client.data.salary;
+                String clientBudget = client.data.budget;
 
+                MySharedPreferences.setUpMySharedPreferences(SignupActivity.this);
+                MySharedPreferences.setUserSetting("uid", Uid + "");
+                MySharedPreferences.setUserSetting("clientSalary", clientSalary + "");
+                MySharedPreferences.setUserSetting("clientBudget", clientBudget + "");
 
-            client=(Client)obj;
-            int Uid=client.data.id;
-            int clientSalary=client.data.salary;
-            String clientBudget=client.data.budget;
+                AlarmManagerUtils alarmManagerUtils = new AlarmManagerUtils(SignupActivity.this);
+                if (clientBudget.equals("weekly")) {
+                    alarmManagerUtils.setWeeklyAlarm();
+                } else if (clientBudget.equals("monthly")) {
+                    alarmManagerUtils.setMonthlyAlarm();
+                }
 
-            MySharedPreferences.setUpMySharedPreferences(SignupActivity.this);
-            MySharedPreferences.setUserSetting("uid",Uid+"");
-            MySharedPreferences.setUserSetting("clientSalary",clientSalary+"");
-            MySharedPreferences.setUserSetting("clientBudget",clientBudget+"");
-            AlarmManagerUtils alarmManagerUtils=new AlarmManagerUtils(SignupActivity.this);
-            if(clientBudget.equals("weekly")){
-                alarmManagerUtils.setWeeklyAlarm();
-            }else if(equals("monthly")){
-                alarmManagerUtils.setMonthlyAlarm();
+                startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                finish();
+            } catch (Exception e) {
             }
-            startActivity(new Intent(SignupActivity.this, MainActivity.class));
-            finish();
         }
 
         @Override
@@ -87,16 +90,16 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
         }
     };
 
-    String name,phone,email,gender,familyNum,salaryRang,reportType;
+    String name, phone, email, gender, familyNum, salaryRang, reportType;
 
     Spinner spinnerFamilyMember;
     //Spinner spinnerSalaryRang;
     String familyMemberStr;
     String salaryRangStr;
 
-    RadioButton maleRadioBtn,femaleRadioBtn,weeklyRadioBtn,monthlyRadioBtn;
+    RadioButton maleRadioBtn, femaleRadioBtn, weeklyRadioBtn, monthlyRadioBtn;
 
-    private EditText inputEmail, inputPassword,inuptUserName,inputPhoneNum,inputPasswordConfirm,inputSalary;
+    private EditText inputEmail, inputPassword, inuptUserName, inputPhoneNum, inputPasswordConfirm, inputSalary;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     //private FirebaseAuth auth;
@@ -107,10 +110,10 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         //a a1=new a();
-       // Log.d("asdasdasd",a1.i+"");
+        // Log.d("asdasdasd",a1.i+"");
         //Get Firebase auth instance
         //auth = FirebaseAuth.getInstance();
-        firebaseSignUp=new FirebaseSignUp();
+        firebaseSignUp = new FirebaseSignUp();
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
@@ -137,7 +140,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
 
         //spinnerSalaryRang=(Spinner)findViewById(R.id.spinner_salary_rang);
-        spinnerFamilyMember=(Spinner)findViewById(R.id.spinner_family_member);
+        spinnerFamilyMember = (Spinner) findViewById(R.id.spinner_family_member);
         //createSalaryRangSpinner();
         createFamilyMemberSpinner();
 
@@ -156,7 +159,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
             }
         });
 
-        clientDetails=new HashMap();
+        clientDetails = new HashMap();
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,12 +167,11 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                 name = inuptUserName.getText().toString().trim();
                 phone = inputPhoneNum.getText().toString().trim();
                 email = inputEmail.getText().toString().trim();
-                salaryRangStr=inputSalary.getText().toString().trim();
+                salaryRangStr = inputSalary.getText().toString().trim();
 
                 String password = inputPassword.getText().toString().trim();
 
                 String passwordConfirm = inputPasswordConfirm.getText().toString().trim();
-
 
 
                 if (TextUtils.isEmpty(email)) {
@@ -198,10 +200,9 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                 }*/
 
                 if (!password.equals(passwordConfirm)) {
-                    Toast.makeText(getApplicationContext(),"تاكيد كلمه السر غير صحيح", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "تاكيد كلمه السر غير صحيح", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
 
 
                 if (password.length() < 6) {
@@ -219,16 +220,17 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                         try {
                             clientDetails = new HashMap();
                             clientDetails.put("name", name);
-                            clientDetails.put("phone",phone);
-                            clientDetails.put("email",email);
-                            clientDetails.put("gender",gender);
-                            clientDetails.put("firebase_id",task.getResult().getUser().getUid());
-                            clientDetails.put("budget_type",reportType);
-                            clientDetails.put("family_count",familyNum);
-                            clientDetails.put("salary",salaryRangStr);
-                        }catch (Exception e){}
+                            clientDetails.put("phone", phone);
+                            clientDetails.put("email", email);
+                            clientDetails.put("gender", gender);
+                            clientDetails.put("firebase_id", task.getResult().getUser().getUid());
+                            clientDetails.put("budget_type", reportType);
+                            clientDetails.put("family_count", familyNum);
+                            clientDetails.put("salary", salaryRangStr);
+                        } catch (Exception e) {
+                        }
 
-                        createClient=new createClientAccountRequest(clientDetails);
+                        createClient = new createClientAccountRequest(clientDetails);
                         createClient.setCallbacks(callbacks);
                         createClient.start();
 
@@ -239,16 +241,16 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                     @Override
                     public void OnFailure(Object obj) {
 
-                            Task<AuthResult> task = (Task<AuthResult>) obj;
-                            Toast.makeText(SignupActivity.this, getString(R.string.createUserwithemailoncomplete) + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
+                        Task<AuthResult> task = (Task<AuthResult>) obj;
+                        Toast.makeText(SignupActivity.this, getString(R.string.createUserwithemailoncomplete) + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
 
-                            Toast.makeText(SignupActivity.this, getString(R.string.authentication_failed) + task.getException(),
-                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignupActivity.this, getString(R.string.authentication_failed) + task.getException(),
+                                Toast.LENGTH_SHORT).show();
 
                     }
                 });
-                firebaseSignUp.signUpWithFirebase(email,password);
+                firebaseSignUp.signUpWithFirebase(email, password);
 
                 progressBar.setVisibility(View.VISIBLE);
                 //create user
@@ -281,23 +283,24 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     }
 
 
-    String[] spinnerFamilyMemberData= {"","1","2","3","أكثر من 3"};
-    String[] familyMemberValues={"1","2","3","3+"};
-    private void createFamilyMemberSpinner(){
-        ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this,R.layout.spinner_item,spinnerFamilyMemberData);
+    String[] spinnerFamilyMemberData = {"", "1", "2", "3", "أكثر من 3"};
+    String[] familyMemberValues = {"1", "2", "3", "3+"};
+
+    private void createFamilyMemberSpinner() {
+        ArrayAdapter<String> SpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, spinnerFamilyMemberData);
         spinnerFamilyMember.setAdapter(SpinnerAdapter);
         spinnerFamilyMember.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                familyMemberStr=spinnerFamilyMemberData[position];
-                if(position>0)
-                    familyNum=familyMemberValues[position-1];
+                familyMemberStr = spinnerFamilyMemberData[position];
+                if (position > 0)
+                    familyNum = familyMemberValues[position - 1];
 
-                if(salaryRangStr!=null&&salaryRangStr.equals("")){
-                    if(familyNum.equals(familyMemberValues[1])){
-                        salaryRangStr="5000";
-                    }else {
-                        salaryRangStr="10000";
+                if (salaryRangStr != null && salaryRangStr.equals("")) {
+                    if (familyNum.equals(familyMemberValues[1])) {
+                        salaryRangStr = "5000";
+                    } else {
+                        salaryRangStr = "10000";
                     }
                 }
             }
@@ -332,27 +335,27 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-        int id=compoundButton.getId();
+        int id = compoundButton.getId();
 
-        switch (id){
+        switch (id) {
             case R.id.male_rb:
-                if(b)
-                    gender="male";
+                if (b)
+                    gender = "male";
                 break;
 
             case R.id.female_rb:
-                if(b)
-                    gender="female";
+                if (b)
+                    gender = "female";
                 break;
 
             case R.id.weekly_rb:
-                if(b)
-                    reportType="weekly";
+                if (b)
+                    reportType = "weekly";
                 break;
 
             case R.id.monthly_rb:
-                if(b)
-                    reportType="monthly";
+                if (b)
+                    reportType = "monthly";
                 break;
         }
 

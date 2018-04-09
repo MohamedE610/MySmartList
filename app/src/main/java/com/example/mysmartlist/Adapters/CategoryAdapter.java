@@ -53,6 +53,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         String detailsStr=categories.data.get(position).name;
         holder.textView.setText(detailsStr);
 
+        String market=categories.data.get(position).market;
+        String marketStr;
+        if(market.equals("1"))
+            marketStr="الدانوب";
+        else
+            marketStr="هايبر باندا";
+        holder.market.setText(marketStr);
+
         String urlStr =categories.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
 
@@ -77,6 +85,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
         ImageView img;
         TextView textView;
+        TextView market;
         CardView cardView;
 
 
@@ -86,7 +95,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             img = (ImageView) itemView.findViewById(R.id.img);
             textView = (TextView) itemView.findViewById(R.id.text_details);
             cardView = (CardView) itemView.findViewById(R.id.card);
-
+            market = (TextView) itemView.findViewById(R.id.market);
         }
 
         @Override

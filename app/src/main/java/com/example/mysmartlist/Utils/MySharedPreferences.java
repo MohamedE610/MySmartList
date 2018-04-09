@@ -29,7 +29,7 @@ public class MySharedPreferences {
         return UserSetting;
     }
 
-    public static boolean IsFirstTime(){
+    public static boolean isFirstTime(){
         String check=sharedPref.getString("FirstTime","");
 
         if(check.equals("yes"))
@@ -37,7 +37,7 @@ public class MySharedPreferences {
          return true;
     }
 
-    public static void FirstTime(){
+    public static void firstTime(){
         editor.putString("FirstTime","yes");
         editor.commit();
     }

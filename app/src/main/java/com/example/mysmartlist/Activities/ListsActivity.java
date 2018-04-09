@@ -34,8 +34,7 @@ public class ListsActivity extends AppCompatActivity {
             public void onClick(View view) {
               /*  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-
-         /*     HashMap<String,String> hashMap=new HashMap<>();
+                 /*     HashMap<String,String> hashMap=new HashMap<>();
               String name="";
               hashMap.put("name",name);
               MySharedPreferences.setUpMySharedPreferences(ListsActivity.this);

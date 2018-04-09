@@ -107,7 +107,7 @@ public class DanobProductsWebCrawling extends AsyncTask<Void, Void, String> {
         try {
             document = Jsoup.parse(html);
             Elements elements = document.getElementsByClass(productClass);
-            HashMap<String,ArrayList<HashMap<String,String>>> products=new HashMap<>();
+            HashMap<String,Object> products=new HashMap<>();
             ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
 
             int count;
@@ -135,6 +135,7 @@ public class DanobProductsWebCrawling extends AsyncTask<Void, Void, String> {
 
             }
             products.put("data",hashMaps);
+            products.put("market_id","1");
 
             AddMultipleProductsRequest addMultipleProductsRequest=new AddMultipleProductsRequest(products);
             addMultipleProductsRequest.setCallbacks(new Callbacks() {

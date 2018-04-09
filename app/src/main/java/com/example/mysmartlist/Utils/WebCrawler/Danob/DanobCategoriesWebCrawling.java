@@ -54,7 +54,8 @@ public class DanobCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
     public void jsoupMethod() {
         final String urlToLoad = "https://danube.sa/departments";
         Document document = null;
-        final HashMap<String,ArrayList<HashMap<String,String>>> categories=new HashMap<>();
+        final HashMap<String,Object> categories=new HashMap<>();
+
         final ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
         try {
             document = Jsoup.connect(urlToLoad).get();
@@ -78,6 +79,7 @@ public class DanobCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                 hashMaps.add(hashMap);
             }
             categories.put("data",hashMaps);
+            categories.put("market_id","1");
 
             AddMultipleCategoriesRequest multipleCategoriesRequest=new AddMultipleCategoriesRequest(categories);
             multipleCategoriesRequest.setCallbacks(new Callbacks() {

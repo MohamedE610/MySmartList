@@ -23,6 +23,11 @@ android {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'README.md'
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -46,16 +51,7 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.8.0'
     compile 'org.jsoup:jsoup:1.11.2'
 
-    /* compile ('io.selendroid:selendroid-standalone:0.16.0') {
-        exclude group: 'io.selendroid', module: 'selendroid-server'
-        exclude group: 'io.selendroid', module: 'android-driver-app'
-    }
-    compile 'io.selendroid:selendroid-client:0.16.0'
 
-    compile('org.apache.httpcomponents:httpmime:4.3.6') {
-        exclude module: 'httpclient'
-    }
-    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'*/
     implementation "com.android.support:multidex:1.0.3"
 }
 

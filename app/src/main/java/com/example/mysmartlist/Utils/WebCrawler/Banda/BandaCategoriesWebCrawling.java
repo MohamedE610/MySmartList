@@ -55,7 +55,7 @@ public class BandaCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
     public void jsoupMethod() {
         final String urlToLoad = "http://www.panda.com.sa/stores/riyadh/categories";
         Document document = null;
-        final HashMap<String,ArrayList<HashMap<String,String>>> categories=new HashMap<>();
+        final HashMap<String,Object> categories=new HashMap<>();
         final ArrayList<HashMap<String,String>> hashMaps=new ArrayList<>();
         try {
             document = Jsoup.connect(urlToLoad).get();
@@ -72,6 +72,7 @@ public class BandaCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                 hashMaps.add(hashMap);
             }
             categories.put("data",hashMaps);
+            categories.put("market_id","2");
 
             AddMultipleCategoriesRequest multipleCategoriesRequest=new AddMultipleCategoriesRequest(categories);
             multipleCategoriesRequest.setCallbacks(new Callbacks() {
@@ -97,7 +98,7 @@ public class BandaCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                 }
             });
 
-            //multipleCategoriesRequest.start();
+            multipleCategoriesRequest.start();
 
 
         } catch (IOException e) {

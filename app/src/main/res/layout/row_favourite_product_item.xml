@@ -26,6 +26,14 @@
             android:padding="5dp"
             android:layout_gravity="center"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/market"
+            android:padding="5dp"
+            android:layout_gravity="center"/>
+
+
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"

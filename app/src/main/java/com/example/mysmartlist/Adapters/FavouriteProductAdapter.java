@@ -87,6 +87,14 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         String detailsStr=products.data.get(position).name+"\n"+products.data.get(position).price;
         holder.textView.setText(detailsStr);
 
+        String market=products.data.get(position).market;
+        String marketStr;
+        if(market.equals("1"))
+            marketStr="الدانوب";
+        else
+            marketStr="هايبر باندا";
+        holder.market.setText(marketStr);
+
         //String urlStr = Constants.BasicUrlImg+products.data.get(position).image;
         String urlStr =products.data.get(position).image;
         Picasso.with(context).load(urlStr).into(holder.img);
@@ -143,6 +151,7 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         ImageView imgFavourite;
         TextView textView;
         CardView cardView;
+        TextView market;
         boolean fav=true;
 
         public MyViewHolder(View itemView) {
@@ -152,6 +161,7 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
             imgFavourite = (ImageView) itemView.findViewById(R.id.imgFavourite);
             textView = (TextView) itemView.findViewById(R.id.text_details);
             cardView = (CardView) itemView.findViewById(R.id.card);
+            market = (TextView) itemView.findViewById(R.id.market);
 
         }
 

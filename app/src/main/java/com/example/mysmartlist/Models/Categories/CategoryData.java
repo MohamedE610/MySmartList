@@ -17,6 +17,9 @@ public class CategoryData implements Serializable
     @SerializedName("image")
     @Expose
     public String image;
+    @SerializedName("market")
+    @Expose
+    public String market;
     private final static long serialVersionUID = 2601669721816561310L;
 
 }

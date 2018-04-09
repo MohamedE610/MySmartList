@@ -16,11 +16,15 @@ import android.widget.Toast;
 
 import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.AlarmManagerUtils;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getClientByFirebaseIDRequest;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
+import com.example.mysmartlist.Utils.WebCrawler.Banda.BandaCategoriesWebCrawling;
 import com.example.mysmartlist.Utils.WebCrawler.Banda.BandaProductsWebCrawling;
+import com.example.mysmartlist.Utils.WebCrawler.Danob.DanobCategoriesWebCrawling;
+import com.example.mysmartlist.Utils.WebCrawler.WebCrawlingUtils;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -40,24 +44,19 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         MySharedPreferences.setUpMySharedPreferences(this);
+        if(MySharedPreferences.isFirstTime()) {
 
+            BandaCategoriesWebCrawling bandaCategoriesWebCrawling = new BandaCategoriesWebCrawling(this);
+            bandaCategoriesWebCrawling.execute();
 
+            DanobCategoriesWebCrawling danobCategoriesWebCrawling=new DanobCategoriesWebCrawling(this);
+            danobCategoriesWebCrawling.execute();
 
+            WebCrawlingUtils.scheduleJob(this);
 
-        /*BandaProductsWebCrawling bandaProductsWebCrawling=new BandaProductsWebCrawling(this,"1","");
-        bandaProductsWebCrawling.execute();*/
-
-        /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling=new BandaCategoriesWebCrawling(this);
-        bandaCategoriesWebCrawling.execute();*/
-
-       /* BandaProductsWebCrawling categoriesWebCrawling = new BandaProductsWebCrawling(this);
-        categoriesWebCrawling.execute();*/
-
-        /*DanobProductsWebCrawling productsWebCrawling=new DanobProductsWebCrawling(this);
-        productsWebCrawling.execute();*/
+            MySharedPreferences.firstTime();
+        }
 
 
         //Get Firebase auth instance
@@ -177,11 +176,23 @@ public class SignInActivity extends AppCompatActivity {
                                 int clientSalary=client.data.salary;
                                 String clientBudget=client.data.budget;
 
+
+                                MySharedPreferences.setUpMySharedPreferences(getApplicationContext());
+                                String client_budget = MySharedPreferences.getUserSetting("clientBudget");
+
                                 MySharedPreferences.setUpMySharedPreferences(SignInActivity.this);
                                 MySharedPreferences.setUserSetting("uid",Uid+"");
                                 MySharedPreferences.setUserSetting("clientSalary",clientSalary+"");
                                 MySharedPreferences.setUserSetting("clientBudget",clientBudget+"");
 
+                                if(!client_budget.equals(clientBudget)) {
+                                    AlarmManagerUtils alarmManagerUtils = new AlarmManagerUtils(SignInActivity.this);
+                                    if (clientBudget.equals("weekly")) {
+                                        alarmManagerUtils.setWeeklyAlarm();
+                                    } else if (clientBudget.equals("monthly")) {
+                                        alarmManagerUtils.setMonthlyAlarm();
+                                    }
+                                }
 
                                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                 startActivity(intent);

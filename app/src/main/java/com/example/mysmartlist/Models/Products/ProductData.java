@@ -26,6 +26,10 @@ public class ProductData implements Serializable
     @SerializedName("favs")
     @Expose
     public Integer favs;
+
+    @SerializedName("market")
+    @Expose
+    public String market;
     private final static long serialVersionUID = 6363198677104344270L;
 
 }

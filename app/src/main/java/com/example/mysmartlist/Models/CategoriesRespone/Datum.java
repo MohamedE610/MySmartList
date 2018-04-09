@@ -17,6 +17,11 @@ public class Datum implements Serializable
     @SerializedName("link")
     @Expose
     public String link;
+
+    @SerializedName("market")
+    @Expose
+    public String market;
+
     private final static long serialVersionUID = 3459718118117989941L;
 
 }
