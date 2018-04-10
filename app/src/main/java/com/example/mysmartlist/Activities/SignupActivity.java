@@ -73,9 +73,9 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
                 AlarmManagerUtils alarmManagerUtils = new AlarmManagerUtils(SignupActivity.this);
                 if (clientBudget.equals("weekly")) {
-                    alarmManagerUtils.setWeeklyAlarm();
+                    //alarmManagerUtils.setWeeklyAlarm();
                 } else if (clientBudget.equals("monthly")) {
-                    alarmManagerUtils.setMonthlyAlarm();
+                    //alarmManagerUtils.setMonthlyAlarm();
                 }
 
                 startActivity(new Intent(SignupActivity.this, MainActivity.class));

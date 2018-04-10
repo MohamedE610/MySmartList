@@ -48,6 +48,9 @@ public class SignInActivity extends AppCompatActivity {
         MySharedPreferences.setUpMySharedPreferences(this);
         MySharedPreferences.setUserSetting("notNow","0");
 
+        /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling = new BandaCategoriesWebCrawling(this);
+            bandaCategoriesWebCrawling.execute();*/
+
         if(MySharedPreferences.isFirstTime()) {
             /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling = new BandaCategoriesWebCrawling(this);
             bandaCategoriesWebCrawling.execute();
@@ -55,7 +58,7 @@ public class SignInActivity extends AppCompatActivity {
             DanobCategoriesWebCrawling danobCategoriesWebCrawling=new DanobCategoriesWebCrawling(this);
             danobCategoriesWebCrawling.execute();*/
 
-            WebCrawlingUtils.scheduleJob(this);
+            //WebCrawlingUtils.scheduleJob(this);
 
             MySharedPreferences.firstTime();
         }
@@ -206,9 +209,9 @@ public class SignInActivity extends AppCompatActivity {
                                 if(!client_budget.equals(clientBudget)) {
                                     AlarmManagerUtils alarmManagerUtils = new AlarmManagerUtils(SignInActivity.this);
                                     if (clientBudget.equals("weekly")) {
-                                        alarmManagerUtils.setWeeklyAlarm();
+                                        //alarmManagerUtils.setWeeklyAlarm();
                                     } else if (clientBudget.equals("monthly")) {
-                                        alarmManagerUtils.setMonthlyAlarm();
+                                        //alarmManagerUtils.setMonthlyAlarm();
                                     }
                                 }
 

@@ -54,7 +54,18 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
         notNowStr = MySharedPreferences.getUserSetting("notNow");
 
         if (notNowStr != null && notNowStr.equals("0")) {
-            marketStr=getArguments().getString("market");
+
+            Bundle bundle=getArguments();
+            if(bundle!=null) {
+                marketStr = bundle.getString("market");
+            }else {
+                marketStr="1";
+            }
+
+
+            if(marketStr==null)
+                marketStr="1";
+
             if (NetworkState.ConnectionAvailable(getActivity())) {
                 if(marketStr.equals("1")){
                     getAllProducts();
@@ -62,6 +73,8 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
                     getAlDanobProducts();
                 }else if(marketStr.equals("3")){
                     getBandaProducts();
+                }else{
+                    getAllProducts();
                 }
             }
 

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         MySharedPreferences.setUpMySharedPreferences(this);
 
 
+        bundle.putString("market","1");
 
         fragmentManager=getSupportFragmentManager();
         try {
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                    marketStr=spinnerMarketData[position];
                    marketStr=marketValues[position];
+                   addHomeFragment();
             }
 
             @Override
@@ -181,26 +183,31 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 tab.setIcon(R.drawable.home__selected);
                 fab.setVisibility(View.VISIBLE);
                 addHomeFragment();
+                marketSpinner.setVisibility(View.VISIBLE);
                 break;
             case 3:
                 tab.setIcon(R.drawable.view_grid_selected);
                 addCategoriesFragment();
                 fab.setVisibility(View.GONE);
+                marketSpinner.setVisibility(View.GONE);
                 break;
             case 2:
                 tab.setIcon(R.drawable.magnify_plus_outline_selected);
                 fab.setVisibility(View.GONE);
                 addSearchFragment();
+                marketSpinner.setVisibility(View.GONE);
                 break;
             case 1:
                 tab.setIcon(R.drawable.heart_outline_selected);
                 fab.setVisibility(View.GONE);
                 addFavouriteFragment();
+                marketSpinner.setVisibility(View.GONE);
                 break;
             case 0:
                 tab.setIcon(R.drawable.settings_selected);
                 fab.setVisibility(View.GONE);
                 addSettingsFragment();
+                marketSpinner.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -250,10 +257,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
 
+    Bundle bundle=new Bundle();
     public static void addHomeFragment() {
         MainActivityFragment fragment=new MainActivityFragment();
         Bundle bundle=new Bundle();
         bundle.putString("market",marketStr);
+        fragment.setArguments(bundle);
         FragmentManager fragmentManager1=fragmentManager;
         fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }

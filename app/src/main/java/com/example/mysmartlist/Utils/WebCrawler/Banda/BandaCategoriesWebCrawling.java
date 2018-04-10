@@ -71,7 +71,7 @@ public class BandaCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                 hashMap.put("link",link);
                 hashMaps.add(hashMap);
             }
-            categories.put("data",hashMaps);
+/**/            categories.put("data",hashMaps);
             categories.put("market_id","2");
 
             AddMultipleCategoriesRequest multipleCategoriesRequest=new AddMultipleCategoriesRequest(categories);

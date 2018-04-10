@@ -31,7 +31,7 @@ public class getMarketProductsByClientIDRequest extends FetchData implements Cal
 
     private int client_id,market_id;
 
-    public getMarketProductsByClientIDRequest(int client_id,int market_id){
+    public getMarketProductsByClientIDRequest(int market_id,int client_id){
         this.client_id=client_id;
         this.market_id=market_id;
     }

@@ -447,7 +447,7 @@ public interface ApiInterface {
             "Content-Type: application/json",
             "Authorization: "+ Constants.accessToken
     })
-    @GET("/markets/{market_id}/products/client/{client_id}")
+    @GET("markets/{market_id}/products/client/{client_id}")
     Call<ArrayList<ProductsByClientID>> getProductsMarket(@Path("market_id") int market_id,@Path("client_id") int client_id);
 
 
