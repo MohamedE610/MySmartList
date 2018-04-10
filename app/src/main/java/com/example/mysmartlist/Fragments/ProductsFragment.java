@@ -18,6 +18,7 @@ import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.FetchProductsData;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getMarketProductsByClientIDRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getProductsByClientIDRequest;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
         // Required empty public constructor
     }
 
+    String marketStr;
 
     View view;
     String notNowStr;
@@ -47,18 +49,20 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
         view = inflater.inflate(R.layout.fragment_products, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_products);
 
+
         MySharedPreferences.setUpMySharedPreferences(getContext());
         notNowStr = MySharedPreferences.getUserSetting("notNow");
 
-
         if (notNowStr != null && notNowStr.equals("0")) {
-
+            marketStr=getArguments().getString("market");
             if (NetworkState.ConnectionAvailable(getActivity())) {
-                MySharedPreferences.setUpMySharedPreferences(getActivity());
-                int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-                productsByClientIDRequest = new getProductsByClientIDRequest(id);
-                productsByClientIDRequest.setCallbacks(this);
-                productsByClientIDRequest.start();
+                if(marketStr.equals("1")){
+                    getAllProducts();
+                }else if(marketStr.equals("2")){
+                    getAlDanobProducts();
+                }else if(marketStr.equals("3")){
+                    getBandaProducts();
+                }
             }
 
         } else {
@@ -96,6 +100,29 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
         return view;
     }
 
+    private void getBandaProducts() {
+        MySharedPreferences.setUpMySharedPreferences(getActivity());
+        int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        getMarketProductsByClientIDRequest marketProductsByClientIDRequest=new getMarketProductsByClientIDRequest(2,id);
+        marketProductsByClientIDRequest.setCallbacks(this);
+        marketProductsByClientIDRequest.start();
+    }
+
+    private void getAlDanobProducts() {
+        MySharedPreferences.setUpMySharedPreferences(getActivity());
+        int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        getMarketProductsByClientIDRequest marketProductsByClientIDRequest=new getMarketProductsByClientIDRequest(1,id);
+        marketProductsByClientIDRequest.setCallbacks(this);
+        marketProductsByClientIDRequest.start();
+    }
+
+    private void getAllProducts() {
+        MySharedPreferences.setUpMySharedPreferences(getActivity());
+        int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        productsByClientIDRequest = new getProductsByClientIDRequest(id);
+        productsByClientIDRequest.setCallbacks(this);
+        productsByClientIDRequest.start();
+    }
 
     @Override
     public void OnSuccess(Object obj) {

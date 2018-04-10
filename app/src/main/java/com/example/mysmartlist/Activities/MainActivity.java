@@ -11,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mysmartlist.Fragments.CategoriesFragment;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     static FragmentManager fragmentManager;
     private FloatingActionButton fab;
 
+    Spinner marketSpinner;
+    static String marketStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +47,24 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         MySharedPreferences.setUpMySharedPreferences(this);
 
 
+
         fragmentManager=getSupportFragmentManager();
-        int uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        try {
+            int uid = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        }catch (Exception e){}
 
         /************************  SignupActivity.getClient(uid);  **************************/
         //SignupActivity.getClient(uid);
         //final TextView textView=(TextView) findViewById(R.id.asd);
+
+        marketSpinner = (Spinner)findViewById(R.id.spinner_market);
+        marketSpinner.setVisibility(View.GONE);
+        String notNowStr = MySharedPreferences.getUserSetting("notNow");
+
+        if (notNowStr != null && notNowStr.equals("0")) {
+            marketSpinner.setVisibility(View.VISIBLE);
+            createMarketSpinner();
+        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +101,28 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
         firebaseCheckAuth.checkFirebaseAuth();
 
-        context=getApplicationContext();
+        context=this;
+    }
+
+
+
+     String[] spinnerMarketData= {"الكل","الدانوب","هايبر باندا"};
+     String[] marketValues={"1","2","3"};
+    private void createMarketSpinner(){
+        ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this,R.layout.spinner_item,spinnerMarketData);
+        marketSpinner.setAdapter(SpinnerAdapter);
+        marketSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                   marketStr=spinnerMarketData[position];
+                   marketStr=marketValues[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -214,6 +252,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     public static void addHomeFragment() {
         MainActivityFragment fragment=new MainActivityFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("market",marketStr);
         FragmentManager fragmentManager1=fragmentManager;
         fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }

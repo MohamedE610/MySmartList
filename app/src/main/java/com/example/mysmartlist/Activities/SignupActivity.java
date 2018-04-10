@@ -283,7 +283,7 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
     }
 
 
-    String[] spinnerFamilyMemberData = {"", "1", "2", "3", "أكثر من 3"};
+    String[] spinnerFamilyMemberData = {" ","فرد","عائلة"};
     String[] familyMemberValues = {"1", "2", "3", "3+"};
 
     private void createFamilyMemberSpinner() {
@@ -298,9 +298,16 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
 
                 if (salaryRangStr != null && salaryRangStr.equals("")) {
                     if (familyNum.equals(familyMemberValues[1])) {
-                        salaryRangStr = "5000";
+                        salaryRangStr = "2262";
                     } else {
-                        salaryRangStr = "10000";
+                        salaryRangStr = "13610";
+                    }
+
+                }else  if (salaryRangStr == null ){
+                    if (familyNum.equals(familyMemberValues[1])) {
+                        salaryRangStr = "2262";
+                    } else {
+                        salaryRangStr = "13610";
                     }
                 }
             }

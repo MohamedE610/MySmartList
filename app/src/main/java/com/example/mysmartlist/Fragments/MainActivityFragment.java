@@ -36,8 +36,11 @@ public class MainActivityFragment extends Fragment {
 
         if (notNowStr!=null&&notNowStr.equals("0")) {
             addPinFragment();
+
+            ProductsFragment productsFragment= new ProductsFragment();
+            productsFragment.setArguments(getArguments());
             getActivity().getSupportFragmentManager().beginTransaction().
-                    add(R.id.products_fragment_container, new ProductsFragment()).commit();
+                    add(R.id.products_fragment_container,productsFragment).commit();
         }else {
             getActivity().getSupportFragmentManager().beginTransaction().
                     add(R.id.products_fragment_container, new ProductsFragment()).commit();
