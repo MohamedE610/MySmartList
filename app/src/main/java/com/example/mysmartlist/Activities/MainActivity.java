@@ -1,5 +1,6 @@
 package com.example.mysmartlist.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.mysmartlist.Fragments.CategoriesFragment;
 import com.example.mysmartlist.Fragments.FavouriteFragment;
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
         firebaseCheckAuth.checkFirebaseAuth();
 
+        context=getApplicationContext();
     }
 
 
@@ -167,22 +170,45 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     }
 
+    static Context context;
     public static void addFavouriteFragment() {
-        FavouriteFragment fragment=new FavouriteFragment();
-        FragmentManager fragmentManager1=fragmentManager;
-        fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        String notNowStr = MySharedPreferences.getUserSetting("notNow");
+
+        if (notNowStr != null && notNowStr.equals("0")) {
+            FavouriteFragment fragment = new FavouriteFragment();
+            FragmentManager fragmentManager1 = fragmentManager;
+            fragmentManager1.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        }else{
+            Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
+            context.startActivity(new Intent(context, SignInActivity.class));
+        }
+
     }
 
     public void addSettingsFragment() {
-        SettingsFragment fragment=new SettingsFragment();
-        FragmentManager fragmentManager1=fragmentManager;
-        fragmentManager1.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        String notNowStr = MySharedPreferences.getUserSetting("notNow");
+
+        if (notNowStr != null && notNowStr.equals("0")) {
+            SettingsFragment fragment = new SettingsFragment();
+            FragmentManager fragmentManager1 = fragmentManager;
+            fragmentManager1.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        }else{
+            Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
+            context.startActivity(new Intent(context, SignInActivity.class));
+        }
+
     }
 
     private void addSearchFragment() {
-        SearchFragment fragment=new SearchFragment();
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        String notNowStr = MySharedPreferences.getUserSetting("notNow");
+        if (notNowStr != null && notNowStr.equals("0")) {
+          SearchFragment fragment=new SearchFragment();
+          FragmentManager fragmentManager=getSupportFragmentManager();
+          fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        }else{
+            Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
+            context.startActivity(new Intent(context, SignInActivity.class));
+        }
     }
 
 

@@ -45,6 +45,7 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
     FetchProductSearchData fetchProductsData;
     RecyclerView recyclerView;
     View view;
+    String notNowStr;
     private String searchKey;
     private String orderKey;
 
@@ -64,23 +65,24 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
         filter=(Spinner)view.findViewById(R.id.spinner);
         createFilterSpinner();
 
-
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!TextUtils.isEmpty(editTextSearch.getText())) {
-                    searchKey = editTextSearch.getText().toString();
-                    if(NetworkState.ConnectionAvailable(getActivity())) {
-                        MySharedPreferences.setUpMySharedPreferences(getContext());
-                        int uid=Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-                        HashMap<String,String> hashMap=new HashMap<>();
-                        hashMap.put("keyword",searchKey);
-                        hashMap.put("order",orderKey);
-                        fetchProductsData = new FetchProductSearchData(hashMap,uid);
-                        fetchProductsData.setCallbacks(SearchFragment.this);
-                        fetchProductsData.start();
+
+                    if (!TextUtils.isEmpty(editTextSearch.getText())) {
+                        searchKey = editTextSearch.getText().toString();
+                        if (NetworkState.ConnectionAvailable(getActivity())) {
+                            MySharedPreferences.setUpMySharedPreferences(getContext());
+                            int uid = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("keyword", searchKey);
+                            hashMap.put("order", orderKey);
+                            fetchProductsData = new FetchProductSearchData(hashMap, uid);
+                            fetchProductsData.setCallbacks(SearchFragment.this);
+                            fetchProductsData.start();
+                        }
                     }
-                }
+
             }
         });
 
@@ -125,7 +127,12 @@ public class SearchFragment extends Fragment implements Callbacks, ProductAdapte
 
     @Override
     public void OnFailure(Object error) {
-
+        products=new ArrayList<>();
+        productAdapter=new ProductAdapter(products,getActivity());
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        productAdapter.setClickListener(this);
+        recyclerView.setAdapter(productAdapter);
+        productAdapter.notifyDataSetChanged();
     }
 
     @Override

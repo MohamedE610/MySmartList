@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mysmartlist.Adapters.ProductAdapter;
+import com.example.mysmartlist.Adapters.ProductAdapter1;
+import com.example.mysmartlist.Models.List.Product;
+import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.FetchProductsData;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getProductsByClientIDRequest;
 
 import java.util.ArrayList;
@@ -26,6 +30,7 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
     ProductAdapter productAdapter;
     //FetchProductsData fetchProductsData;
     getProductsByClientIDRequest productsByClientIDRequest;
+    FetchProductsData fetchProductsData;
     RecyclerView recyclerView;
 
     public ProductsFragment() {
@@ -33,22 +38,60 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
     }
 
 
-
     View view;
+    String notNowStr;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_products, container, false);
-        recyclerView=(RecyclerView)view.findViewById(R.id.recycler_products);
+        view = inflater.inflate(R.layout.fragment_products, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_products);
 
-        if(NetworkState.ConnectionAvailable(getActivity())) {
-            MySharedPreferences.setUpMySharedPreferences(getActivity());
-            int id= Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-            productsByClientIDRequest = new getProductsByClientIDRequest(id);
-            productsByClientIDRequest.setCallbacks(this);
-            productsByClientIDRequest.start();
+        MySharedPreferences.setUpMySharedPreferences(getContext());
+        notNowStr = MySharedPreferences.getUserSetting("notNow");
+
+
+        if (notNowStr != null && notNowStr.equals("0")) {
+
+            if (NetworkState.ConnectionAvailable(getActivity())) {
+                MySharedPreferences.setUpMySharedPreferences(getActivity());
+                int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+                productsByClientIDRequest = new getProductsByClientIDRequest(id);
+                productsByClientIDRequest.setCallbacks(this);
+                productsByClientIDRequest.start();
+            }
+
+        } else {
+            if (NetworkState.ConnectionAvailable(getActivity())) {
+                fetchProductsData = new FetchProductsData();
+                fetchProductsData.setCallbacks(new Callbacks() {
+                    @Override
+                    public void OnSuccess(Object obj) {
+                       Products products = (Products) obj;
+                       ProductAdapter1 productAdapter1 = new ProductAdapter1(products, getActivity());
+                       recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+                       productAdapter1.setClickListener(new ProductAdapter1.RecyclerViewClickListener() {
+                            @Override
+                            public void ItemClicked(View v, int position) {
+
+                            }
+                        });
+
+                        recyclerView.setAdapter(productAdapter1);
+                        productAdapter1.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void OnFailure(Object obj) {
+
+                    }
+                });
+
+                fetchProductsData.start();
+            }
         }
+
 
         return view;
     }
@@ -58,9 +101,9 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
     public void OnSuccess(Object obj) {
         //String json=(String)obj;
         //products= JsonParsingUtils.getAllProducts(json);
-        products=( ArrayList<ProductsByClientID> )obj;
-        productAdapter=new ProductAdapter(products,getActivity());
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        products = (ArrayList<ProductsByClientID>) obj;
+        productAdapter = new ProductAdapter(products, getActivity());
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         productAdapter.setClickListener(this);
         recyclerView.setAdapter(productAdapter);
         productAdapter.notifyDataSetChanged();

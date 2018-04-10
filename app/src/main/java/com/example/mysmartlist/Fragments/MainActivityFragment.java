@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mysmartlist.R;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -28,10 +29,19 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        context=getActivity();
-        addPinFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().
-                add(R.id.products_fragment_container,new ProductsFragment()).commit();
+
+        MySharedPreferences.setUpMySharedPreferences(getContext());
+        String notNowStr= MySharedPreferences.getUserSetting("notNow");
+        context = getActivity();
+
+        if (notNowStr!=null&&notNowStr.equals("0")) {
+            addPinFragment();
+            getActivity().getSupportFragmentManager().beginTransaction().
+                    add(R.id.products_fragment_container, new ProductsFragment()).commit();
+        }else {
+            getActivity().getSupportFragmentManager().beginTransaction().
+                    add(R.id.products_fragment_container, new ProductsFragment()).commit();
+        }
 
         return inflater.inflate(R.layout.fragment_main, container, false);
     }

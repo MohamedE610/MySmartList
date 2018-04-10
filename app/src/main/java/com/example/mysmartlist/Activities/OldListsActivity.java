@@ -9,20 +9,21 @@ import com.example.mysmartlist.R;
 
 public class OldListsActivity extends AppCompatActivity {
 
-    private FragmentManager fragmentManager;
+    private static FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_lists);
+        fragmentManager=getSupportFragmentManager();
         addOldListsFragment();
+
         setTitle("القوائم السابقة");
     }
 
-    private void addOldListsFragment() {
-        fragmentManager=getSupportFragmentManager();
+    public static void addOldListsFragment() {
         OLdListsFragment oLdListsFragment=new OLdListsFragment();
-        fragmentManager.beginTransaction().add(R.id.old_lists_container,oLdListsFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.old_lists_container,oLdListsFragment).commit();
     }
 
 

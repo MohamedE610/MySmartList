@@ -139,6 +139,20 @@
             android:textSize="15sp"
             android:textColor="@android:color/black"
             />
+
+        <TextView
+            android:id="@+id/not_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:padding="3dp"
+            android:background="@color/orange_90"
+            android:text="ليس الان"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            />
+
     </LinearLayout>
 
 

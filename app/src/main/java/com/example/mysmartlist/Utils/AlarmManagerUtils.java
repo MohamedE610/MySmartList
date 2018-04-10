@@ -69,7 +69,7 @@ public class AlarmManagerUtils {
         bundle.putString("action","weekly");
         builder.setExtras(bundle);
 
-        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(builder.build());
 
     }
@@ -88,7 +88,7 @@ public class AlarmManagerUtils {
         PersistableBundle bundle=new PersistableBundle();
         bundle.putString("action","monthly");
         builder.setExtras(bundle);
-        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        JobScheduler jobScheduler = (JobScheduler)  context.getSystemService(context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(builder.build());
 
     }

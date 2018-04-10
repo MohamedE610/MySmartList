@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mysmartlist.Activities.OldListsActivity;
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
@@ -201,6 +202,7 @@ public class OLdListsAdapter extends RecyclerView.Adapter<OLdListsAdapter.MyView
             @Override
             public void OnSuccess(Object obj) {
                 Toast.makeText(context, "العمليه تمت بنجاح", Toast.LENGTH_SHORT).show();
+                OldListsActivity.addOldListsFragment();
             }
 
             @Override

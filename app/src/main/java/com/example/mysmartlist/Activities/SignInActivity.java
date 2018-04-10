@@ -35,7 +35,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     //private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private TextView btnSignup,btnReset;
+    private TextView btnSignup,btnReset,notNow;
     private Button  btnLogin ;
     private CheckBox checkBox;
     FirebaseSignIn firebaseSignIn;
@@ -44,14 +44,16 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MySharedPreferences.setUpMySharedPreferences(this);
-        if(MySharedPreferences.isFirstTime()) {
 
-            BandaCategoriesWebCrawling bandaCategoriesWebCrawling = new BandaCategoriesWebCrawling(this);
+        MySharedPreferences.setUpMySharedPreferences(this);
+        MySharedPreferences.setUserSetting("notNow","0");
+
+        if(MySharedPreferences.isFirstTime()) {
+            /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling = new BandaCategoriesWebCrawling(this);
             bandaCategoriesWebCrawling.execute();
 
             DanobCategoriesWebCrawling danobCategoriesWebCrawling=new DanobCategoriesWebCrawling(this);
-            danobCategoriesWebCrawling.execute();
+            danobCategoriesWebCrawling.execute();*/
 
             WebCrawlingUtils.scheduleJob(this);
 
@@ -65,6 +67,7 @@ public class SignInActivity extends AppCompatActivity {
 
         //if (auth.getCurrentUser() != null) {
         if(firebaseSignIn.getFirebaseUser()!=null){
+            MySharedPreferences.setUserSetting("notNow","0");
             startActivity(new Intent(SignInActivity.this, MainActivity.class));
             finish();
         }
@@ -82,8 +85,11 @@ public class SignInActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (TextView) findViewById(R.id.btn_reset_password);
         btnSignup = (TextView) findViewById(R.id.btn_signup);
+        notNow = (TextView) findViewById(R.id.not_now);
+
         btnSignup.setClickable(true);
         btnReset.setClickable(true);
+        notNow.setClickable(true);
 
 
         String remember_me=MySharedPreferences.getUserSetting("remember_me");
@@ -116,9 +122,19 @@ public class SignInActivity extends AppCompatActivity {
         //Get Firebase auth instance
         //auth = FirebaseAuth.getInstance();
 
+        notNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MySharedPreferences.setUserSetting("notNow","1");
+                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MySharedPreferences.setUserSetting("notNow","0");
                 startActivity(new Intent(SignInActivity.this, SignupActivity.class));
                 finish();
 
@@ -128,6 +144,7 @@ public class SignInActivity extends AppCompatActivity {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MySharedPreferences.setUserSetting("notNow","0");
                 startActivity(new Intent(SignInActivity.this, ResetPasswordActivity.class));
             }
         });
@@ -135,6 +152,7 @@ public class SignInActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MySharedPreferences.setUserSetting("notNow","0");
                 //btnLogin.setEnabled(false);
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();

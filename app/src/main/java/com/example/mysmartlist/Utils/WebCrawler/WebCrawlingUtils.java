@@ -32,7 +32,8 @@ public class WebCrawlingUtils {
 
         PersistableBundle  bundle=new PersistableBundle();
         builder.setExtras(bundle);
-        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        //JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        JobScheduler jobScheduler =(JobScheduler)context.getSystemService(context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(builder.build());
 
     }

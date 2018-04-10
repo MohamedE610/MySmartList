@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mysmartlist.Activities.ListProductsActivity;
 import com.example.mysmartlist.Adapters.ListProductsAdapter;
 import com.example.mysmartlist.Models.List.List;
 import com.example.mysmartlist.R;
@@ -50,6 +51,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
     Button btnShare,btnRemove,btnCancel;
 
     View view;
+    Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         btnCancel.setVisibility(View.GONE);
         btnShare.setVisibility(View.GONE);
 
+        bundle=getArguments();
          list_id=getArguments().getInt("list_id");
         if(NetworkState.ConnectionAvailable(getActivity())) {
             getListProduct();
@@ -84,20 +87,24 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         editLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // tabLayout.setVisibility(View.VISIBLE);
-                btnRemove.setVisibility(View.VISIBLE);
-                btnCancel.setVisibility(View.VISIBLE);
-                btnShare.setVisibility(View.VISIBLE);
 
-                isEditable=true;
+                if (list!=null&& list.data!=null&&list.data.products!=null&&list.data.products.size() > 0) {
+                    // tabLayout.setVisibility(View.VISIBLE);
+                    btnRemove.setVisibility(View.VISIBLE);
+                    btnCancel.setVisibility(View.VISIBLE);
+                    btnShare.setVisibility(View.VISIBLE);
 
-                if(isEditable)
-                    editLinear.setVisibility(View.INVISIBLE);
-                else
-                    editLinear.setVisibility(View.VISIBLE);
+                    isEditable = true;
 
-                DisplayData(object,isEditable,list_id);
+                    if (isEditable)
+                        editLinear.setVisibility(View.INVISIBLE);
+                    else
+                        editLinear.setVisibility(View.VISIBLE);
 
+                    DisplayData(object, isEditable, list_id);
+                }else{
+                    Toast.makeText(getContext(), "لا يوجد منتجات ... الرجاء اضافة منتجات اولا ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -106,21 +113,26 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
             @Override
             public void onClick(View view) {
 
-                moveListFromCurrentListToOldList=new MoveListFromCurrentListToOldListRequest(list_id);
-                moveListFromCurrentListToOldList.setCallbacks(new Callbacks() {
-                    @Override
-                    public void OnSuccess(Object obj) {
-                        Toast.makeText(getActivity(), "العملية تمت بنجاح", Toast.LENGTH_SHORT).show();
-                    }
+                if (list!=null&& list.data!=null&&list.data.products!=null&&list.data.products.size() > 0) {
+                    moveListFromCurrentListToOldList = new MoveListFromCurrentListToOldListRequest(list_id);
+                    moveListFromCurrentListToOldList.setCallbacks(new Callbacks() {
+                        @Override
+                        public void OnSuccess(Object obj) {
+                            Toast.makeText(getActivity(), "العملية تمت بنجاح", Toast.LENGTH_SHORT).show();
+                            ListProductsActivity.addListProductsFragment(getActivity().getSupportFragmentManager(), bundle);
+                        }
 
-                    @Override
-                    public void OnFailure(Object obj) {
+                        @Override
+                        public void OnFailure(Object obj) {
 
-                    }
-                });
-                moveListFromCurrentListToOldList.start();
+                        }
+                    });
+                    moveListFromCurrentListToOldList.start();
 
-                addToReportsView.setVisibility(View.GONE);
+                    addToReportsView.setVisibility(View.GONE);
+                }else{
+                    Toast.makeText(getContext(), "لا يوجد منتجات ... الرجاء اضافة منتجات اولا ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -144,7 +156,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         listProductsAdapter.setISendCheckedListLisnter(this);
         recyclerView.setAdapter(listProductsAdapter);
         listProductsAdapter.notifyDataSetChanged();
-        if(list.data.expenses!=null)
+        if(list!=null&&list.data!=null&& list.data.expenses!=null)
            expensesTextView.setText(list.data.expenses.toString());
     }
 
@@ -205,7 +217,6 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
 
     private void shareProducts() {
 
-
         String str=list.data.name;
         for (int i = 0; i <list.data.products.size() ; i++) {
             str+="\n";
@@ -241,6 +252,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
                 listByIdRequest = new getListByIdRequest(list_id);
                 listByIdRequest.setCallbacks(ListProductsFragment.this);
                 listByIdRequest.start();
+                ListProductsActivity.addListProductsFragment(getActivity().getSupportFragmentManager(),bundle);
             }
 
             @Override

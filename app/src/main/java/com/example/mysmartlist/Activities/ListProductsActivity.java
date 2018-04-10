@@ -24,7 +24,7 @@ public class ListProductsActivity extends AppCompatActivity {
         setTitle("المنتجات");
 
         Bundle bundle=getIntent().getExtras();
-        addListProductsFragment(bundle);
+        addListProductsFragment(getSupportFragmentManager(),bundle);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
@@ -39,11 +39,11 @@ public class ListProductsActivity extends AppCompatActivity {
     }
 
 
-    private void addListProductsFragment(Bundle bundle) {
+    public static void addListProductsFragment(FragmentManager fragmentManager,Bundle bundle) {
         ListProductsFragment fragment=new ListProductsFragment();
         fragment.setArguments(bundle);
-        FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_list_products_container,fragment).commit();
+
     }
 
 
