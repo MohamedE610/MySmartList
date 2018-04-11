@@ -450,6 +450,14 @@ public interface ApiInterface {
     @GET("markets/{market_id}/products/client/{client_id}")
     Call<ArrayList<ProductsByClientID>> getProductsMarket(@Path("market_id") int market_id,@Path("client_id") int client_id);
 
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("markets/{market_id}/categories")
+    Call<Categories> getCategoriesMarket(@Path("market_id") int market_id);
+
 
 
 

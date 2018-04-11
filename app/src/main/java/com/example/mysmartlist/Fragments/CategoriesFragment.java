@@ -12,8 +12,12 @@ import com.example.mysmartlist.Adapters.CategoryAdapter;
 import com.example.mysmartlist.Models.Categories.Categories;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
+import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.NetworkState;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.FetchCategoriesData;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getMarketCategoriesRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getMarketProductsByClientIDRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getProductsByClientIDRequest;
 
 
 public class CategoriesFragment extends Fragment implements Callbacks, CategoryAdapter.RecyclerViewClickListener {
@@ -23,6 +27,8 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
    CategoryAdapter categoryAdapter;
    FetchCategoriesData fetchCategoriesData;
    RecyclerView recyclerView;
+    private String marketStr;
+
     public CategoriesFragment() {
         // Required empty public constructor
     }
@@ -36,13 +42,51 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
         view=inflater.inflate(R.layout.fragment_categories, container, false);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_cat);
 
+        Bundle bundle=getArguments();
+        if(bundle!=null) {
+            marketStr = bundle.getString("market");
+        }else {
+            marketStr="1";
+        }
+
+        if(marketStr==null)
+            marketStr="1";
+
+
         if(NetworkState.ConnectionAvailable(getActivity())) {
-            fetchCategoriesData = new FetchCategoriesData();
-            fetchCategoriesData.setCallbacks(this);
-            fetchCategoriesData.start();
+            if(marketStr.equals("1")){
+                getAllCategories();
+            }else if(marketStr.equals("2")){
+                getAlDanobCategories();
+            }else if(marketStr.equals("3")){
+                getBandaCategories();
+            }else{
+                getAllCategories();
+            }
         }
 
         return view;
+    }
+
+    private void getBandaCategories() {
+        MySharedPreferences.setUpMySharedPreferences(getActivity());
+        int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+        getMarketCategoriesRequest marketCategoriesRequest=new getMarketCategoriesRequest(Integer.valueOf(marketStr));
+        marketCategoriesRequest.setCallbacks(this);
+        marketCategoriesRequest.start();
+
+    }
+
+    private void getAlDanobCategories() {
+        MySharedPreferences.setUpMySharedPreferences(getActivity());
+        int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+
+    }
+
+    private void getAllCategories() {
+        fetchCategoriesData = new FetchCategoriesData();
+        fetchCategoriesData.setCallbacks(this);
+        fetchCategoriesData.start();
     }
 
 

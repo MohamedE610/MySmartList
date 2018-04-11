@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     Spinner marketSpinner;
     static String marketStr;
 
+    boolean isHome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
         firebaseCheckAuth.checkFirebaseAuth();
 
-        context=this;
+        mainActivity=this;
     }
 
 
@@ -117,7 +119,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                    marketStr=spinnerMarketData[position];
                    marketStr=marketValues[position];
-                   addHomeFragment();
+                   if(isHome)
+                      addHomeFragment();
+                   else
+                       addCategoriesFragment();
             }
 
             @Override
@@ -167,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 tabLayout.getTabAt(i).setIcon(R.drawable.home);
             }else if(i==3) {
                 tabLayout.getTabAt(i).setIcon(R.drawable.view_grid);
-            }else if(i==2) {
+            }else if(i==2){
                 tabLayout.getTabAt(i).setIcon(R.drawable.magnify_plus_outline);
             }else if(i==1) {
                 tabLayout.getTabAt(i).setIcon(R.drawable.heart_outline);
@@ -184,12 +189,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 fab.setVisibility(View.VISIBLE);
                 addHomeFragment();
                 marketSpinner.setVisibility(View.VISIBLE);
+                isHome=true;
                 break;
             case 3:
                 tab.setIcon(R.drawable.view_grid_selected);
                 addCategoriesFragment();
                 fab.setVisibility(View.GONE);
-                marketSpinner.setVisibility(View.GONE);
+                marketSpinner.setVisibility(View.VISIBLE);
+                isHome=false;
                 break;
             case 2:
                 tab.setIcon(R.drawable.magnify_plus_outline_selected);
@@ -215,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     }
 
-    static Context context;
+    static MainActivity mainActivity;
     public static void addFavouriteFragment() {
         String notNowStr = MySharedPreferences.getUserSetting("notNow");
 
@@ -224,8 +231,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             FragmentManager fragmentManager1 = fragmentManager;
             fragmentManager1.beginTransaction().replace(R.id.fragment_container, fragment).commit();
         }else{
-            Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, SignInActivity.class));
+            Toast.makeText(mainActivity, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
+            mainActivity.startActivity(new Intent(mainActivity, SignInActivity.class));
+            mainActivity.finish();
         }
 
     }
@@ -238,8 +246,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             FragmentManager fragmentManager1 = fragmentManager;
             fragmentManager1.beginTransaction().replace(R.id.fragment_container, fragment).commit();
         }else{
-            Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, SignInActivity.class));
+            Toast.makeText(mainActivity, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
+            mainActivity.startActivity(new Intent(mainActivity, SignInActivity.class));
+            mainActivity.finish();
         }
 
     }
@@ -251,8 +260,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
           FragmentManager fragmentManager=getSupportFragmentManager();
           fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
         }else{
-            Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, SignInActivity.class));
+            Toast.makeText(mainActivity, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
+            mainActivity.startActivity(new Intent(mainActivity, SignInActivity.class));
+            mainActivity.finish();
         }
     }
 
@@ -269,6 +279,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     public void addCategoriesFragment() {
         CategoriesFragment fragment=new CategoriesFragment();
+
+        if (marketStr==null || marketStr.equals("") ||marketStr.equals(" "))
+            marketStr="1";
+
+        bundle.putString("market",marketStr);
+        fragment.setArguments(bundle);
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
