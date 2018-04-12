@@ -42,9 +42,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.SignInActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.ListsActivity"
             android:label="@string/title_activity_lists"
@@ -63,13 +61,12 @@
             android:name=".Services.ReportService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Services.WebCrawlingService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
             android:name=".Activities.ReportDetailsActivity"
@@ -82,7 +79,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Activities.ProductDetailsActivity" />
+        <activity android:name=".Activities.CategoryProductsActivity"></activity>
     </application>
 
 </manifest>

@@ -459,6 +459,45 @@ public interface ApiInterface {
     Call<Categories> getCategoriesMarket(@Path("market_id") int market_id);
 
 
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/products/{product_id}/notes")
+    Call<HashMap> getProductNotes(@Path("client_id") int client_id,@Path("product_id") int product_id);
 
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("clients/{client_id}/products/{product_id}/notes")
+    Call<HashMap> addProductNotes(@Path("client_id") int client_id,@Path("product_id") int product_id, @Body HashMap hashMap);
+
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @GET("notes/{note_id}")
+    Call<HashMap> getProductNoteById(@Path("note_id") int note_id);
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @PUT("notes/{note_id}")
+    Call<HashMap>updateProductNote(@Path("note_id") int note_id);
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: "+ Constants.accessToken
+    })
+    @DELETE("notes/{note_id}")
+    Call<HashMap> deleteProductNotes(@Path("note_id") int note_id);
 
 }
