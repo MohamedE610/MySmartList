@@ -20,7 +20,8 @@ import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.CalculateClientMonthlyReportRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.CalculateClientWeeklyReportRequest;
-import com.example.mysmartlist.Utils.Networking.RestApiRequests.getAllClientReportsRequest;
+import com.example.mysmartlist.Utils.WebCrawler.WebCrawlingUtils;
+
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class ReportService extends JobService {
@@ -40,9 +41,8 @@ public class ReportService extends JobService {
             MySharedPreferences.setUpMySharedPreferences(getApplicationContext());
             uid = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
             String clientBudget = MySharedPreferences.getUserSetting("clientBudget");
-
+            AlarmManagerUtils alarmManagerUtils = new AlarmManagerUtils(getApplicationContext());
             if (!clientBudget.equals(action)) {
-                AlarmManagerUtils alarmManagerUtils = new AlarmManagerUtils(getApplicationContext());
 
                 if (clientBudget.equals("weekly")) {
                     alarmManagerUtils.setWeeklyAlarm();
@@ -56,8 +56,10 @@ public class ReportService extends JobService {
 
             if (action.equals("weekly")) {
                 calculateWeeklyReports();
+                alarmManagerUtils.scheduleJobWeekly();
             } else if (action.equals("monthly")) {
                 calculateMonthlyReports();
+                alarmManagerUtils.scheduleJobMonthly();
             }
 
         } catch (Exception e) {
