@@ -1,6 +1,7 @@
 package com.example.mysmartlist.Activities;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -18,6 +19,12 @@ public class ReportsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reports);
         setTitle("التقارير");
         addReportsFragment();
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void addReportsFragment() {

@@ -24,38 +24,67 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-
         </activity>
         <activity android:name=".Activities.ScannerActivity" />
         <activity
             android:name=".Activities.SignupActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.SignInActivity" />
+        </activity>
         <activity
             android:name=".Activities.ResetPasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.SignInActivity" />
+        </activity>
         <activity
             android:name=".Activities.SignInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.ListsActivity"
             android:label="@string/title_activity_lists"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+
         <activity
             android:name=".Activities.ListProductsActivity"
             android:label="@string/title_activity_list_products"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.ContactUsActivity" />
-        <activity android:name=".Activities.QuestionsActivity" />
-        <activity android:name=".Activities.ProfileActivity" />
-        <activity android:name=".Activities.OldListsActivity" />
-        <activity android:name=".Activities.ReportsActivity" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.ListsActivity" />
+        </activity>
+        <activity android:name=".Activities.ContactUsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity"/>
+        </activity>
+        <activity android:name=".Activities.QuestionsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+        <activity android:name=".Activities.ProfileActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+        <activity android:name=".Activities.OldListsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+        <activity android:name=".Activities.ReportsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
 
         <service
             android:name=".Services.ReportService"
@@ -71,7 +100,11 @@
         <activity
             android:name=".Activities.ReportDetailsActivity"
             android:label="@string/title_activity_report_details"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.ReportsActivity" />
+        </activity>
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -79,8 +112,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ProductDetailsActivity" />
-        <activity android:name=".Activities.CategoryProductsActivity"></activity>
+        <activity android:name=".Activities.ProductDetailsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+        <activity android:name=".Activities.CategoryProductsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -150,7 +150,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("categories/{category_id}")
-    Call<ProductData> getProductByCategory(@Path("category_id") int category_id);
+    Call<Products> getProductByCategory(@Path("category_id") int category_id);
 
 
     /***************         Categories           *****************/

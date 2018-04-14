@@ -1,5 +1,6 @@
 package com.example.mysmartlist.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mysmartlist.Activities.CategoryProductsActivity;
 import com.example.mysmartlist.Adapters.CategoryAdapter;
 import com.example.mysmartlist.Models.Categories.Categories;
 import com.example.mysmartlist.R;
@@ -108,6 +110,9 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
 
     @Override
     public void ItemClicked(View v, int position) {
-
+        Intent intent=new Intent(getContext(), CategoryProductsActivity.class);
+        intent.putExtra("cat_id",categories.data.get(position).id);
+        intent.putExtra("cat_name",categories.data.get(position).name);
+        getActivity().startActivity(intent);
     }
 }

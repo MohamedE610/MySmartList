@@ -1,5 +1,6 @@
 package com.example.mysmartlist.Activities;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,13 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_contact_us);
 
         setTitle("تواصل معنا");
-        
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         facebookImg=(ImageView)findViewById(R.id.facebook_img);
         twitterImg=(ImageView)findViewById(R.id.twitter);
         emailImg=(ImageView)findViewById(R.id.email);
