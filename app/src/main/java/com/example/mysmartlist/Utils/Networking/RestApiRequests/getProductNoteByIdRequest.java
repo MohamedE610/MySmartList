@@ -11,6 +11,7 @@ import retrofit2.Retrofit;
 
 */
 
+import com.example.mysmartlist.Models.Note.Note;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiClient;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.ApiInterface;
 import com.example.mysmartlist.Utils.Networking.RetrofitUtils.FetchData;
@@ -25,7 +26,7 @@ import retrofit2.Response;
  * Created by abdallah on 12/18/2017.
  */
 
-public class getProductNoteByIdRequest extends FetchData implements Callback<HashMap>  {
+public class getProductNoteByIdRequest extends FetchData implements Callback<Note>  {
 
 
     private int note_id;
@@ -37,18 +38,18 @@ public class getProductNoteByIdRequest extends FetchData implements Callback<Has
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<HashMap>  clientCall = apiInterface.getProductNoteById(note_id);
+        Call<Note>  clientCall = apiInterface.getProductNoteById(note_id);
         clientCall.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<HashMap> call, Response<HashMap> response) {
-        HashMap body =response.body();
+    public void onResponse(Call<Note> call, Response<Note> response) {
+        Note body =response.body();
         callbacks.OnSuccess( body);
     }
 
     @Override
-    public void onFailure(Call<HashMap> call, Throwable t) {
+    public void onFailure(Call<Note> call, Throwable t) {
         callbacks.OnFailure(t.getMessage());
     }
 }

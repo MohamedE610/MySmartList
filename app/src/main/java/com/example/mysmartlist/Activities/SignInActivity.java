@@ -21,10 +21,7 @@ import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getClientByFirebaseIDRequest;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
-import com.example.mysmartlist.Utils.WebCrawler.Banda.BandaCategoriesWebCrawling;
-import com.example.mysmartlist.Utils.WebCrawler.Banda.BandaProductsWebCrawling;
-import com.example.mysmartlist.Utils.WebCrawler.Danob.DanobCategoriesWebCrawling;
-import com.example.mysmartlist.Utils.WebCrawler.WebCrawlingUtils;
+import com.example.mysmartlist.Utils.WebCrawler.Panda.PandaCategoriesWebCrawling;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -48,13 +45,12 @@ public class SignInActivity extends AppCompatActivity {
         MySharedPreferences.setUpMySharedPreferences(this);
         MySharedPreferences.setUserSetting("notNow","0");
 
-        /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling = new BandaCategoriesWebCrawling(this);
-            bandaCategoriesWebCrawling.execute();*/
+        /*PandaCategoriesWebCrawling pandaCategoriesWebCrawling = new PandaCategoriesWebCrawling(this);
+            pandaCategoriesWebCrawling.execute();*/
 
         if(MySharedPreferences.isFirstTime()) {
-            /*BandaCategoriesWebCrawling bandaCategoriesWebCrawling = new BandaCategoriesWebCrawling(this);
-            bandaCategoriesWebCrawling.execute();
-
+            /*PandaCategoriesWebCrawling pandaCategoriesWebCrawling = new PandaCategoriesWebCrawling(this);
+            pandaCategoriesWebCrawling.execute();
             DanobCategoriesWebCrawling danobCategoriesWebCrawling=new DanobCategoriesWebCrawling(this);
             danobCategoriesWebCrawling.execute();*/
 

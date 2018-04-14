@@ -20,6 +20,7 @@ public class ReportDetailsActivity extends AppCompatActivity {
     TextView budgetTextView;
     private ReportData reportData;
     private long averageBudget;
+    private double expenses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,63 +44,73 @@ public class ReportDetailsActivity extends AppCompatActivity {
         expensesTextView = (TextView) findViewById(R.id.text_expenses);
         budgetTextView = (TextView) findViewById(R.id.text_budget);
 
-         Bundle bundle=getIntent().getExtras();
-         reportData=new ReportData();
+        Bundle bundle = getIntent().getExtras();
+        reportData = new ReportData();
 
-         if(bundle!=null)
-            reportData=(ReportData) bundle.getSerializable("report");
+        if (bundle != null)
+            reportData = (ReportData) bundle.getSerializable("report");
 
         MySharedPreferences.setUpMySharedPreferences(this);
 
-        int clientSalary=Integer.valueOf(MySharedPreferences.getUserSetting("clientSalary"));
-        String clientBudget=MySharedPreferences.getUserSetting("clientBudget");
-        averageBudget=0;
+        int clientSalary = Integer.valueOf(MySharedPreferences.getUserSetting("clientSalary"));
+        String clientBudget = MySharedPreferences.getUserSetting("clientBudget");
 
-        if(clientBudget.equals("weekly")){
-            averageBudget=clientSalary/4;
-            averageBudget=averageBudget/4;
-        }else if(clientBudget.equals("monthly")){
-            averageBudget=clientSalary/4;
+        try {
+            expenses = Double.valueOf(MySharedPreferences.getUserSetting("last_expenses"));
+        } catch (Exception e) {
+            expenses = 0;
         }
 
-        if(reportData!=null&&averageBudget==reportData.totalExpenses){
-              goodClientReport();
-        }else if(reportData!=null&&averageBudget<reportData.totalExpenses){
-              badClientReport();
-        }else if(reportData!=null&&averageBudget>reportData.totalExpenses){
-              perfectClientReport();
+        averageBudget = 0;
+
+        if (clientBudget.equals("weekly")) {
+            averageBudget += clientSalary / 4;
+            averageBudget += averageBudget / 4;
+        } else if (clientBudget.equals("monthly")) {
+            averageBudget = clientSalary / 4;
+        }
+
+        expenses += reportData.totalExpenses;
+        if (reportData != null && averageBudget == expenses) {
+            goodClientReport();
+        } else if (reportData != null && averageBudget < expenses) {
+            badClientReport();
+        } else if (reportData != null && averageBudget > expenses) {
+            perfectClientReport();
         }
 
     }
 
 
-
     private void perfectClientReport() {
-    String msgStr="ممتاز"+"\n"+"لقد قمت بتوفير جزء من الميزانيه قدره "+(averageBudget-reportData.totalExpenses)+"";
-    String expensesStr="مصاريفك : "+reportData.totalExpenses+"";
-    String budgetStr="ميزانيتك : "+averageBudget+"";
+        String msgStr = "ممتاز" + "\n" + "لقد قمت بتوفير جزء من الميزانيه قدره " + (averageBudget - expenses) + "";
+        String expensesStr = "مصاريفك : " + reportData.totalExpenses + "";
+        String budgetStr = "ميزانيتك : " + averageBudget + "";
 
-    msgTextView.setText(msgStr);
-    expensesTextView.setText(expensesStr);
-    budgetTextView.setText(budgetStr);
+        MySharedPreferences.setUserSetting("last_expenses", (averageBudget - expenses) + "");
+
+        msgTextView.setText(msgStr);
+        expensesTextView.setText(expensesStr);
+        budgetTextView.setText(budgetStr);
 
     }
 
     private void badClientReport() {
-        String msgStr="احذر "+"\n"+"لقد قمت بتخطى ميزانيتك بمبلغ قدره "+(reportData.totalExpenses-averageBudget)+"";
-        String expensesStr="مصاريفك : "+reportData.totalExpenses+"";
-        String budgetStr="ميزانيتك : "+averageBudget+"";
-
+        String msgStr = "احذر " + "\n" + "لقد قمت بتخطى ميزانيتك بمبلغ قدره " + (expenses - averageBudget) + "";
+        String expensesStr = "مصاريفك : " + reportData.totalExpenses + "";
+        String budgetStr = "ميزانيتك : " + averageBudget + "";
+        MySharedPreferences.setUserSetting("last_expenses", (expenses + averageBudget) + "");
         msgTextView.setText(msgStr);
         expensesTextView.setText(expensesStr);
         budgetTextView.setText(budgetStr);
     }
 
     private void goodClientReport() {
-        String msgStr="جيد"+"\n"+"لقد قمت بصرف الميزانيه الخاصه بك بطريقه جيده "+(averageBudget-reportData.totalExpenses)+"";
-        String expensesStr="مصاريفك : "+reportData.totalExpenses+"";
-        String budgetStr="ميزانيتك : "+averageBudget+"";
+        String msgStr = "جيد" + "\n" + "لقد قمت بصرف الميزانيه الخاصه بك بطريقه جيده " + (averageBudget - expenses) + "";
+        String expensesStr = "مصاريفك : " + reportData.totalExpenses + "";
+        String budgetStr = "ميزانيتك : " + averageBudget + "";
 
+        MySharedPreferences.setUserSetting("last_expenses", (averageBudget - expenses) + "");
         msgTextView.setText(msgStr);
         expensesTextView.setText(expensesStr);
         budgetTextView.setText(budgetStr);

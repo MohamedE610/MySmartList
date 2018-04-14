@@ -48,7 +48,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
     TextView addToReportsView;
     TextView expensesTextView;
 
-    Button btnShare,btnRemove,btnCancel;
+    Button btnShare,btnRemove,btnCancel,btnOk;
 
     View view;
     Bundle bundle;
@@ -61,15 +61,18 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         addToReportsView=(TextView) view.findViewById(R.id.btn_add_reports);
         expensesTextView=(TextView) view.findViewById(R.id.text_expenses);
 
+        btnOk=(Button)view.findViewById(R.id.btn_ok);
         btnCancel=(Button)view.findViewById(R.id.btn_cancel);
         btnRemove=(Button)view.findViewById(R.id.btn_remove);
         btnShare=(Button)view.findViewById(R.id.btn_share);
 
+        btnOk.setOnClickListener(this);
         btnShare.setOnClickListener(this);
         btnRemove.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
 
         btnRemove.setVisibility(View.GONE);
+        btnOk.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
         btnShare.setVisibility(View.GONE);
 
@@ -92,6 +95,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
                     // tabLayout.setVisibility(View.VISIBLE);
                     btnRemove.setVisibility(View.VISIBLE);
                     btnCancel.setVisibility(View.VISIBLE);
+                    btnOk.setVisibility(View.VISIBLE);
                     btnShare.setVisibility(View.VISIBLE);
 
                     isEditable = true;
@@ -166,6 +170,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         //tabLayout.setVisibility(View.INVISIBLE);
         btnRemove.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
+        btnOk.setVisibility(View.GONE);
         btnShare.setVisibility(View.GONE);
 
         isEditable=false;
@@ -205,11 +210,23 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
 
     }
 
+    private void okMethod() {
+        editLinear.setVisibility(View.VISIBLE);
+        //tabLayout.setVisibility(View.INVISIBLE);
+        btnRemove.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
+        btnOk.setVisibility(View.GONE);
+        btnShare.setVisibility(View.GONE);
+        isEditable=false;
+        DisplayData(object,isEditable,list_id);
+    }
+
     private void cancelMethod() {
         editLinear.setVisibility(View.VISIBLE);
         //tabLayout.setVisibility(View.INVISIBLE);
         btnRemove.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
+        btnOk.setVisibility(View.GONE);
         btnShare.setVisibility(View.GONE);
         isEditable=false;
         DisplayData(object,isEditable,list_id);
@@ -234,6 +251,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         editLinear.setVisibility(View.VISIBLE);
         //tabLayout.setVisibility(View.INVISIBLE);
         btnRemove.setVisibility(View.GONE);
+        btnOk.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
         btnShare.setVisibility(View.GONE);
 
@@ -267,6 +285,7 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
         //tabLayout.setVisibility(View.INVISIBLE);
         btnRemove.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
+        btnOk.setVisibility(View.GONE);
         btnShare.setVisibility(View.GONE);
 
         isEditable=false;
@@ -297,6 +316,9 @@ public class ListProductsFragment extends Fragment implements Callbacks, ListPro
                 break;
             case R.id.btn_share:
                 shareProducts();
+                break;
+            case R.id.btn_ok:
+                okMethod();
                 break;
         }
     }

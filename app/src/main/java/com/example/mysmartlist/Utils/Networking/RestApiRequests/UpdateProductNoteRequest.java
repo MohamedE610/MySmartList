@@ -29,15 +29,17 @@ public class UpdateProductNoteRequest extends FetchData implements Callback<Hash
 
 
     private int note_id;
+    HashMap hashMap;
 
-    public UpdateProductNoteRequest(int note_id){
+    public UpdateProductNoteRequest(int note_id,HashMap hashMap){
         this.note_id=note_id;
+        this.hashMap=hashMap;
     }
 
     public void start() {
         retrofit= ApiClient.getClient();
         apiInterface=retrofit.create(ApiInterface.class);
-        Call<HashMap>  clientCall = apiInterface.updateProductNote(note_id);
+        Call<HashMap>  clientCall = apiInterface.updateProductNote(note_id,hashMap);
         clientCall.enqueue(this);
     }
 

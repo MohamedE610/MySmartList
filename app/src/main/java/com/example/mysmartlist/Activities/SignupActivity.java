@@ -297,14 +297,14 @@ public class SignupActivity extends AppCompatActivity implements CompoundButton.
                     familyNum = familyMemberValues[position - 1];
 
                 if (salaryRangStr != null && salaryRangStr.equals("")) {
-                    if (familyNum.equals(familyMemberValues[1])) {
+                    if ( familyNum != null&&familyNum.equals(familyMemberValues[0])) {
                         salaryRangStr = "2262";
                     } else {
                         salaryRangStr = "13610";
                     }
 
                 }else  if (salaryRangStr == null ){
-                    if (familyNum.equals(familyMemberValues[1])) {
+                    if (familyNum != null&& familyNum.equals(familyMemberValues[0])) {
                         salaryRangStr = "2262";
                     } else {
                         salaryRangStr = "13610";

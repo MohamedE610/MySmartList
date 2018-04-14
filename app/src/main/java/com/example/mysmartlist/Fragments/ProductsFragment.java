@@ -1,5 +1,6 @@
 package com.example.mysmartlist.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mysmartlist.Activities.ProductDetailsActivity;
 import com.example.mysmartlist.Adapters.ProductAdapter;
 import com.example.mysmartlist.Adapters.ProductAdapter1;
 import com.example.mysmartlist.Models.List.Product;
+import com.example.mysmartlist.Models.Products.ProductData;
 import com.example.mysmartlist.Models.Products.Products;
 import com.example.mysmartlist.Models.ProductsByClientID.ProductsByClientID;
 import com.example.mysmartlist.R;
@@ -42,6 +45,7 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
 
     View view;
     String notNowStr;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,25 +59,25 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
 
         if (notNowStr != null && notNowStr.equals("0")) {
 
-            Bundle bundle=getArguments();
-            if(bundle!=null) {
+            Bundle bundle = getArguments();
+            if (bundle != null) {
                 marketStr = bundle.getString("market");
-            }else {
-                marketStr="1";
+            } else {
+                marketStr = "1";
             }
 
 
-            if(marketStr==null)
-                marketStr="1";
+            if (marketStr == null)
+                marketStr = "1";
 
             if (NetworkState.ConnectionAvailable(getActivity())) {
-                if(marketStr.equals("1")){
+                if (marketStr.equals("1")) {
                     getAllProducts();
-                }else if(marketStr.equals("2")){
+                } else if (marketStr.equals("2")) {
                     getAlDanobProducts();
-                }else if(marketStr.equals("3")){
+                } else if (marketStr.equals("3")) {
                     getBandaProducts();
-                }else{
+                } else {
                     getAllProducts();
                 }
             }
@@ -84,11 +88,11 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
                 fetchProductsData.setCallbacks(new Callbacks() {
                     @Override
                     public void OnSuccess(Object obj) {
-                       Products products = (Products) obj;
-                       ProductAdapter1 productAdapter1 = new ProductAdapter1(products, getActivity());
-                       recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                        Products products = (Products) obj;
+                        ProductAdapter1 productAdapter1 = new ProductAdapter1(products, getActivity());
+                        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-                       productAdapter1.setClickListener(new ProductAdapter1.RecyclerViewClickListener() {
+                        productAdapter1.setClickListener(new ProductAdapter1.RecyclerViewClickListener() {
                             @Override
                             public void ItemClicked(View v, int position) {
 
@@ -116,7 +120,7 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
     private void getBandaProducts() {
         MySharedPreferences.setUpMySharedPreferences(getActivity());
         int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-        getMarketProductsByClientIDRequest marketProductsByClientIDRequest=new getMarketProductsByClientIDRequest(2,id);
+        getMarketProductsByClientIDRequest marketProductsByClientIDRequest = new getMarketProductsByClientIDRequest(2, id);
         marketProductsByClientIDRequest.setCallbacks(this);
         marketProductsByClientIDRequest.start();
     }
@@ -124,7 +128,7 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
     private void getAlDanobProducts() {
         MySharedPreferences.setUpMySharedPreferences(getActivity());
         int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-        getMarketProductsByClientIDRequest marketProductsByClientIDRequest=new getMarketProductsByClientIDRequest(1,id);
+        getMarketProductsByClientIDRequest marketProductsByClientIDRequest = new getMarketProductsByClientIDRequest(1, id);
         marketProductsByClientIDRequest.setCallbacks(this);
         marketProductsByClientIDRequest.start();
     }
@@ -156,6 +160,9 @@ public class ProductsFragment extends Fragment implements Callbacks, ProductAdap
 
     @Override
     public void ItemClicked(View v, int position) {
-
+        ProductsByClientID product = products.get(position);
+        Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
+        intent.putExtra("data", product);
+        startActivity(intent);
     }
 }

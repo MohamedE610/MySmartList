@@ -8,6 +8,8 @@ import com.example.mysmartlist.Models.CategoriesRespone.CategoriesResponse;
 import com.example.mysmartlist.Models.Client.Client;
 import com.example.mysmartlist.Models.ClientLists.ClientLists;
 import com.example.mysmartlist.Models.List.List;
+import com.example.mysmartlist.Models.Note.Note;
+import com.example.mysmartlist.Models.Notes.Notes;
 import com.example.mysmartlist.Models.PopularProducts.PopularProduct;
 import com.example.mysmartlist.Models.Product_1;
 import com.example.mysmartlist.Models.Products.ProductData;
@@ -465,14 +467,14 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("clients/{client_id}/products/{product_id}/notes")
-    Call<HashMap> getProductNotes(@Path("client_id") int client_id,@Path("product_id") int product_id);
+    Call<Notes> getProductNotes(@Path("client_id") int client_id, @Path("product_id") int product_id);
 
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json",
             "Authorization: "+ Constants.accessToken
     })
-    @GET("clients/{client_id}/products/{product_id}/notes")
+    @POST("clients/{client_id}/products/{product_id}/notes")
     Call<HashMap> addProductNotes(@Path("client_id") int client_id,@Path("product_id") int product_id, @Body HashMap hashMap);
 
 
@@ -482,7 +484,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @GET("notes/{note_id}")
-    Call<HashMap> getProductNoteById(@Path("note_id") int note_id);
+    Call<Note> getProductNoteById(@Path("note_id") int note_id);
 
     @Headers({
             "Accept: application/json",
@@ -490,7 +492,7 @@ public interface ApiInterface {
             "Authorization: "+ Constants.accessToken
     })
     @PUT("notes/{note_id}")
-    Call<HashMap>updateProductNote(@Path("note_id") int note_id);
+    Call<HashMap>updateProductNote(@Path("note_id") int note_id ,@Body HashMap hashMap);
 
     @Headers({
             "Accept: application/json",

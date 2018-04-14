@@ -31,6 +31,7 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
 
     public CategoriesFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -69,18 +70,16 @@ public class CategoriesFragment extends Fragment implements Callbacks, CategoryA
     }
 
     private void getBandaCategories() {
-        MySharedPreferences.setUpMySharedPreferences(getActivity());
-        int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-        getMarketCategoriesRequest marketCategoriesRequest=new getMarketCategoriesRequest(Integer.valueOf(marketStr));
+        getMarketCategoriesRequest marketCategoriesRequest=new getMarketCategoriesRequest(2);
         marketCategoriesRequest.setCallbacks(this);
         marketCategoriesRequest.start();
 
     }
 
     private void getAlDanobCategories() {
-        MySharedPreferences.setUpMySharedPreferences(getActivity());
-        int id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
-
+        getMarketCategoriesRequest marketCategoriesRequest=new getMarketCategoriesRequest(1);
+        marketCategoriesRequest.setCallbacks(this);
+        marketCategoriesRequest.start();
     }
 
     private void getAllCategories() {

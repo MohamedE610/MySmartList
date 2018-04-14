@@ -3,6 +3,9 @@ package com.example.mysmartlist.Adapters;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +13,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mysmartlist.Models.List.List;
+import com.example.mysmartlist.Models.Notes.Notes;
 import com.example.mysmartlist.R;
 import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.Constants;
+import com.example.mysmartlist.Utils.MySharedPreferences;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.AddProductNotesRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.DeleteProductNotesRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.UpdateProductNoteRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.decrementProductCountInListRequest;
+import com.example.mysmartlist.Utils.Networking.RestApiRequests.getProductNotesRequest;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.incrementProductCountInListRequest;
 import com.squareup.picasso.Picasso;
 
@@ -40,6 +50,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
     boolean isEditable;
     int list_id;
 
+
     public ListProductsAdapter() {
     }
 
@@ -52,6 +63,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         this.context = context;
         this.isEditable=isEditable;
         this.list_id=list_id;
+        MySharedPreferences.setUpMySharedPreferences(context);
     }
 
 
@@ -65,13 +77,50 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         return new MyViewHolder(view);
     }
 
+    private void getProductNote(int client_id,int product_id, EditText editText ,TextView textView,MyViewHolder viewHolder){
+        getProductNotesRequest productNotesRequest=new getProductNotesRequest(client_id,product_id);
+        productNotesRequest.setCallbacks(new Callbacks() {
+            @Override
+            public void OnSuccess(Object obj) {
+                if(obj==null)
+                    return;
+                Notes notes =(Notes) obj;
+
+                if(notes==null||notes.data==null)
+                    return;
+                String noteStr=notes.data.get(notes.data.size()-1).note;
+                viewHolder.note_id=Integer.valueOf(notes.data.get(notes.data.size()-1).id);
+                textView.setText(noteStr);
+                editText.setText(noteStr);
+                editText.setHint(viewHolder.note_id+"");
+
+            }
+
+            @Override
+            public void OnFailure(Object obj) {
+
+            }
+        });
+        productNotesRequest.start();
+    }
+
+    int id;
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        try {
+            id = Integer.valueOf(MySharedPreferences.getUserSetting("uid"));
+            getProductNote(id,list.data.products.get(position).id,holder.noteEditText,holder.noteTextView,holder);
+
+        }catch (Exception e){}
 
         if(isEditable){
             holder.checkBox.setVisibility(View.VISIBLE);
+            holder.noteEditText.setVisibility(View.VISIBLE);
+            holder.noteTextView.setVisibility(View.GONE);
         }else {
             holder.checkBox.setVisibility(View.GONE);
+            holder.noteEditText.setVisibility(View.GONE);
+            holder.noteTextView.setVisibility(View.VISIBLE);
         }
 
         String detailsStr=list.data.products.get(position).name;
@@ -159,12 +208,40 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
            }
        });
 
+        holder.noteEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                    HashMap<String,String>hashMap=new HashMap<>();
+                    hashMap.put("note",holder.noteEditText.getText().toString());
+                    AddProductNotesRequest addProductNotesRequest=new
+                            AddProductNotesRequest(id,list.data.products.get(position).id,hashMap);
+                    addProductNotesRequest.setCallbacks(new Callbacks() {
+                        @Override
+                        public void OnSuccess(Object obj) {
+                        }
+
+                        @Override public void OnFailure(Object obj) {
+                        }
+                    });
+                    addProductNotesRequest.start();
+            }
+        });
         setAnimation(holder.cardView, position);
     }
 
     @Override
     public void onViewRecycled(MyViewHolder holder) {
-
         super.onViewRecycled(holder);
     }
 
@@ -186,6 +263,10 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         TextView textViewMinus;
         CardView cardView;
         CheckBox checkBox;
+        Integer note_id;
+        TextView noteTextView;
+        EditText noteEditText;
+
 
 
         public MyViewHolder(View itemView) {
@@ -199,6 +280,9 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
             textViewCount = (TextView) itemView.findViewById(R.id.text_count);
             cardView = (CardView) itemView.findViewById(R.id.card);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
+
+            noteTextView = (TextView) itemView.findViewById(R.id.note_text);
+            noteEditText = (EditText) itemView.findViewById(R.id.note_edit);
         }
 
         @Override

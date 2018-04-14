@@ -23,9 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by abdallah on 12/18/2017.
- */
 
 public class DeleteProductNotesRequest extends FetchData implements Callback<HashMap>  {
 
