@@ -1,5 +1,6 @@
 package com.example.mysmartlist.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -42,7 +43,7 @@ import java.util.HashMap;
 public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyViewHolder> {
 
     Products products;
-    Context context;
+    Activity context;
     int LastPosition = -1;
     int pos;
     RecyclerViewClickListener ClickListener;
@@ -119,7 +120,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
     public ProductAdapter1() {
     }
 
-    public ProductAdapter1(Products products, Context context) {
+    public ProductAdapter1(Products products, Activity context) {
         this.products = products;
         this.context = context;
         MySharedPreferences.setUpMySharedPreferences(context);
@@ -167,6 +168,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
             public void onClick(View view) {
                 Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
                 context.startActivity(new Intent(context, SignInActivity.class));
+                context.finish();
             }
         });
 
@@ -175,6 +177,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
             public void onClick(View view) {
                     Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
                     context.startActivity(new Intent(context, SignInActivity.class));
+                context.finish();
             }
         });
         holder.linearLayoutAdd.setClickable(true);
@@ -184,6 +187,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
             public void onClick(View view) {
                 Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
                 context.startActivity(new Intent(context, SignInActivity.class));
+                context.finish();
 
             }
         });
@@ -194,6 +198,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
             public void onClick(View view) {
                 Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
                 context.startActivity(new Intent(context, SignInActivity.class));
+                context.finish();
             }
         });
 
@@ -202,6 +207,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
             public void onClick(View view) {
                 Toast.makeText(context, "الرجاء تسجيل الدخول اولا", Toast.LENGTH_SHORT).show();
                 context.startActivity(new Intent(context, SignInActivity.class));
+                context.finish();
             }
         });
 
