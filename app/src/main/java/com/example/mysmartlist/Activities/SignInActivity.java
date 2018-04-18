@@ -21,6 +21,7 @@ import com.example.mysmartlist.Utils.Callbacks;
 import com.example.mysmartlist.Utils.MySharedPreferences;
 import com.example.mysmartlist.Utils.Networking.RestApiRequests.getClientByFirebaseIDRequest;
 import com.example.mysmartlist.Utils.FirebaseAuthenticationUtils.FirebaseSignIn;
+import com.example.mysmartlist.Utils.WebCrawler.Danob.DanobCategoriesWebCrawling;
 import com.example.mysmartlist.Utils.WebCrawler.Panda.PandaCategoriesWebCrawling;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -44,6 +45,9 @@ public class SignInActivity extends AppCompatActivity {
 
         MySharedPreferences.setUpMySharedPreferences(this);
         MySharedPreferences.setUserSetting("notNow","0");
+
+        DanobCategoriesWebCrawling danobCategoriesWebCrawling=new DanobCategoriesWebCrawling(this);
+        danobCategoriesWebCrawling.execute();
 
         /*PandaCategoriesWebCrawling pandaCategoriesWebCrawling = new PandaCategoriesWebCrawling(this);
             pandaCategoriesWebCrawling.execute();*/

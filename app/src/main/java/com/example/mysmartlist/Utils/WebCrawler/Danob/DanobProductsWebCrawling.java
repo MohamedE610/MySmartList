@@ -141,11 +141,13 @@ public class DanobProductsWebCrawling extends AsyncTask<Void, Void, String> {
             addMultipleProductsRequest.setCallbacks(new Callbacks() {
                 @Override
                 public void OnSuccess(Object obj) {
+
                     String s=obj.toString();
                 }
 
                 @Override
-                public void OnFailure(Object obj) {
+                public void OnFailure(Object obj)
+                {
                     String s=obj.toString();
                 }
             });

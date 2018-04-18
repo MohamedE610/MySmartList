@@ -9,7 +9,7 @@ public class Constants {
 
     public static final  String danubeBasicUrl="https://danube.sa";
     public static final  String localHostIp="http://192.168.1.8";
-    public static final  String BasicUrl = "https://smartlist.frb.io/api/";
+    public static final  String BasicUrl = "https://smartapp.frb.io/api/";
     public static final  String BasicUrlImg = "https://smartlist.frb.io/";
     public static final String accessToken="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVlMWViNzk5YmUyNDlkNWM1MTNhMjVhOTZkYmM0NzMzNzk3MjczNjYzOTJhZDI5MTk4NWJmZWFjMzg2YWMwZWRmNDM2M2RjMDI4MWI0YjhhIn0.eyJhdWQiOiIyIiwianRpIjoiNWUxZWI3OTliZTI0OWQ1YzUxM2EyNWE5NmRiYzQ3MzM3OTcyNzM2NjM5MmFkMjkxOTg1YmZlYWMzODZhYzBlZGY0MzYzZGMwMjgxYjRiOGEiLCJpYXQiOjE1MjMzMDIwMTIsIm5iZiI6MTUyMzMwMjAxMiwiZXhwIjoxNTU0ODM4MDEyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.CWnmi01Kh87JTFfTaZx92XHkLrYZuRLf5LaFfA3xUQ4YImgccRldhQbItoLyAiFq-rJT6XVeGkhYigOSyOhWriPOkLmYOkpj93lsHU6LnkaZ_5FLNuW6f1QbGH5dZ7AVyej2St6lQnPrdsogfDrRbNBiqcz9qrPNp5urkUUKKBG-R_9fS9b6uUVURNU72NEQ1u7yVsuo5j8tr-VhTKzsIwEyiE7Ja1CYDq2oaJtvR-1ElpjYU41ny1zo5UbtQEM52mEWnCQF0eMxTEs_z1p_JrwTJI5s1brVd6NR8PqzIPwOIP8ZCBbu4KryeyRpe8A6d_Unabiso3b3fgCEPNQpJ05Op9a7a5xXiWWd2-wapAYDA6CT0AAzquporjreqlGMOY5BqX10SuW1k0pNVNFGyB5EJkWP6Sj0e4Urw9G6V8O9xdZK_Fds5q_-SIQ3Kh8UzRX3YsmkcXJLlI9aNA1WJYKcuBl1DAbHqs_vqIm0oSwYgNpDsC_h9oFVp0nBL_rshF_HNk_bjIcL1wGeqjYyZLxIhjZZePmAfh7jjxsqirz8ZuFlr7IxzNl-Rd5SoCRtS0nDqbwoxyTntu9fX-meGdrWsXsb5wPj-u2mIqfisTKD9zXqUkcLVGjA9X5zXggabgl79fbM5ek4hvscnrFoUGn7hxYaTjw18yPpgslUWus";
 

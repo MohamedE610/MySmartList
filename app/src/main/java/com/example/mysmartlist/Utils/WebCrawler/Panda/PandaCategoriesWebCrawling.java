@@ -83,7 +83,7 @@ public class PandaCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                             MySharedPreferences.setUserSetting("wc_cat","1");*/
 
                     for (int i = 0; i <hashMaps.size() ; i++) {
-                        PandaProductsWebCrawling pandaProductsWebCrawling =new PandaProductsWebCrawling(context,categoriesResponse.data.get(0).id+"",hashMaps.get(0).get("link"));
+                        PandaProductsWebCrawling pandaProductsWebCrawling =new PandaProductsWebCrawling(context,categoriesResponse.data.get(i).id+"",hashMaps.get(i).get("link"));
                         pandaProductsWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                     }

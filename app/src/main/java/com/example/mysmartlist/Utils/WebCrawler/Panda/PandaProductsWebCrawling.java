@@ -90,23 +90,24 @@ public class PandaProductsWebCrawling extends AsyncTask<Void, Void, String> {
                 hashMaps.add(hashMap);
             }
             products.put("data",hashMaps);
-            products.put("market_id","2");
+            products.put ("market_id","2");
 
             AddMultipleProductsRequest addMultipleProductsRequest=new AddMultipleProductsRequest(products);
             addMultipleProductsRequest.setCallbacks(new Callbacks() {
                 @Override
                 public void OnSuccess(Object obj) {
+
                     String s=obj.toString();
                 }
 
                 @Override
                 public void OnFailure(Object obj) {
+
                     String s=obj.toString();
                 }
             });
 
             addMultipleProductsRequest.start();
-
 
         } catch (IOException e) {
             e.printStackTrace();

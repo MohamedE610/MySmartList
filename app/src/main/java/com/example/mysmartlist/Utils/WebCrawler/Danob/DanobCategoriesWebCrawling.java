@@ -91,7 +91,7 @@ public class DanobCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
                             MySharedPreferences.setUserSetting("wc_cat","1");*/
 
                     for (int i = 0; i <hashMaps.size() ; i++) {
-                        DanobProductsWebCrawling danobProductsWebCrawling =new DanobProductsWebCrawling(context,categoriesResponse.data.get(0).id+"",hashMaps.get(0).get("link"));
+                        DanobProductsWebCrawling danobProductsWebCrawling =new DanobProductsWebCrawling(context,categoriesResponse.data.get(i).id+"",hashMaps.get(i).get("link"));
                         danobProductsWebCrawling.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
 
@@ -99,8 +99,8 @@ public class DanobCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
 
                 @Override
                 public void OnFailure(Object obj) {
-                    /*MySharedPreferences.setUpMySharedPreferences(context);
-                    MySharedPreferences.setUserSetting("wc_cat","-1");*/
+                    MySharedPreferences.setUpMySharedPreferences(context);
+                    MySharedPreferences.setUserSetting("wc_cat","-1");
                 }
             });
 
@@ -108,6 +108,8 @@ public class DanobCategoriesWebCrawling extends AsyncTask<Void, Void, String> {
 
 
         } catch (IOException e) {
+            DanobCategoriesWebCrawling danobCategoriesWebCrawling=new DanobCategoriesWebCrawling(context);
+            danobCategoriesWebCrawling.execute();
             e.printStackTrace();
         }
 
